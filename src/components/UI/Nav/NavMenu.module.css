@@ -36,3 +36,13 @@
 a, a:visited{
     color: inherit;
 }
+
+.nav_title_div {
+    display: flex;
+    align-items: baseline;
+}
+
+.nav_version {
+    font-size: 10px;
+    padding-left: 6px;
+}
