@@ -1,7 +1,7 @@
 export const get_web_api_url = (loc) => {
   switch (loc.hostname) {
     case "localhost" || "127.0.0.1":
-      return "http://localhost:8000";
+      return "http://localhost:8000/api";
     default:
       return `https://${loc.hostname}/api`;
   }
