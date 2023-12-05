@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const DEFAULT_STATE = {
   viewWidth: null,
+  viewHeight: null,
   isMobile: false,
   modal: {
     isOpen: false,
@@ -14,11 +15,12 @@ const DEFAULT_STATE = {
 };
 
 const reducers = {
-  setWidth(state, actions) {
+  setDimensions(state, actions) {
     state.viewWidth = actions.payload.viewWidth;
+    state.viewHeight = actions.payload.viewHeight;
   },
   setIsMobile(state) {
-    state.isMobile = state.viewWidth < 450 ? true : false;
+    state.isMobile = state.viewWidth || state.viewHeight < 450 ? true : false;
   },
   toggleModal(state, actions) {
     if (actions.payload.bool) {

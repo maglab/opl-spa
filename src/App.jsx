@@ -3,9 +3,6 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { useMsal } from '@azure/msal-react';
-import { useEffect } from "react";
 
 // import Home from './pages/Home/Home'
 // import About from './pages/About/About'
@@ -18,21 +15,25 @@ import "./index.css";
 import apiAnnotations from "./api/apiAnnotations";
 import Login from "./pages/Login/Login";
 import RootLayout from "./pages/Root/RootLayout";
-import { userActions } from "./state/User/userSlice";
-
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to={"open-problems"} /> },
-  {path: "/login", element: <RootLayout/>, children:[
-    {index: true, element: <Login/>}
-  ]},
+  {
+    path: "/login",
+    element: <RootLayout />,
+    children: [{ index: true, element: <Login /> }],
+  },
   {
     path: "open-problems",
     element: <RootOpenProblems />,
+    children: [{ index: true, element: <OpenProblems /> }],
+  },
+  {
+    path: "open-problems/:id",
+    element: <RootLayout />, // Use RootLayout as the root element for the Details page
     children: [
-      { index: true, element: <OpenProblems /> },
       {
-        path: ":id",
+        index: true,
         element: <Details />,
         loader: ({ params }) => apiProblems.getDetails({ id: params.id }),
       },
@@ -59,9 +60,7 @@ const router = createBrowserRouter([
 //   {path: '', index: true, element: <Home/>},
 //   {path: 'About', element: <About/>}]}
 
-
 function App() {
-
   return (
     <div>
       <RouterProvider router={router} />

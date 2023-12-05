@@ -7,7 +7,7 @@ import ListAccordionContent from "../Accordion/ListAccordionContent";
 import { HashLink } from "react-router-hash-link";
 function MuiListComponent(props) {
   const problem = props.problem;
-  const { problem_id:id, description, children } = problem;
+  const { problem_id: id, description, children } = problem;
   const [isExpanded, setExpanded] = useState(false);
   const onClickHandler = () => {
     if (children || description) {
@@ -32,7 +32,7 @@ function MuiListComponent(props) {
         <ListItemContent>
           <HashLink to={`./${id}#nav`}>
             <ListItemText
-              className="text-base hover:text-theme-blue hover:underline md:text-lg"
+              className=" hover:text-theme-blue hover:underline text-sm md:text-sm"
               primary={problem.title}
             />
           </HashLink>
