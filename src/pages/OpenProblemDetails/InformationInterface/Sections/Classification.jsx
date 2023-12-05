@@ -35,12 +35,13 @@ const fetchAnnotationData = async (components, problemId) => {
 
 function Classification() {
   const { data } = useLoaderData();
-  const openProblemId = data.open_problem?.problem_id;
+  const openProblemId = data.problem_id;
   const contactParams = {
     firstName: data.contact?.first_name,
     lastName: data.contact?.last_name,
-  };
+  }; //For now no contact
   const userName = setUserName(contactParams) ?? "-";
+  console.log(data.contact);
 
   const [annotationData, setAnnotationData] = useState(null);
   const [error, setError] = useState(null);
