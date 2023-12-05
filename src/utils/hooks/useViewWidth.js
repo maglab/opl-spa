@@ -9,7 +9,12 @@ function useViewWidth() {
   useEffect(() => {
     // Handle resizing of window and keep track of the inner width
     const handleResize = () => {
-      dispatch(generalActions.setWidth({ viewWidth: window.innerWidth }));
+      dispatch(
+        generalActions.setDimensions({
+          viewWidth: window.innerWidth,
+          viewHeight: window.innerHeight,
+        })
+      );
       dispatch(generalActions.setIsMobile());
     };
     handleResize();
@@ -18,7 +23,7 @@ function useViewWidth() {
       window.removeEventListener("resize", handleResize); //Cleanup function to prevent memory leak
     };
   }, [dispatch, viewWidth]);
-  return {viewWidth, isMobile}
+  return { viewWidth, isMobile };
 }
 
 export default useViewWidth;
