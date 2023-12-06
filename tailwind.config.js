@@ -24,6 +24,7 @@ export default {
         fadeout: "fadeout 0.5 ease-out",
       },
       colors: {
+        "hover-grey": "grey-200",
         "bg-grey": "#f5f5f5",
         "theme-blue": "#4675CE",
         "theme-blue-light": "#1976d21c",
