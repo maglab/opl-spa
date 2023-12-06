@@ -7,9 +7,8 @@ import { formActions } from "../../../../state/Question/questionFormSlice";
 import { HashLink } from "react-router-hash-link";
 import apiSubmissions from "../../../../api/apiSubmissions";
 import { useEffect, useState } from "react";
-function ButtonGroupComponent(props) {
-  const { problem_id: problemId, title } = props.problem;
-  const isRoot = props.isRoot;
+function ButtonGroupComponent({ openProblem, isRoot }) {
+  const { problem_id: problemId, title } = openProblem;
   const dispatch = useDispatch();
 
   // State for post counts

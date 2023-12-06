@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import MuiListComponent from "./MuiListComponent";
+import ItemComponent from "./ItemComponent/ItemComponent";
 import apiProblems from "../../../../api/apiProblems";
 import { questionActions } from "../../../../state/Question/questionSlice";
 import sortQuery from "../../../../utils/functions/dataManipulation/sortQuery";
@@ -74,7 +74,7 @@ function QuestionList() {
   if (error) {
     return (
       <div>
-        z<p className="text-2xl"> {error.message}</p>
+        <p className="text-2xl"> {error.message}</p>
       </div>
     );
   }
@@ -88,9 +88,9 @@ function QuestionList() {
   }
   if (displayedProblems) {
     return (
-      <ul>
+      <ul className="problems-list space-y-1">
         {displayedProblems.map((item) => (
-          <MuiListComponent key={item.problem_id} problem={item} />
+          <ItemComponent openProblem={item} />
         ))}
       </ul>
     );
@@ -98,11 +98,11 @@ function QuestionList() {
 
   if (filtersOn || selectedSorting) {
     return (
-      <ul className="problem-list ">
+      <ul className="problem-list space-y-1">
         {problemsArray &&
           problemsArray.length > 0 &&
           problemsArray.map((item) => (
-            <MuiListComponent key={item.problem_id} problem={item} />
+            <ItemComponent key={item.problem_id} openProblem={item} />
           ))}
         {problemsArray && problemsArray.length === 0 && (
           <div className="py-4">

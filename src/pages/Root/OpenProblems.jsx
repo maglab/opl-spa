@@ -10,7 +10,7 @@ import { generalActions } from "../../state/generalStateSlice";
 import useViewWidth from "../../utils/hooks/useViewWidth";
 
 function OpenProblems() {
-  const { viewWidth, isMobile } = useViewWidth;
+  const { viewWidth, isMobile } = useViewWidth();
   return (
     <div className="flex flex-col">
       <div className="nav h-3/12">
