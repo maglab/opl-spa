@@ -1,4 +1,4 @@
-import Chip from "../../../../../components/UI/Chip/Chip";
+import ChipSection from "./ChipSection";
 import ListAccordionContent from "../../Accordion/ListAccordionContent";
 
 import { useState } from "react";
@@ -26,7 +26,7 @@ function ItemComponent({ openProblem }) {
         onClick={onClickHandler}
         className="bg-white p-2 px-4 space-y-4 shadow-md w-full hover:bg-gray-200"
       >
-        <div className="w-full flex flex-row justify-between items-center">
+        <div className="w-full flex flex-row justify-between items-center text-left">
           <span
             onClick={preventClickPropagation}
             className="title hover:text-theme-blue hover:underline"
@@ -41,11 +41,7 @@ function ItemComponent({ openProblem }) {
           onClick={preventClickPropagation}
           className="chips flex flex-row w-full space-x-3"
         >
-          <Chip>Testing Chip</Chip>
-          <Chip>Testing Chip</Chip>
-          <Chip>Testing Chip</Chip>
-          <Chip>Small</Chip>
-          <Chip>Really long chip</Chip>
+          <ChipSection id={id} />
         </div>
       </button>
       <div className="accordion border-l border-theme-blue">
