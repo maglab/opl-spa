@@ -32,7 +32,6 @@ const apiAnnotations = {
       fields = false,
     } = params;
     const queryParams = fields.length > 0 ? { fields: fields.join(",") } : {};
-    console.log(queryParams);
 
     const path = all
       ? `annotations/all/${problemId}`
