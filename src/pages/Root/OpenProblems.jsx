@@ -1,12 +1,8 @@
 import "./RootQuestion.css";
 
 import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-
 import { Nav2 } from "../../components/UI/Nav/Nav";
 import Footer from "./Footer/Footer";
-import { generalActions } from "../../state/generalStateSlice";
 import useViewWidth from "../../utils/hooks/useViewWidth";
 
 function OpenProblems() {
