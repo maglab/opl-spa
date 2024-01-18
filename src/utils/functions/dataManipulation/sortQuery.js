@@ -19,11 +19,6 @@ export default function sortQuery(filterObj) {
       default:
         flattenedObj[key] = filterObj[key].map((item) => item.id);
     }
-    // if (key === "sorting") {
-    //   flattenedObj[key] = filterObj[key];
-    // } else {
-    //   flattenedObj[key] = filterObj[key].map((item) => item.id);
-    // }
   }
   return flattenedObj;
 }
