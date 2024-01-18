@@ -7,7 +7,8 @@ import StatbarButtonGroupView from "./StatbarButtonGroupView";
 import scrollToView from "../../../utils/functions/scrollToView";
 // This functon is for the statbar that allows the user to select whether to view the questions as a table or as a tree view instead
 function Statbar() {
-  const [problemsLength, setProblemsLength] = useState(0);
+  // const [problemsLength, setProblemsLength] = useState(0);
+  const problemsLength = useSelector((state) => state.question.count);
   const isMobileState = useSelector((state) => state.question.isMobile);
   const filteredProblems = useSelector(
     (state) => state.question.filteredResults
@@ -18,15 +19,15 @@ function Statbar() {
     dispatch(formActions.toggleFormOpen());
     scrollToView(".form-title");
   };
-  useEffect(() => {
-    if (filteredProblems) {
-      setProblemsLength(filteredProblems.length);
-    } else if (allProblems) {
-      setProblemsLength(allProblems.length);
-    } else {
-      setProblemsLength(0);
-    }
-  }, [filteredProblems, allProblems]);
+  // useEffect(() => {
+  //   if (filteredProblems) {
+  //     setProblemsLength(filteredProblems.length);
+  //   } else if (allProblems) {
+  //     setProblemsLength(allProblems.length);
+  //   } else {
+  //     setProblemsLength(0);
+  //   }
+  // }, [filteredProblems, allProblems]);
   return (
     <Box className="h-max">
       <div className="flex h-12 w-full items-center justify-between shadow shadow-theme-blue ">
@@ -35,7 +36,7 @@ function Statbar() {
         </div>
         <div className="flex h-full w-1/4 flex-grow-0 items-center justify-center">
           <p className="text-center text-xs font-semibold md:text-base">
-            {problemsLength} Open Problems
+            {problemsLength && problemsLength} Open Problems
           </p>
         </div>
         <div className="flex h-full w-1/4 justify-end">
