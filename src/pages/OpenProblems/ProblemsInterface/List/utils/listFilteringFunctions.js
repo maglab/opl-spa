@@ -34,7 +34,6 @@ export async function applyFilters(api, dispatch, action, setStates) {
     const data = response.data;
     if (response.status === 200) {
       //The dispatch action
-      console.log(data.count);
       dispatch(action({ key: "allProblems", value: data.results }));
       dispatch(action({ key: "count", value: data.count }));
       dispatch(action({ key: "nextPage", value: data.next }));
