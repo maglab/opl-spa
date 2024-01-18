@@ -22,19 +22,23 @@ export function checkFilters(filterObj, dispatch, trueAction, falseAction) {
 /**
  *
  * @param {{apiCall: Function, queryParams: Object }} api - The api call and its parameters to be sent
- * @param {Function} dispatch - Redux dispatch function
- * @param {{function: Function, params: Object}} action - Redux action to be called and its parameters
+ * @param {Function} dispatch - Redux dispatch function - a set state function for applying a value a state.
+ * @param {[{function: Function, params: Object}]} actions - Redux action to be called and its parameters
  * @param {{setLoading: Function, setError}} setStates - Set states for loading and error.
  */
 export async function applyFilters(api, dispatch, action, setStates) {
   const { setLoading, setError } = setStates;
   const { apiCall, queryParams } = api;
-  //Obtain correct array from api and then apply the filters
   try {
     const response = await apiCall({ queryParams });
     const data = response.data;
     if (response.status === 200) {
-      dispatch(action.function({ ...action.params, value: data }));
+      //The dispatch action
+      console.log(data.count);
+      dispatch(action({ key: "allProblems", value: data.results }));
+      dispatch(action({ key: "count", value: data.count }));
+      dispatch(action({ key: "nextPage", value: data.next }));
+      // dispatch(action.function({key:"page": value:data.page}))
       setLoading(false);
     }
   } catch (error) {

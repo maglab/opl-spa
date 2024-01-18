@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-
 import { generalActions } from "../../state/generalStateSlice";
 import SubmissionModalContent from "../../components/UI/Modal/SubmissionModalContent";
 import Statbar from "./Statbar/Statbar";
@@ -24,7 +23,7 @@ function OpenProblems() {
       <div className="side-nav w-1/5 sticky">
         <Filter config={config} />
       </div>
-      <div className="main w-4/5 h-screen overflow-auto">
+      <div className="main w-4/5 h-max overflow-auto">
         <SearchBar label={"Search for an open problem"} />
         <Statbar className="statbar" />
         <ProblemsInterface />

@@ -24,6 +24,7 @@ function ChipSection({ id }) {
     return []; //Return nothing if conditions are not met
   }, [id, apiData]);
   console.log(apiData);
+  //We need
   return (
     <>
       {isLoading && <LinearProgress />}

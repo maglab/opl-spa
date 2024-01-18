@@ -1,9 +1,13 @@
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import QuestionList from "./List/QuestionList";
 import QuestionForm from "../Form/QuestionForm";
 import SortingInputs from "./Sorting/SortingInputs";
 function ProblemsInterface() {
   const formState = useSelector((state) => state.form);
+  const [paginationNumber, setPaginationNumber] = useState(1); //Default to 1 for api
+  const nextPage = useSelector((state) => state.question.nextPage);
+
   return (
     <div className="flex flex-col">
       {!formState.submitFormOpen && (
@@ -22,7 +26,14 @@ function ProblemsInterface() {
             }
           />
         ) : (
-          <QuestionList />
+          <>
+            <QuestionList paginationNumber={paginationNumber} />
+            {nextPage && (
+              <div className="pagination-buttons flex justify-center pt-10">
+                <button> Show more</button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

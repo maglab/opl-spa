@@ -10,8 +10,12 @@ import {
   applyFilters,
   applyQueryString,
 } from "./utils/listFilteringFunctions";
-
-function QuestionList() {
+/**
+ * Open Problems list main component.
+ * @param {Number} param0 - Pagination number to be called to the API. Tracked by parent state.
+ * @returns - List of all open problems sorted by pagination and annotations.
+ */
+function QuestionList({ paginationNumber }) {
   const problemsArray = useSelector((state) => state.question.allProblems);
   const displayedProblems = useSelector(
     (state) => state.question.filteredResults
@@ -42,21 +46,21 @@ function QuestionList() {
       apiCall: apiProblems.getProblems,
       queryParams: sortQuery(filters),
     };
-    const action = {
-      function: questionActions.setState,
-      params: { key: "allProblems", value: null }, //Default to null
-    };
+    //The action to be executed and its required parameters
+    const action = questionActions.setState;
     const setStates = { setError, setLoading };
+    //If there is selected sorting or filters, then we send the request using the apply filters function. The request data is stored in redux using dispatch.
     if (filtersOn || selectedSorting) {
       applyFilters(api, dispatch, action, setStates);
     }
   }, [filtersOn, filters, selectedSorting]);
+
   // Finally we sort the list based on the query string.
   useEffect(() => {
     if (!problemsArray) return; //Guard clause to prevent executing when problems haven't been fetched yet
     const fuseOptions = {
       threshold: 0.5,
-      keys: ["title"], //For now we search by title - may extrend to other values
+      keys: ["title", "description"], //For now we search by title - may extrend to other values
     };
     const results = applyQueryString(fuseOptions, problemsArray, searchQuery);
     //If more than one results then we populate the store else we keep it as null
@@ -107,7 +111,7 @@ function QuestionList() {
         {problemsArray && problemsArray.length === 0 && (
           <div className="py-4">
             {" "}
-            <p className="text-center">
+            <p className="text-center font-semibold">
               {" "}
               No Open Problems matching this query.
             </p>
