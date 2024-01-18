@@ -16,6 +16,9 @@ export const DEFAULT_STATE = {
   },
   openProblem: {},
   allProblems: null,
+  count: null,
+  page: null,
+  nextPage: null,
 };
 
 const reducers = {
@@ -42,7 +45,7 @@ const reducers = {
     state.viewType = "table";
   },
   setQuery(state, actions) {
-    //Sets the search query from search bar
+    //Sets the search query from search bar - unecessary with setSate method
     state.searchQuery = actions.payload.query;
   },
   setSorting(state, actions) {
