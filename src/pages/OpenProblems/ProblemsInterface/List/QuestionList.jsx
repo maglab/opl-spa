@@ -10,6 +10,56 @@ import {
   applyFilters,
   applyQueryString,
 } from "./utils/listFilteringFunctions";
+
+/**
+ * Loading sectrion to be used by the main Question List component. Is shown when open problems are loading.
+ * @returns {React.Component}
+ */
+function LoadingSection() {
+  return (
+    <div className="w-full h-full flex items-center justify-center translate-y-1/2">
+      <Spinner />
+    </div>
+  );
+}
+
+/**
+ * Error sectrion to be used by the main Question List component for rendering error messages
+ * @returns {React.Component}
+ */
+function ErrorDisplay() {
+  return (
+    <div>
+      <p className="text-2xl"> {error.message}</p>
+    </div>
+  );
+}
+
+/**
+ *
+ * @param {Array} param0 openProblems -
+ * @returns {React.Component}
+ */
+function ListSection({ openProblems }) {
+  if (!openProblems || openProblems.length === 0) {
+    return (
+      <div className="py-4">
+        <p className="text-center font-semibold">
+          No Open Problems matching this query.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <ul className="problem-list space-y-1">
+      {openProblems.map((item) => (
+        <ItemComponent key={item.problem_id} openProblem={item} />
+      ))}
+    </ul>
+  );
+}
+
 /**
  * Open Problems list main component.
  * @param {*} param0 -  isLoading - state value
@@ -18,6 +68,7 @@ import {
  */
 function QuestionList({ loading, setLoading }) {
   const problemsArray = useSelector((state) => state.question.allProblems);
+  //displatedProblems for fuzzy search - however this will be soon removed
   const displayedProblems = useSelector(
     (state) => state.question.filteredResults
   );
@@ -28,7 +79,6 @@ function QuestionList({ loading, setLoading }) {
   );
   const filtersOn = useSelector((state) => state.question.filterOpen);
   const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(true);
   // We need to create a useEffect function to track filter states and order the openProblems accordingly
   //Use a config file to determine what annotations are being searched for
   const dispatch = useDispatch();
@@ -77,49 +127,18 @@ function QuestionList({ loading, setLoading }) {
   }, [searchQuery]);
 
   if (error) {
-    return (
-      <div>
-        <p className="text-2xl"> {error.message}</p>
-      </div>
-    );
+    return <ErrorDisplay />;
   }
 
   if (loading) {
-    return (
-      <div className="w-full h-full flex items-center justify-center translate-y-1/2">
-        <Spinner />
-      </div>
-    );
+    return <LoadingSection />;
   }
   if (displayedProblems) {
-    return (
-      <ul className="problems-list space-y-1">
-        {displayedProblems.map((item) => (
-          <ItemComponent openProblem={item} />
-        ))}
-      </ul>
-    );
+    return <ListSection openProblems={displayedProblems} />;
   }
 
   if (filtersOn || selectedSorting) {
-    return (
-      <ul className="problem-list space-y-1">
-        {problemsArray &&
-          problemsArray.length > 0 &&
-          problemsArray.map((item) => (
-            <ItemComponent key={item.problem_id} openProblem={item} />
-          ))}
-        {problemsArray && problemsArray.length === 0 && (
-          <div className="py-4">
-            {" "}
-            <p className="text-center font-semibold">
-              {" "}
-              No Open Problems matching this query.
-            </p>
-          </div>
-        )}
-      </ul>
-    );
+    return <ListSection openProblems={problemsArray} />;
   }
 }
 
