@@ -1,5 +1,5 @@
 import ItemComponent from "../List/ItemComponent/ItemComponent";
-import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
+import ButtonGroupComponent from "../Buttons/ButtonGroupComponent";
 function ListAccordionContent({ openProblem }) {
   const children = openProblem.children;
   const parent = openProblem.parent_problem;

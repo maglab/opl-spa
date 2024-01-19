@@ -1,12 +1,19 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
+
 import QuestionList from "./List/QuestionList";
 import QuestionForm from "../Form/QuestionForm";
 import SortingInputs from "./Sorting/SortingInputs";
+import MoreButton from "./Buttons/MoreButton";
+/**
+ * Wrapper component for the interface of the open problems list.
+ * @returns - Open Problems Interface Component
+ */
 function ProblemsInterface() {
   const formState = useSelector((state) => state.form);
-  const [paginationNumber, setPaginationNumber] = useState(1); //Default to 1 for api
   const nextPage = useSelector((state) => state.question.nextPage);
+  // We track the loading state for the
+  const [loading, setLoading] = useState(true);
 
   return (
     <div className="flex flex-col">
@@ -27,10 +34,10 @@ function ProblemsInterface() {
           />
         ) : (
           <>
-            <QuestionList paginationNumber={paginationNumber} />
-            {nextPage && (
-              <div className="pagination-buttons flex justify-center pt-10">
-                <button> Show more</button>
+            <QuestionList loading={loading} setLoading={setLoading} />
+            {!loading && nextPage && (
+              <div className="w-full pagination-bttn flex justify-center pt-5">
+                <MoreButton />
               </div>
             )}
           </>

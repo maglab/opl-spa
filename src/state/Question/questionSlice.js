@@ -44,15 +44,17 @@ const reducers = {
     //Set the view type of the question as a list
     state.viewType = "table";
   },
-  setQuery(state, actions) {
-    //Sets the search query from search bar - unecessary with setSate method
-    state.searchQuery = actions.payload.query;
-  },
   setSorting(state, actions) {
     state.filters.sorting = actions.payload.value;
   },
   setState(state, actions) {
     state[actions.payload.key] = actions.payload.value;
+  },
+  concatenateArrays(state, actions) {
+    state[actions.payload.key] = [
+      ...state[actions.payload.key],
+      ...actions.payload.array,
+    ];
   },
 };
 
