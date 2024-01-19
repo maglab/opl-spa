@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { apiRequest } from "../../api/apiClient";
 // To replace useApi
 function useGetApi(apiFunction, params) {
   const [apiData, setApiData] = useState(null);

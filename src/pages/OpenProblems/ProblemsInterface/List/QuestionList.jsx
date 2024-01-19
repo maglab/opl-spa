@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ItemComponent from "./ItemComponent/ItemComponent";
 import apiProblems from "../../../../api/apiProblems";
@@ -12,10 +12,11 @@ import {
 } from "./utils/listFilteringFunctions";
 /**
  * Open Problems list main component.
- * @param {Number} param0 - Pagination number to be called to the API. Tracked by parent state.
+ * @param {*} param0 -  isLoading - state value
+ * @param {function} param1 - setLoading - hook function of useState of the parent component
  * @returns - List of all open problems sorted by pagination and annotations.
  */
-function QuestionList({ paginationNumber }) {
+function QuestionList({ loading, setLoading }) {
   const problemsArray = useSelector((state) => state.question.allProblems);
   const displayedProblems = useSelector(
     (state) => state.question.filteredResults
@@ -27,7 +28,7 @@ function QuestionList({ paginationNumber }) {
   );
   const filtersOn = useSelector((state) => state.question.filterOpen);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   // We need to create a useEffect function to track filter states and order the openProblems accordingly
   //Use a config file to determine what annotations are being searched for
   const dispatch = useDispatch();
