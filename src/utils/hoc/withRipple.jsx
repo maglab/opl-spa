@@ -2,7 +2,7 @@ import { useRef } from "react";
 import "../../assets/css/Ripple.css";
 
 /**
- *
+ * withRipple higher order function to apply ripple effect to components.
  * @param {React.ComponentType} WrappedComponent - The component to wrap with the ripple effect
  * @returns {React.FC} - Component wrapped with ripple functionality
  */
@@ -42,6 +42,11 @@ const withRipple = (WrappedComponent) => {
         ref={containerRef}
         className="ripple-container"
         onClick={addRippleEffect}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+        }}
       >
         <WrappedComponent {...props} />
       </div>
