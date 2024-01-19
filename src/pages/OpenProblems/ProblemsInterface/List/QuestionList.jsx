@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import ItemComponent from "./ItemComponent/ItemComponent";
 import apiProblems from "../../../../api/apiProblems";
 import { questionActions } from "../../../../state/Question/questionSlice";
@@ -10,6 +11,8 @@ import {
   applyFilters,
   applyQueryString,
 } from "./utils/listFilteringFunctions";
+import useFiltersEffect from "../../../../utils/hooks/useFiltersEffect";
+import useSearchEffect from "../../../../utils/hooks/useSearchEffect";
 
 /**
  * Loading sectrion to be used by the main Question List component. Is shown when open problems are loading.
@@ -36,8 +39,8 @@ function ErrorDisplay() {
 }
 
 /**
- *
- * @param {Array} param0 openProblems -
+ * List section that renders list of any set of open problems.
+ * @param {Array} param0 openProblems - Array of open problems usually from api.
  * @returns {React.Component}
  */
 function ListSection({ openProblems }) {
@@ -107,24 +110,7 @@ function QuestionList({ loading, setLoading }) {
   }, [filtersOn, filters, selectedSorting]);
 
   // Finally we sort the list based on the query string.
-  useEffect(() => {
-    if (!problemsArray) return; //Guard clause to prevent executing when problems haven't been fetched yet
-    const fuseOptions = {
-      threshold: 0.5,
-      keys: ["title", "description"], //For now we search by title - may extrend to other values
-    };
-    const results = applyQueryString(fuseOptions, problemsArray, searchQuery);
-    //If more than one results then we populate the store else we keep it as null
-    if (results.length > 0) {
-      dispatch(
-        questionActions.setState({ key: "filteredResults", value: results })
-      );
-    } else {
-      dispatch(
-        questionActions.setState({ key: "filteredResults", value: null })
-      );
-    }
-  }, [searchQuery]);
+  useSearchEffect(searchQuery);
 
   if (error) {
     return <ErrorDisplay />;
