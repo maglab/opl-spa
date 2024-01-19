@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import ItemComponent from "./ItemComponent/ItemComponent";
-import apiProblems from "../../../../api/apiProblems";
-import { questionActions } from "../../../../state/Question/questionSlice";
-import sortQuery from "../../../../utils/functions/dataManipulation/sortQuery";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
-import {
-  checkFilters,
-  applyFilters,
-  applyQueryString,
-} from "./utils/listFilteringFunctions";
 import useFiltersEffect from "../../../../utils/hooks/useFiltersEffect";
 import useSearchEffect from "../../../../utils/hooks/useSearchEffect";
 
@@ -69,7 +61,7 @@ function ListSection({ openProblems }) {
  * @param {function} param1 - setLoading - hook function of useState of the parent component
  * @returns - List of all open problems sorted by pagination and annotations.
  */
-function QuestionList({ loading, setLoading }) {
+export default function QuestionList({ loading, setLoading }) {
   const problemsArray = useSelector((state) => state.question.allProblems);
   //displatedProblems for fuzzy search - however this will be soon removed
   const displayedProblems = useSelector(
@@ -82,34 +74,16 @@ function QuestionList({ loading, setLoading }) {
   );
   const filtersOn = useSelector((state) => state.question.filterOpen);
   const [error, setError] = useState(false);
-  // We need to create a useEffect function to track filter states and order the openProblems accordingly
-  //Use a config file to determine what annotations are being searched for
-  const dispatch = useDispatch();
 
-  //Use effect runs in order specified so we should check if filters have been applied
-  useEffect(() => {
-    const trueAction = { action: questionActions.setState, params: true };
-    const falseAction = { ...trueAction, params: false };
-    checkFilters(filters, dispatch, trueAction, falseAction);
-  }, [filters]);
-
-  useEffect(() => {
-    setLoading(true);
-    //Process the query parameters in appropriate format for get request
-    const api = {
-      apiCall: apiProblems.getProblems,
-      queryParams: sortQuery(filters),
-    };
-    //The action to be executed and its required parameters
-    const action = questionActions.setState;
-    const setStates = { setError, setLoading };
-    //If there is selected sorting or filters, then we send the request using the apply filters function. The request data is stored in redux using dispatch.
-    if (filtersOn || selectedSorting) {
-      applyFilters(api, dispatch, action, setStates);
-    }
-  }, [filtersOn, filters, selectedSorting]);
-
-  // Finally we sort the list based on the query string.
+  //Use effect runs in order specified so we should check if filters have been applied and then send request based on filters and sorting
+  useFiltersEffect({
+    filters,
+    filtersOn,
+    selectedSorting,
+    setLoading,
+    setError,
+  });
+  // Finally we sort the list based on the query string. NOTE: TEMPORARY
   useSearchEffect(searchQuery);
 
   if (error) {
@@ -127,5 +101,3 @@ function QuestionList({ loading, setLoading }) {
     return <ListSection openProblems={problemsArray} />;
   }
 }
-
-export default QuestionList;
