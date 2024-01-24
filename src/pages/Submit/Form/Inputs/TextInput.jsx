@@ -128,7 +128,9 @@ export function TextInputTitle({ id, label, labelText, required }) {
         } items-center py-[1.5rem] text-center`}
       >
         <label
-          className={`inline-block ${isMobileState ? "w-full" : "w-1/5"}`}
+          className={`inline-block text-center ${
+            isMobileState ? "w-full" : "w-1/6"
+          }`}
           htmlFor={id}
         >
           <p className="text-sm font-bold md:text-base">{labelText}</p>
@@ -177,7 +179,9 @@ function TextInput({ id, label, labelText, required }) {
         } items-center py-[1.5rem] text-center`}
       >
         <label
-          className={`inline-block ${isMobileState ? "w-full" : "w-1/5"}`}
+          className={`inline-block text-center ${
+            isMobileState ? "w-full" : "w-1/6"
+          }`}
           htmlFor={id}
         >
           <p className="text-sm font-bold md:text-base">{labelText}</p>

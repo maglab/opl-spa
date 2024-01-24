@@ -165,8 +165,8 @@ function ReferencesInput() {
       >
         <label
           htmlFor=""
-          className={`inline-block font-semibold ${
-            isMobileState ? "w-full" : "w-1/5"
+          className={`inline-block font-semibold text-center ${
+            isMobileState ? "w-full" : "w-1/6"
           }`}
         >
           References:

@@ -5,7 +5,7 @@ import useViewWidth from "../../utils/hooks/useViewWidth";
 function RootLayout() {
   const { isMobile } = useViewWidth();
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-bg-grey">
       <div className="nav h-3/12 w-full">
         <Nav2 />
       </div>

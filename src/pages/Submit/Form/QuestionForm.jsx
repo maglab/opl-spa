@@ -90,14 +90,14 @@ function QuestionForm() {
   };
 
   return (
-    <div className="form items-center">
+    <div className="form items-center bg-white py-4">
       <Form
         className="flex w-full flex-col items-center text-center text-sm md:text-base"
         onSubmit={onSubmitHandler}
       >
         <FormContent />
         <ReCAPTCHA
-          className="recaptcha"
+          className="recaptcha py-4"
           sitekey={RECAPTCHA_SITE_KEY}
           ref={captchaRef}
         />

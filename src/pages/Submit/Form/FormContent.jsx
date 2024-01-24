@@ -11,7 +11,7 @@ function FormContent() {
     dispatch(formActions.resetForm({ exit: false }));
   };
   return (
-    <div className="question-inputs w-full bg-white shadow">
+    <div className="question-inputs w-full shadow">
       <TextInputTitle
         id="title"
         label="required"
