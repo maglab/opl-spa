@@ -21,7 +21,6 @@ function Filter({ config }) {
     dispatch(
       questionActions.setState({ key: "filters", value: DEFAULT_STATE.filters })
     );
-    dispatch(questionActions.setState({ key: "filterOpen", value: false }));
   };
 
   return (

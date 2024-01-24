@@ -1,7 +1,7 @@
 import withRipple from "../../../../utils/hoc/withRipple";
 import apiClient, { apiRequest } from "../../../../api/apiClient";
 import { questionActions } from "../../../../state/Question/questionSlice";
-import Spinner from "../../../../components/UI/Spinner/Spinner";
+import Spinner from "../../../../components/UI/Loading/Spinner";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";

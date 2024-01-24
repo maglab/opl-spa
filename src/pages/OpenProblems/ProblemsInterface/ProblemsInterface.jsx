@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 
 import QuestionList from "./List/QuestionList";
-import QuestionForm from "../Form/QuestionForm";
+import QuestionForm from "../../Submit/Form/QuestionForm";
 import SortingInputs from "./Sorting/SortingInputs";
 import MoreButton from "./Buttons/MoreButton";
 /**
@@ -12,7 +12,7 @@ import MoreButton from "./Buttons/MoreButton";
 function ProblemsInterface() {
   const formState = useSelector((state) => state.form);
   const nextPage = useSelector((state) => state.question.nextPage);
-  // We track the loading state for the
+  // We track the loading state
   const [loading, setLoading] = useState(true);
 
   return (
@@ -25,13 +25,7 @@ function ProblemsInterface() {
 
       <div className="questions-container px-4 py-2">
         {formState.submitFormOpen ? (
-          <QuestionForm
-            parent={
-              formState.chosenParent
-                ? formState.formDetails.parentTitle
-                : "None"
-            }
-          />
+          <QuestionForm />
         ) : (
           <>
             <QuestionList loading={loading} setLoading={setLoading} />
