@@ -6,7 +6,7 @@ export const DEFAULT_STATE = {
   viewType: "table",
   searchQuery: "",
   filteredResults: null,
-  filterOpen: false,
+  filterOpen: true,
   filters: {
     sorting: "latest",
     subject: [],
@@ -55,6 +55,9 @@ const reducers = {
       ...state[actions.payload.key],
       ...actions.payload.array,
     ];
+  },
+  toggleState(state, actions) {
+    state[actions.payload.key] = !state[actions.payload.key];
   },
 };
 

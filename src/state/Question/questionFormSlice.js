@@ -29,12 +29,6 @@ const DEFAULT_STATE = {
 };
 //Paylod data structure: {hasParent: boolean, parent: 'id-string'}
 const reducers = {
-  toggleFormOpen(state) {
-    state.submitFormOpen = true;
-  },
-  toggleFormClose(state) {
-    state.submitFormOpen = false;
-  },
   chooseParent(state, action) {
     state.chosenParent = true;
     state.formDetails.parentTitle = action.payload.chosenParentTitle;
@@ -56,7 +50,6 @@ const reducers = {
       const index = ref.indexOf(":");
       const prefix = ref.substring(0, index);
       const suffix = ref.substring(index + 1);
-      // const prefix = splitPrefix[0];
       switch (prefix) {
         case "doi":
           const doi = suffix;
@@ -90,18 +83,24 @@ const reducers = {
       Object.assign(state, DEFAULT_STATE);
     }
   },
-  toggleModalOpen(state) {
-    state.submitModalOpen = true;
-  },
-  toggleModalClose(state) {
-    state.submitModalOpen = false;
-  },
   setSubmitStatus(state, action) {
     state.submitStatus = {
       status: action.payload.status,
       title: action.payload.title,
       message: action.payload.message,
     };
+  },
+  setState(state, actions) {
+    state[actions.payload.key] = actions.payload.value;
+  },
+  clearState(state, actions) {
+    state[actions.payload.key] = DEFAULT_STATE[actions.payload.key];
+  },
+  toggleTrue(state, action) {
+    state[action.payload.key] = true;
+  },
+  toggleFalse() {
+    state[action.payload.key] = false;
   },
 };
 
