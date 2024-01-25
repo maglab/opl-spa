@@ -20,7 +20,7 @@ function ContactForm() {
         Contact Information (optional)
       </h1>
       <div className="Names flex w-full flex-row">
-        <div className="label-name inline-block w-1/5 pt-4 text-center">
+        <div className="label-name inline-block w-1/6 pt-4 text-center">
           <label htmlFor="f-name l-name">
             <p className="inline-block text-sm font-bold md:text-base">Name:</p>
           </label>

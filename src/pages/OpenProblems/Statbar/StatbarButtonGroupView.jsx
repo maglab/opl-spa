@@ -2,24 +2,28 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { useDispatch, useSelector } from "react-redux";
+
 import { questionActions } from "../../../state/Question/questionSlice";
 import { formActions } from "../../../state/Question/questionFormSlice";
 import TooltipWrapper from "../../../components/UI/ToolTip/TooltipWrapper";
-
 function StatbarButtonGroupView() {
   const dispatch = useDispatch();
   const isMobileState = useSelector((state) => state.question.isMobile);
   const viewState = useSelector((state) => state.question.viewType);
 
   const handleView = (e, value) => {
-    dispatch(formActions.toggleFormClose());
-    if (value === "tree") {
-      dispatch(questionActions.setSorting({ value: "root" }));
-      dispatch(questionActions.setSearchResults({ results: null }));
-    } else if (value === "table") {
-      dispatch(questionActions.setSorting({ value: "latest" }));
-      dispatch(questionActions.setSearchResults({ results: null }));
+    dispatch(formActions.toggleFalse({ key: "submitFormOpen" }));
+    switch (value) {
+      case "tree":
+        dispatch(questionActions.setSorting({ value: "root" }));
+        dispatch(questionActions.setSearchResults({ results: null }));
+        break;
+      case "table":
+        dispatch(questionActions.setSorting({ value: "latest" }));
+        break;
     }
+
+    dispatch(questionActions.setSearchResults({ results: null }));
     dispatch(questionActions.setState({ key: "viewType", value: value }));
   };
 

@@ -11,13 +11,18 @@ function textArea(props) {
   );
 }
 
-export function TextAreaNoChangeHandler(props) {
+export function TextAreaNoChangeHandler({
+  className,
+  placeHolder,
+  onChange,
+  value,
+}) {
   return (
     <textarea
-      className={props.className}
-      placeholder={props.placeHolder}
-      onChange={props.onChange}
-      value={props.value}
+      className={className}
+      placeholder={placeHolder}
+      onChange={onChange}
+      value={value}
     ></textarea>
   );
 }

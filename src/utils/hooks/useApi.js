@@ -17,15 +17,14 @@ function useGetApi(apiFunction, params) {
         } else {
           setApiData(response.data);
         }
-      } catch (err) {
-        setError(err);
+      } catch (error) {
+        setError(error);
       } finally {
         setLoading(false);
       }
     }
 
     getApiData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiFunction, JSON.stringify(params)]); // adding apiFunction and params as dependencies
 
   return { isLoading, apiData, error };

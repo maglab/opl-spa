@@ -1,6 +1,11 @@
 import doiValidator from "../../../../utils/functions/validators/doiValidator";
 import pubmedValidator from "../../../../utils/functions/validators/pubmedIDValidator";
 
+/**
+ * Helper function. Validates an array of references to be sent to API.
+ * @param {Array[String]} references - Array of DOI/PMID values for references.
+ * @returns {{Array, Array}} - Object containing an array of valid DOI/PMIDs and invalid.
+ */
 async function validateReferences(references) {
   const valid = [];
   const invalid = [];
@@ -11,6 +16,7 @@ async function validateReferences(references) {
     if (referenceType === "doi") {
       try {
         const validDOI = await doiValidator(referenceValue);
+
         if (validDOI) {
           valid.push(reference);
         }
@@ -31,15 +37,4 @@ async function validateReferences(references) {
   return { valid, invalid };
 }
 
-async function handleValidation(references, invalidPrefixes) {
-  if (!invalidPrefixes) {
-    try {
-      const { valid, invalid } = await validateReferences(references);
-      return { valid, invalid };
-    } catch (error) {
-      console.log(error); //log error for now but erros should be within the invalid array
-    }
-  }
-}
-
-export default handleValidation;
+export default validateReferences;

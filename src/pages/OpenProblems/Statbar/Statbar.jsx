@@ -1,22 +1,24 @@
-import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
-import { formActions } from "../../../state/Question/questionFormSlice";
+import { useNavigate } from "react-router-dom";
+
+import { questionActions } from "../../../state/Question/questionSlice";
 import StatbarButtonGroupView from "./StatbarButtonGroupView";
 import scrollToView from "../../../utils/functions/scrollToView";
-// This functon is for the statbar that allows the user to select whether to view the questions as a table or as a tree view instead
+
+/**
+ * Statbar - App bar that allows the user to select whether to view the questions as a table or as a tree view instead
+ * @returns {React.Component}
+ */
 function Statbar() {
-  // const [problemsLength, setProblemsLength] = useState(0);
+  const navigate = useNavigate();
   const problemsLength = useSelector((state) => state.question.count);
   const isMobileState = useSelector((state) => state.question.isMobile);
-  const filteredProblems = useSelector(
-    (state) => state.question.filteredResults
-  );
-  const allProblems = useSelector((state) => state.question.allProblems);
   const dispatch = useDispatch();
   const submitQuestionHandler = () => {
-    dispatch(formActions.toggleFormOpen());
+    navigate("/submit/");
+    dispatch(questionActions.setState({ key: "filterOpen", value: false }));
     scrollToView(".form-title");
   };
 

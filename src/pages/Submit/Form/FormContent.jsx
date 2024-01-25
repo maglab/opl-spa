@@ -1,22 +1,18 @@
 import TextArea from "./Inputs/TextArea";
 import TextInput from "./Inputs/TextInput";
-import Select from "./Inputs/Select";
+import { TextInputTitle } from "./Inputs/TextInput";
 import ReferencesInput from "./Inputs/ReferencesInput";
 import ContactForm from "./ContactInformationForm";
-import { useLoaderData } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { formActions } from "../../../state/Question/questionFormSlice";
 function FormContent() {
-  const allProblems = useLoaderData();
-  const openProblems = allProblems.latest;
   const dispatch = useDispatch();
   const clearFormHandler = () => {
     dispatch(formActions.resetForm({ exit: false }));
   };
   return (
-    <div className="question-inputs w-full">
-      <Select openProblems={openProblems} id="parent-question" />
-      <TextInput
+    <div className="question-inputs w-full shadow">
+      <TextInputTitle
         id="title"
         label="required"
         labelText="Title:"

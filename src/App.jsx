@@ -6,8 +6,9 @@ import {
 
 // import Home from './pages/Home/Home'
 // import About from './pages/About/About'
-import RootOpenProblems from "./pages/Root/OpenProblems";
+// import RootOpenProblems from "./pages/Root/OpenProblems";
 import OpenProblems from "./pages/OpenProblems/OpenProblems";
+import SubmitPage from "./pages/Submit/Submit";
 import apiProblems from "./api/apiProblems";
 import Details from "./pages/OpenProblemDetails/Details";
 import AnnotationDetails from "./pages/AnnotationDetails/AnnotationDetails";
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "open-problems",
-    element: <RootOpenProblems />,
+    element: <RootLayout />,
     children: [{ index: true, element: <OpenProblems /> }],
   },
   {
@@ -40,8 +41,18 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "submit",
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <SubmitPage />,
+      },
+    ],
+  },
+  {
     path: "annotation",
-    element: <RootOpenProblems />,
+    element: <RootLayout />,
     children: [
       {
         path: ":category/:id",

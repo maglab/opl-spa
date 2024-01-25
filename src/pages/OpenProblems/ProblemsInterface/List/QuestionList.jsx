@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import ItemComponent from "./ItemComponent/ItemComponent";
-import Spinner from "../../../../components/UI/Spinner/Spinner";
+import Spinner from "../../../../components/UI/Loading/Spinner";
 import useFiltersEffect from "../../../../utils/hooks/useFiltersEffect";
 import useSearchEffect from "../../../../utils/hooks/useSearchEffect";
 

@@ -27,7 +27,7 @@ function Details() {
   const ref = useRef(null);
 
   return (
-    <div className="p-4 mx-12 px-6 h-full overflow-auto">
+    <div className="h-full overflow-auto flex flex-col justify-center">
       <hr className="border-1 border-theme-blue" />
       <div className="return-bttn">
         <Link

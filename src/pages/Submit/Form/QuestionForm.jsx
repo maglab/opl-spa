@@ -2,12 +2,13 @@ import { Form } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
 import { Button } from "@mui/material";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useNavigate } from "react-router-dom";
 import { formActions } from "../../../state/Question/questionFormSlice";
 import { generalActions } from "../../../state/generalStateSlice";
 import FormContent from "./FormContent";
 import Modal from "../../../components/UI/Modal/Modal";
 import validateForm from "./functions/validateForm";
-import ReCAPTCHA from "react-google-recaptcha";
 import apiProblems from "../../../api/apiProblems";
 import sendRequest from "./functions/sendRequest";
 import { RECAPTCHA_SITE_KEY } from "../../../config";
@@ -20,6 +21,7 @@ function QuestionForm() {
   const formStatus = useSelector((state) => state.form.submitStatus);
   const formModalState = useSelector((state) => state.general.modal.isOpen);
   const validationState = useSelector((state) => state.validation);
+  const navigate = useNavigate();
 
   // //Scroll to element on load;
   const ref = useRef(null);
@@ -83,34 +85,23 @@ function QuestionForm() {
   };
   //Exit button handler
   const exitButtonHandler = () => {
-    dispatch(generalActions.toggleModal({ bool: false }));
     dispatch(formActions.resetForm({ exit: true }));
+    navigate("/open-problems");
   };
 
   return (
-    <div className="form items-center">
-      <h1
-        ref={ref}
-        className="form-title text-center text-xl font-bold md:text-2xl"
-      >
-        Submit an open problem
-      </h1>
-      <p className="py-4 text-sm md:text-base">
-        If you believe that a problem you are submitting falls under one of our
-        existing problems, please select it as an associated open problem. If
-        not, select "Submit as a root problem".
-      </p>
+    <div className="form items-center bg-white py-4">
       <Form
         className="flex w-full flex-col items-center text-center text-sm md:text-base"
         onSubmit={onSubmitHandler}
       >
         <FormContent />
         <ReCAPTCHA
-          className="recaptcha"
+          className="recaptcha py-4"
           sitekey={RECAPTCHA_SITE_KEY}
           ref={captchaRef}
         />
-        <div>
+        <div className="buttons">
           <Button type="submit"> Submit </Button>
           <Button onClick={exitButtonHandler}>Exit</Button>
         </div>
@@ -122,12 +113,12 @@ function QuestionForm() {
             height={350}
             width={350}
           >
-            <div className="p-2">
+            <div className="">
               <h1 className="text-center text-lg font-bold md:text-2xl">
                 {formStatus.title}
               </h1>
               <p className="text-md pt-4 md:text-lg">{formStatus.message}</p>
-              <div className="flex flex-row justify-center p-2">
+              <div className="flex flex-row justify-center">
                 <Button onClick={onSubmitModalClose}>Exit</Button>
               </div>
             </div>

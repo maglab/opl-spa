@@ -9,7 +9,7 @@ function doiValidator(input) {
     if (isValid) {
       return resolve(strippedInput);
     } else {
-      return reject("Incorrect pubmed pattern");
+      return reject("Incorrect DOI pattern");
     }
   });
 }
