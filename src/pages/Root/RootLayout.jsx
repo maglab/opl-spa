@@ -10,7 +10,7 @@ function RootLayout() {
         <Nav2 />
       </div>
       <main
-        className={`max-w-7xl min-h-screen max-h-max${
+        className={`max-w-7xl w-full min-h-screen max-h-max${
           isMobile ? "px-8" : null
         } py-6 pb-4`}
       >

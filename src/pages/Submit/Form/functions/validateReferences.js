@@ -16,6 +16,7 @@ async function validateReferences(references) {
     if (referenceType === "doi") {
       try {
         const validDOI = await doiValidator(referenceValue);
+
         if (validDOI) {
           valid.push(reference);
         }

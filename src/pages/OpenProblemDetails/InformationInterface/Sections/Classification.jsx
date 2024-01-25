@@ -41,7 +41,6 @@ function Classification() {
     lastName: data.contact?.last_name,
   }; //For now no contact
   const userName = setUserName(contactParams) ?? "-";
-  console.log(data.contact);
 
   const [annotationData, setAnnotationData] = useState(null);
   const [error, setError] = useState(null);

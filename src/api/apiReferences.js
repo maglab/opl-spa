@@ -1,4 +1,5 @@
 import apiClient from "./apiClient";
+import { apiRequest } from "./apiClient";
 
 const apiReferences = {
   getReferenceForProblem: async (params) => {

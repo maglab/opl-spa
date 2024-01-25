@@ -5,7 +5,6 @@ import { formValidationActions } from "../../../../state/Question/formValidation
 import validateReferences from "../functions/validateReferences";
 import { TextAreaNoChangeHandler } from "../../../../components/UI/Inputs/TextArea";
 import apiReferences from "../../../../api/apiReferences";
-import Spinner from "../../../../components/UI/Loading/Spinner";
 
 /**
  * Helper function. Validates prefix of a string using regex.
@@ -18,74 +17,88 @@ const validPrefixes = (reference) => {
 };
 
 /**
- * Validation component handles input validation logic.
+ * Validation component handles input validation logic. Only validates correct prefix and pmid/doi value through regex.
  * @param {String} inputValue - DOI/PMID references to be validated.
  * @param {Function} onValidationComplete - Callback function to be called when validation is complete
- * @param {Function} setIsValidating - useState function to set the state whether component is validating or not.
  * @returns {React.JSX}
  */
-function ValidationComponent({
-  inputValue,
-  onValidationComplete,
-  setIsValidating,
-}) {
+function ValidationComponent({ inputValue, onValidationComplete }) {
   const [invalidReferences, setInvalidReferences] = useState([]);
-  const [invalidPrefixes, setInvalidPrefixes] = useState(false);
+  const [validReferences, setValidReferences] = useState([]);
+  const [invalidPrefixes, setInvalidPrefixes] = useState([]);
   const dispatch = useDispatch();
 
   //Timed validation. First check for invalid prefixes, when there is none we then validate the references.
   useEffect(() => {
-    setIsValidating(true);
     const timer = setTimeout(async () => {
-      const splitReferences = inputValue.split(",").map((reference) =>
-        reference
-          .trim()
-          .toLowerCase()
-          .filter((reference) => reference !== "")
-      );
+      if (inputValue.trim().length === 0) return;
+      const splitReferences = inputValue
+        .split(",")
+        .map((reference) => reference.trim().toLowerCase())
+        .filter((reference) => reference !== "");
 
-      const invalidPrefixesArr = splitReferences.filter(
-        (reference) => !validPrefixes(reference)
+      setInvalidPrefixes(
+        splitReferences.filter((reference) => !validPrefixes(reference))
       );
+      //All working as expected until here
 
+      //Validate each reference if there are no invalid prefixed references, save valid references
       if (invalidPrefixes.length == 0) {
-        const { valid, invalid } = validateReferences(splitReferences);
+        const { valid, invalid } = await validateReferences(splitReferences); //Linter is saying no effect but validateReferences returns a promise.
+        setValidReferences(valid);
+        setInvalidReferences(invalid);
         if (invalid.length === 0) {
-          //Store in redux??
+          // Store in redux for now
           dispatch(formActions.setReferences({ references: valid }));
-        } else {
-          setInvalidReferences(true);
         }
       }
-      setInvalidPrefixes(invalidPrefixesArr.length > 0);
-      setIsValidating(false);
       // Invoke the onValidationComplete callback with the validation result
-      onValidationComplete(invalidReferences.length === 0 && !invalidPrefixes);
-    }, 1000);
+      onValidationComplete(
+        invalidReferences.length === 0 && invalidPrefixes.length === 0
+      );
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [
     inputValue,
-    setIsValidating,
     dispatch,
     invalidReferences,
     invalidPrefixes,
-    onValidationComplete,
+    validReferences,
   ]);
 
-  return (
-    <div className="validation-box">
-      {invalidPrefixes.length > 0 && (
-        <p className="text-rose-600"> Incorrect prefix format</p>
-      )}
-      {invalidReferences && (
-        <p className="text-rose-600">Incorrect DOI/PMID format</p>
-      )}
-      {!invalidReferences && invalidPrefixes.length === 0 && (
-        <p> Valid DOI/PMID formats.</p>
-      )}
-    </div>
-  );
+  if (inputValue.trim().length > 0) {
+    return (
+      <div className="validation-box">
+        {invalidPrefixes.length > 0 ? (
+          <>
+            {" "}
+            <p className="text-rose-600"> Incorrect prefix format:</p>
+            <ul className="list-disc">
+              {invalidPrefixes.map((ref) => (
+                <li>{ref}</li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+        {invalidReferences.length > 0 ? (
+          <>
+            <p className="text-rose-600">Incorrect DOI/PMID format</p>
+            <ul className="list-disc">
+              {invalidReferences.map((ref) => (
+                <li key={ref}>{ref}</li>
+              ))}
+            </ul>
+          </>
+        ) : null}
+        {invalidReferences.length === 0 &&
+        !invalidPrefixes &&
+        validReferences.length > 0 ? (
+          <p> Valid DOI/PMID formats.</p>
+        ) : null}
+      </div>
+    );
+  }
 }
 
 /**
@@ -98,64 +111,66 @@ function ReferenceList({ classNames, references }) {
   return (
     <ul className={`${classNames}`}>
       {references.map((reference) => (
-        <li>{reference}</li>
+        <li className="text-sm md:text-base">
+          {reference.title} {reference.year}
+        </li>
       ))}
     </ul>
   );
 }
 
+/**
+ * Text area for references for submitting open problems. Validates inputted DOIs and PMIDs and then uses API to search existance of articles.
+ * @returns {React.Component}
+ */
 function ReferencesInput() {
   const dispatch = useDispatch();
+  // Remember that the validation component stores references in redux store when input values are valid.
   const referencesState = useSelector(
     (state) => state.form.formDetails.references
   );
-  const inputReferences = useSelector(
-    (state) => state.form.formDetails.referencesTextArea
-  );
   const isMobileState = useSelector((state) => state.question.isMobile);
 
-  const [isValidating, setIsValidating] = useState(false);
+  const [inputValues, setInputValues] = useState("");
   const [convertedReferences, setConvertedReferences] = useState([]);
-  const [unconvertedReferences, setUnconvertedReferences] = useState([]);
-  //State for input DOI/PMIDS set by validation component
+  const [unconvertedReferences, setUnconvertedReferences] = useState([]); //Not used for now
+  //State for input DOI/PMIDS prefixes set by validation component
   const [referencesIsValid, setReferencesIsValid] = useState(true);
 
   const onChangeHandler = (e) => {
-    const inputValue = e.target.value;
-    dispatch(formActions.setInputReferences({ value: inputValue }));
+    setInputValues(e.target.value);
   };
 
+  //Use effect for retrieving reference data from API. Should only be called when there are no invalid prefixes.
   useEffect(() => {
-    if (inputReferences.trim().length === 0) {
-      dispatch(formValidationActions.checkReferences({ validStatus: true }));
+    if (inputValues.trim().length === 0) setReferencesIsValid(true);
+    if (!referencesIsValid) {
+      setConvertedReferences([]);
+      setUnconvertedReferences([]);
     }
-    if (!referencesIsValid) return;
-
     async function getReferenceDetails() {
       const response = await apiReferences.verifyReferences({
         references: referencesState,
       });
       const references = response.data;
-      setConvertedReferences(references.verifiedReferences);
-      setUnconvertedReferences(references.u);
+      setConvertedReferences(references.verified_references);
+      setUnconvertedReferences(references.unconverted_references);
     }
     getReferenceDetails();
 
     // Update state and dispatch actions here
-  }, [referencesState, referencesIsValid, dispatch, inputReferences]);
+  }, [inputValues]);
 
   // Callback to handle validation completion in the parent component
   const handleValidationComplete = (isValid) => {
-    setIsValidating(true);
-    setReferencesIsValid(isValid);
+    setReferencesIsValid(isValid); // Used in the validation component to indicate that all DOIs/PMIDs have been validated or if all DOIs/PMIDs are valid
   };
 
   return (
     <>
       <ValidationComponent
-        inputValue={inputReferences}
+        inputValue={inputValues}
         onValidationComplete={handleValidationComplete}
-        setIsValidating={setIsValidating}
       />
 
       <div
@@ -180,11 +195,17 @@ function ReferencesInput() {
               : "border-slate-500 focus:border-slate-50"
           } bg-bg-grey p-2 `}
           placeHolder="Comma-separated DOIs or PMIDs. Enter each DOI or PMID with the prefix 'DOI:' or 'PMID:' respectively."
-          value={inputReferences}
+          value={inputValues}
           onChange={onChangeHandler}
         />
       </div>
       <ReferenceList references={convertedReferences} />
+      {/* {unconvertedReferences.length > 0 && (
+        <>
+          <p> Unconverted References:</p>
+          <ReferenceList references={unconvertedReferences} />
+        </>
+      )} */}
     </>
   );
 }
