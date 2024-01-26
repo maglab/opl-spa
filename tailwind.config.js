@@ -2,6 +2,9 @@
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fontFamily: {
+      general: ["Lato", "sans-serif"],
+    },
     extend: {
       transitionProperty: {
         height: "height",
