@@ -19,7 +19,7 @@ function NavMenu2() {
   ];
 
   return (
-    <div className=" max-w-7xl items-center justify-between w-full flex flex-row">
+    <div className=" max-w-7xl items-center justify-between w-full flex flex-row h-fit">
       <a href="https://longevityknowledge.com" target="_blank" rel="noreferrer">
         <div className={styles.nav_title_div}>
           <LogoSVG />

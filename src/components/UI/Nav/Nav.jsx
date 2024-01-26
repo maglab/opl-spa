@@ -4,7 +4,7 @@ export const Nav2 = () => {
   return (
     <nav
       id="nav"
-      className="nav bg-white shadow-md flex justify-center h-16 w-full py-8"
+      className="nav bg-white shadow-md flex justify-center h-fit w-full"
     >
       <NavMenu />
     </nav>
