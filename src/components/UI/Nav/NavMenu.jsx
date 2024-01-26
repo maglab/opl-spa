@@ -1,6 +1,16 @@
 import { Fragment } from "react";
 import LoginButton from "./Buttons/LoginButton";
 import styles from "./NavMenu.module.css";
+import Logo from "../../../assets/svg/OpenLongevityLogo.svg?react";
+import withSVG from "../../../utils/hoc/withSVG";
+
+const defaultSvgProps = {
+  width: "100px",
+  height: "100px",
+};
+
+const LogoSVG = withSVG(Logo, defaultSvgProps);
+
 function NavMenu2() {
   const menuList = [
     { title: "Home", route: "/open-problems/" },
@@ -9,10 +19,10 @@ function NavMenu2() {
   ];
 
   return (
-    <Fragment>
+    <div className=" max-w-7xl items-center justify-between w-full flex flex-row">
       <a href="https://longevityknowledge.com" target="_blank" rel="noreferrer">
         <div className={styles.nav_title_div}>
-          <h1 className="nav-title text-xl font-bold">Open Longevity</h1>
+          <LogoSVG />
           <span className={styles.nav_version}>
             {import.meta.env.VITE_BUILD_VERSION}
           </span>
@@ -38,7 +48,7 @@ function NavMenu2() {
         })}
         <LoginButton />
       </ul>
-    </Fragment>
+    </div>
   );
 }
 
