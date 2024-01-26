@@ -4,7 +4,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-// import Home from './pages/Home/Home'
+import Home from "./pages/Home/Home";
 // import About from './pages/About/About'
 // import RootOpenProblems from "./pages/Root/OpenProblems";
 import OpenProblems from "./pages/OpenProblems/OpenProblems";
@@ -16,9 +16,15 @@ import "./index.css";
 import apiAnnotations from "./api/apiAnnotations";
 import Login from "./pages/Login/Login";
 import RootLayout from "./pages/Root/RootLayout";
-
+import RootHome from "./pages/Root/RootHome";
 const router = createBrowserRouter([
-  { path: "/", element: <Navigate to={"open-problems"} /> },
+  // { path: "/", element: <Navigate to={"open-problems"} /> },
+  {
+    path: "/",
+    element: <RootHome />,
+    children: [{ path: "", index: true, element: <Home /> }],
+  },
+  // {path: 'About', element: <About/>}]},
   {
     path: "/login",
     element: <RootLayout />,
@@ -67,9 +73,6 @@ const router = createBrowserRouter([
   },
 ]);
 //Uncompleted home pages:
-// {path: '/', element: <RootLayout/> ,children:[
-//   {path: '', index: true, element: <Home/>},
-//   {path: 'About', element: <About/>}]}
 
 function App() {
   return (
