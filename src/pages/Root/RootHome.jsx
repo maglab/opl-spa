@@ -12,10 +12,7 @@ function RootHome() {
       <div className="nav h-3/12 w-full">
         <Nav2 />
       </div>
-      <section
-        className="bg-no-repeat bg-cover bg-bottom  w-full h-[80dvh] flex justify-center "
-        // style={bgImport}
-      >
+      <section className="bg-no-repeat bg-cover bg-bottom  w-full h-[80dvh] flex justify-center ">
         <Hero />
       </section>
       <div className="w-full bg-theme-blue">
