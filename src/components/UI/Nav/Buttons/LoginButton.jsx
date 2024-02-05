@@ -46,7 +46,7 @@ function LoginButton() {
   }
 
   return (
-    <button className="bg-theme-blue text-white text-sm p-2 rounded-sm hover:bg-opacity-90">
+    <button className="border border-theme-blue text-theme-blue text-sm p-2 rounded-sm hover:bg-opacity-90">
       {/* // <p onClick={handleLogout}> Logout</p> // Show "Logout" when authenticated */}
       <Link to="/login">Login / Register</Link>
     </button>

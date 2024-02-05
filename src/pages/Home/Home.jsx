@@ -61,7 +61,8 @@ function Home() {
           </section> */}
         </div>
       </div>
-      <div className="resources w-full bg-theme-blue-shade items-center flex justify-center">
+      <div className="resources w-full bg-theme-blue-shade items-center flex flex-col justify-center">
+        <hr className=" border-white max-w-7xl w-full" />
         <section className="resources items-center max-w-7xl w-full">
           <Resources />
         </section>

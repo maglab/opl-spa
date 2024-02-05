@@ -1,5 +1,5 @@
-import { Fragment } from "react";
 import LoginButton from "./Buttons/LoginButton";
+import ProblemsButton from "./Buttons/ProblemsButton";
 import styles from "./NavMenu.module.css";
 import Logo from "../../../assets/svg/OpenLongevityLogo.svg?react";
 import withSVG from "../../../utils/hoc/withSVG";
@@ -13,7 +13,7 @@ const LogoSVG = withSVG(Logo, defaultSvgProps);
 
 function NavMenu2() {
   const menuList = [
-    { title: "Home", route: "/open-problems/" },
+    { title: "Home", route: "/" },
     // { title: "About", route: "/about" },
     // { title: "Search", route: "/question" },
   ];
@@ -47,6 +47,7 @@ function NavMenu2() {
           );
         })}
         <LoginButton />
+        <ProblemsButton />
       </ul>
     </div>
   );
