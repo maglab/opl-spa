@@ -9,18 +9,14 @@ function RootHome() {
   const { isMobile } = useViewWidth();
   return (
     <div className="flex flex-col items-center bg-bg-grey">
-      <div className="nav h-3/12 w-full">
+      <div className="nav h-fit w-full">
         <Nav2 />
       </div>
       <section className="bg-no-repeat bg-cover bg-bottom  w-full h-[80dvh] flex justify-center ">
         <Hero />
       </section>
-      <div className="w-full bg-theme-blue">
-        <main
-          className={`max-w-7xl w-full  max-h-max${
-            isMobile ? "px-8" : null
-          }  pb-4 items-center`}
-        >
+      <div className="w-full flex justify-center">
+        <main className={`w-full`}>
           <Outlet />
         </main>
       </div>

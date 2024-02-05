@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import SourcesList from "./SourcesList";
 import setUserName from "../../../functions/setUserName";
 import CommentsButton from "../Comments/CommentsButton";
