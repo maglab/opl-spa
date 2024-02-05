@@ -5,8 +5,8 @@ import Logo from "../../../assets/svg/OpenLongevityLogo.svg?react";
 import withSVG from "../../../utils/hoc/withSVG";
 
 const defaultSvgProps = {
-  width: "100px",
-  height: "100px",
+  width: "80px",
+  height: "80px",
 };
 
 const LogoSVG = withSVG(Logo, defaultSvgProps);
