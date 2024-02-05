@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-
+import { apiRequest } from "./apiClient";
 const apiComments = {
   postComment: async (params) => {
     const submissionId = params.submissionId;
