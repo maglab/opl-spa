@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
-// To replace useApi
-function useGetApi(apiFunction, params) {
-  const [apiData, setApiData] = useState(null);
+
+/**
+ * Hook for making an API call and setting a loading and error state for conditional rendering.
+ * @param {Function} apiFunction - Api call function.
+ * @param {Object} params - Used to set the query parameters for the get request.
+ * @param {*} defaultApi - Sets the default value for the API data state
+ * @returns {Object} - Returns a state for the data, loading and error.
+ */
+function useGetApi(apiFunction, params, defaultApi = null) {
+  const [apiData, setApiData] = useState(defaultApi);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,12 +18,7 @@ function useGetApi(apiFunction, params) {
       try {
         // Call the provided API function with params
         const response = await apiFunction(params);
-        // Check if the response is an error instance
-        if (response instanceof Error) {
-          setError(response);
-        } else {
-          setApiData(response.data);
-        }
+        setApiData(response.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -25,7 +27,7 @@ function useGetApi(apiFunction, params) {
     }
 
     getApiData();
-  }, [apiFunction, JSON.stringify(params)]); // adding apiFunction and params as dependencies
+  }, [JSON.stringify(params)]);
 
   return { isLoading, apiData, error };
 }

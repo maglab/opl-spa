@@ -1,4 +1,4 @@
-import apiClient from "./apiClient";
+import apiClient, { apiRequest } from "./apiClient";
 
 const apiSubmissions = {
   getSubmissions: async (params) => {
@@ -9,6 +9,9 @@ const apiSubmissions = {
     } catch (error) {
       return error;
     }
+  },
+  getAllSubmissions: async () => {
+    return apiRequest(() => apiClient.get("posts/all"));
   },
   getSubmissionCount: async (params) => {
     const problemId = params.problemId;
@@ -28,7 +31,7 @@ const apiSubmissions = {
     } catch (error) {
       return error;
     }
-  }
+  },
 };
 
 export default apiSubmissions;

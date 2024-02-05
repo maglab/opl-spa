@@ -6,13 +6,13 @@ function RootLayout() {
   const { isMobile } = useViewWidth();
   return (
     <div className="flex flex-col items-center bg-bg-grey">
-      <div className="nav h-3/12 w-full">
+      <div className="nav min-h-3/12 w-full ">
         <Nav2 />
       </div>
       <main
-        className={`max-w-7xl w-full min-h-screen max-h-max${
+        className={`max-w-7xl w-full min-h-[80vh] max-h-max${
           isMobile ? "px-8" : null
-        } py-6 pb-4`}
+        }  pb-4`}
       >
         <Outlet />
       </main>

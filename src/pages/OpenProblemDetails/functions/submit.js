@@ -1,5 +1,5 @@
 import { detailsActions } from "../../../state/Details/detailsSlice";
-import postSubmission from "../../../api/apiSubmissions";
+import apiSubmissions from "../../../api/apiSubmissions";
 
 const submit = async (data, dispatch) => {
   const openProblemId = data.openProblem;
@@ -15,7 +15,7 @@ const submit = async (data, dispatch) => {
     is_active: false,
   };
   try {
-    const response = await postSubmission({
+    const response = await apiSubmissions.postSubmission({
       data: requestData,
       problemId: openProblemId,
     });

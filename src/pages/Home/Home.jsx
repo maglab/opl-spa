@@ -1,60 +1,74 @@
-import Header from '../../components/Header/Header'
-import {Box, Container, Typography,IconButton} from '@mui/material'
-import StatUI from '../../components/UI/Card/CardUI'
-import StorageIcon from '@mui/icons-material/Storage';
-import ArticleIcon from '@mui/icons-material/Article';
+import useGetApi from "../../utils/hooks/useApi";
+import apiProblems from "../../api/apiProblems";
+import apiSubmissions from "../../api/apiSubmissions";
+import List from "./DataSection/List";
+import AnsweredCard from "./DataSection/AnswerdCards";
+import Resources from "./DataSection/Resources";
+import CardSkeleton from "../../components/UI/Loading/CardSkeleton";
 
-const BOX_STYLES = {
-    display: 'flex',
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-}
+/**
+ * Helper function. Return apiFunction call with optional sorting. To be called by the Home component.
+ * @param {String} sorting - The sorting query parameter for the API.
+ * @returns {Function} - Returns
+ */
+const getProblemsData = async (sorting) => {
+  return apiProblems.getProblems({
+    queryParams: {
+      sorting,
+      page_size: "6",
+    },
+  });
+};
 
+function Home() {
+  const { apiData: latest, error: errorLatest } = useGetApi(
+    getProblemsData,
+    "latest",
+    []
+  );
 
-const CONTAINER_STYLES = {
-    display:'flex', 
-    flexDirection: 'column',
-    alignItems: 'center'
-}
+  const {
+    apiData: solutions,
+    loadingSolutions,
+    errorSolutions,
+  } = useGetApi(apiSubmissions.getAllSubmissions, null, []);
 
-function Home(){
-    return(
-        <div className='h-4/5'>
-            <Header /> 
-            <section className='statistics'>
+  return (
+    <div className="flex flex-col justify-center items-center w-full">
+      <div className="w-full py-8 flex justify-center bg-theme-blue-shade">
+        <div className="flex flex-col justify-between items-center gap-y-8 max-w-7xl w-full">
+          <section className="latest items-center py-6 border-b border-white w-full">
+            <h1 className="text-3xl text-white font-general underline underline-offset-2">
+              {" "}
+              Latest Open Problems
+            </h1>
 
-            <Container sx={CONTAINER_STYLES} maxWidth='m'>
-
-
-            <Typography variant='h4' sx={{ paddingTop:'2.5rem' ,paddingBottom:'2.5rem', textDecoration:'underline'}}>Statistics</Typography>
-
-            <Box sx={BOX_STYLES}>
-            <StatUI type='question'/>
-            <StatUI type='category'/>
-            </Box>
-
-            </Container>
-
-            </section>
-
-            <section className='useful-links'>
-                <Container maxWidth='m' sx={{...CONTAINER_STYLES, paddingBottom:'4rem'}}>
-                    <Typography variant='h4' sx={{paddingTop:'3rem', paddingBottom:'1rem', textDecoration:'underline'}}> Useful Links </Typography>
-                    
-                    <Box sx={BOX_STYLES}>
-                        <IconButton aria-label='database-schema' size='large' sx={{padding:'0, 1rem'}}> <StorageIcon sx={{paddingRight:'1rem', transform:'scale(1.5)'}} /> Database Schema </IconButton>
-                        <IconButton aria-label='funding'> <ArticleIcon sx={{paddingRight:'1rem', transform:'scale(1.5)'}}/> Documentation </IconButton>
-
-
-                    </Box>
-                </Container>
-            </section>
-
-
-
-
+            <List openProblems={latest.results} error={errorLatest} />
+          </section>
+          <section className="solutions w-full py-6">
+            <h1 className="text-3xl text-white font-general underline underline-offset-2 py-6">
+              {" "}
+              Solutions
+            </h1>
+            <AnsweredCard
+              solutions={solutions.results}
+              error={errorSolutions}
+              loading={loadingSolutions}
+            />
+          </section>
+          {/* <section className="Resources flex flex-row justify-evenly py-8 w-full">
+            <Resources />
+          </section> */}
         </div>
-    )
+      </div>
+      <div className="resources w-full bg-theme-blue-shade items-center flex flex-col justify-center">
+        <hr className=" border-white max-w-7xl w-full" />
+        <section className="resources items-center max-w-7xl w-full">
+          <Resources />
+        </section>
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
