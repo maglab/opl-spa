@@ -5,8 +5,6 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
-// import About from './pages/About/About'
-// import RootOpenProblems from "./pages/Root/OpenProblems";
 import OpenProblems from "./pages/OpenProblems/OpenProblems";
 import SubmitPage from "./pages/Submit/Submit";
 import apiProblems from "./api/apiProblems";

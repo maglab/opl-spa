@@ -36,7 +36,7 @@ function Home() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <div className="w-full py-8 flex justify-center bg-theme-blue-shade">
-        <div className="flex flex-col justify-between items-center gap-y-8 max-w-7xl w-full">
+        <div className="flex flex-col justify-between items-center gap-y-8 max-w-6xl w-full">
           <section className="latest items-center py-6 border-b border-white w-full">
             <h1 className="text-xl md:text-3xl text-white font-general underline underline-offset-2">
               Latest Open Problems
