@@ -5,7 +5,7 @@ import List from "./DataSection/List";
 import AnsweredCard from "./DataSection/AnswerdCards";
 import Resources from "./DataSection/Resources";
 import CardSkeleton from "../../components/UI/Loading/CardSkeleton";
-
+import useViewWidth from "../../utils/hooks/useViewWidth";
 /**
  * Helper function. Return apiFunction call with optional sorting. To be called by the Home component.
  * @param {String} sorting - The sorting query parameter for the API.
@@ -38,30 +38,27 @@ function Home() {
       <div className="w-full py-8 flex justify-center bg-theme-blue-shade">
         <div className="flex flex-col justify-between items-center gap-y-8 max-w-7xl w-full">
           <section className="latest items-center py-6 border-b border-white w-full">
-            <h1 className="text-3xl text-white font-general underline underline-offset-2">
-              {" "}
+            <h1 className="text-xl md:text-3xl text-white font-general underline underline-offset-2">
               Latest Open Problems
             </h1>
 
             <List openProblems={latest.results} error={errorLatest} />
           </section>
           <section className="solutions w-full py-6">
-            <h1 className="text-3xl text-white font-general underline underline-offset-2 py-6">
-              {" "}
+            <h1 className="text-xl md:text-3xl text-white font-general underline underline-offset-2 py-6">
               Solutions
             </h1>
-            <AnsweredCard
-              solutions={solutions.results}
-              error={errorSolutions}
-              loading={loadingSolutions}
-            />
+            <div className="w-full flex justify-center">
+              <AnsweredCard
+                solutions={solutions.results}
+                error={errorSolutions}
+                loading={loadingSolutions}
+              />
+            </div>
           </section>
-          {/* <section className="Resources flex flex-row justify-evenly py-8 w-full">
-            <Resources />
-          </section> */}
         </div>
       </div>
-      <div className="resources w-full bg-theme-blue-shade items-center flex flex-col justify-center">
+      <div className="resources w-full bg-theme-blue-shade items-center flex flex-col justify-center py-6">
         <hr className=" border-white max-w-7xl w-full" />
         <section className="resources items-center max-w-7xl w-full">
           <Resources />

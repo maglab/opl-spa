@@ -1,28 +1,31 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { generalActions } from "../../state/generalStateSlice";
+import { useEffect, useState } from "react";
+
 function useViewWidth() {
-  const dispatch = useDispatch();
-  const viewWidth = useSelector((state) => state.general.viewWidth);
-  const isMobile = useSelector((state) => state.general.viewWidth);
+  const [viewWidth, setViewWidth] = useState(window.innerWidth);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Handle resizing of window and keep track of the inner width
     const handleResize = () => {
-      dispatch(
-        generalActions.setDimensions({
-          viewWidth: window.innerWidth,
-          viewHeight: window.innerHeight,
-        })
-      );
-      dispatch(generalActions.setIsMobile());
+      const newViewWidth = window.innerWidth;
+      setViewWidth(newViewWidth);
+
+      // Determine if the screen is considered mobile based on some criteria (e.g., screen width)
+      const newIsMobile = newViewWidth <= 450; // You can adjust this threshold - 450 for now since that encapsulates most mobile screens
+      setIsMobile(newIsMobile);
     };
+
+    // Initial update
     handleResize();
+
+    // Add listener for window resize event
     window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener("resize", handleResize); //Cleanup function to prevent memory leak
+      // Remove the event listener to prevent memory leaks
+      window.removeEventListener("resize", handleResize);
     };
-  }, [dispatch, viewWidth]);
+  }, []);
+
   return { viewWidth, isMobile };
 }
 
