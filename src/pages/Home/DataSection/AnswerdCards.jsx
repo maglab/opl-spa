@@ -1,23 +1,36 @@
 import OpenProblemCard from "../../../components/UI/Card/OpenProblemCard";
 import CardSkeleton from "../../../components/UI/Loading/CardSkeleton";
 import useViewWidth from "../../../utils/hooks/useViewWidth";
-function AnsweredCard({ solutions, error, loading }) {
+
+function ResponsiveContainer({ children }) {
   const { isMobile } = useViewWidth();
+
+  return (
+    <ul
+      className={`inline-grid ${
+        isMobile ? "grid-cols-1" : "grid-cols-3"
+      } gap-4 `}
+    >
+      {children}
+    </ul>
+  );
+}
+
+function AnsweredCard({ solutions, error, loading }) {
   if (loading) {
     return (
-      <div className="w-full flex flex-row justify-evenly">
-        <CardSkeleton />
-        <CardSkeleton />
+      <div className="w-full flex">
+        <ResponsiveContainer>
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </ResponsiveContainer>
       </div>
     );
   }
   return (
     <div className="w-full flex ">
-      <ul
-        className={`inline-grid ${
-          isMobile ? "grid-cols-1" : "grid-cols-3"
-        }  gap-4`}
-      >
+      <ResponsiveContainer>
         {solutions &&
           solutions.slice(0, 3).map((solution) => (
             <li className="">
@@ -28,7 +41,7 @@ function AnsweredCard({ solutions, error, loading }) {
               />
             </li>
           ))}
-      </ul>
+      </ResponsiveContainer>
     </div>
   );
 }
