@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useField } from "formik";
+
 import { formActions } from "../../../../state/Question/questionFormSlice";
 import { formValidationActions } from "../../../../state/Question/formValidationSlice";
+import useViewWidth from "../../../../utils/hooks/useViewWidth";
 function TextArea(props) {
   const formDetailsState = useSelector((state) => state.form.formDetails);
   const isMobileState = useSelector((state) => state.question.isMobile);
@@ -40,6 +43,24 @@ function TextArea(props) {
         rows={props.rows}
         name={props.id}
       />
+    </div>
+  );
+}
+
+export function TextArea2({ id, name, type, label, placeHolder }) {
+  const [field, meta] = useField(name, type);
+  const { isMobile } = useViewWidth();
+  return (
+    <div
+      className={`grid ${
+        isMobile ? "grid-cols-1" : "grid-cols-2"
+      } font-general`}
+    >
+      <label htmlFor={id} className="font-semibold">
+        {label}
+      </label>
+      <textarea {...field} name={name} type={type} placeholder={placeHolder} />
+      {meta.touched && meta.error && <div>{meta.error}</div>}
     </div>
   );
 }
