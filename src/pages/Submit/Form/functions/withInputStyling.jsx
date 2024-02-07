@@ -13,6 +13,7 @@ const withInputStyling = (BaseComponent) => {
     label,
     placeHolder,
     paddingY,
+    rows,
   }) {
     const { isMobile } = useViewWidth();
     const [field, meta] = useField(name, type);
@@ -32,6 +33,7 @@ const withInputStyling = (BaseComponent) => {
           type={type}
           placeHolder={placeHolder}
           {...field}
+          rows={rows ? rows : null}
         />
         {meta.touched && meta.error && <div>{meta.error}</div>}
       </div>

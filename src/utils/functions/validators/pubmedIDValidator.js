@@ -1,7 +1,7 @@
 function pubmedValidator(input) {
   // Regular expression to match PubMed ID pattern (numeric value)
   return new Promise((resolve, reject) => {
-    const pubmedIDPattern = /^\d+$/;
+    const pubmedIDPattern = /^(pmid:|PMID:)?\d+$/;
     const isValid = pubmedIDPattern.test(input);
     //If starts with 0 then reject;
     if (input.startsWith("0")) {

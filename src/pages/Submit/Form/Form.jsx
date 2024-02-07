@@ -1,15 +1,17 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { initialValues } from "./functions/formik";
 import formikValidation from "./functions/formik";
-import { TextInput2, TextArea2 } from "./Inputs/Inputs";
+import { TextArea, TextInput } from "./Inputs/Inputs";
 import TitleInput from "./Inputs/TitleInput";
 import ReferenceInput from "./Inputs/ReferenceInput";
-import { NameInput } from "./ContactInformationForm";
+import { NameInput } from "./Inputs/NameInput";
 import { RECAPTCHA_SITE_KEY } from "../../../config";
-
+import FilledButton from "../../../components/UI/Buttons/FilledButton";
+import OutlinedButton from "../../../components/UI/Buttons/OutlineButton";
 /**
  * Wrapper component to contain contact inputs.
  * @param {React.Component} children - Any child components.
@@ -44,13 +46,18 @@ function ReCaptchaSection({ ref }) {
 }
 
 function OpenProblemForm() {
+  const navigate = useNavigate();
   //Use formik requires initial values and validation functions
   // Will have to manually track for Recaptcha using ref
   const ref = useRef(null);
+  const exitOnclick = (event) => {
+    event.preventDefault(); //Prevent the submit
+    navigate(-1);
+  };
 
   return (
     <Formik initialValues={initialValues} validate={formikValidation}>
-      <Form className="bg-white p-6 py-10 shadow-md">
+      <Form className="bg-white p-6 py-14 shadow-md">
         <TitleInput
           name="title"
           id="title"
@@ -58,7 +65,7 @@ function OpenProblemForm() {
           placeHolder="Required."
           paddingY={4}
         />
-        <TextArea2
+        <TextArea
           name="description"
           id="description"
           label="Description:"
@@ -79,14 +86,14 @@ function OpenProblemForm() {
         <hr />
         <ContactSection>
           <NameInput paddingY={4} />
-          <TextInput2
+          <TextInput
             name="organisation"
             type="text"
             id="organisation"
             label="Organisation:"
             paddingY={4}
           />
-          <TextInput2
+          <TextInput
             name="email"
             type="email"
             id="email"
@@ -97,6 +104,11 @@ function OpenProblemForm() {
         </ContactSection>
         <hr className="py-4" />
         <ReCaptchaSection />
+
+        <div className="buttons flex flex-row justify-center gap-x-6 py-4">
+          <OutlinedButton label="Exit" onClick={exitOnclick} type="button" />
+          <FilledButton label="Submit" type="submit" />
+        </div>
       </Form>
     </Formik>
   );
