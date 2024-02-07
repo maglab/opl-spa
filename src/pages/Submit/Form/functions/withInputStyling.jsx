@@ -6,13 +6,20 @@ import { useField } from "formik";
  * @returns {React.Component}
  */
 const withInputStyling = (BaseComponent) => {
-  return function StyledComponent({ id, name, type, label, placeHolder }) {
+  return function StyledComponent({
+    id,
+    name,
+    type,
+    label,
+    placeHolder,
+    paddingY,
+  }) {
     const { isMobile } = useViewWidth();
     const [field, meta] = useField(name, type);
 
     return (
       <div
-        className={`grid py-6 items-center ${
+        className={`grid py-${paddingY} items-center ${
           isMobile ? "grid-cols-1" : "grid-cols-[20%_80%]"
         } text-center font-general`}
       >
@@ -20,7 +27,7 @@ const withInputStyling = (BaseComponent) => {
           {label}
         </label>
         <BaseComponent
-          className="text-input h-fit-content h-auto w-full rounded-border border border-slate-500 bg-bg-grey p-2"
+          className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
           name={name}
           type={type}
           placeHolder={placeHolder}

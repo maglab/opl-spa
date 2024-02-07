@@ -1,6 +1,6 @@
 import TextArea from "./Inputs/TextArea";
-import TextInput from "./Inputs/TextInput";
-import { TextInputTitle } from "./Inputs/TextInput";
+import TextInput from "./Inputs/Inputs";
+import { TextInputTitle } from "./Inputs/Inputs";
 import ReferencesInput from "./Inputs/ReferencesInput";
 import ContactForm from "./ContactInformationForm";
 import { useDispatch } from "react-redux";

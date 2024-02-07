@@ -1,9 +1,9 @@
 import QuestionForm from "./Form/QuestionForm";
-
+import OpenProblemForm from "./Form/Form";
 function QuestionGuidance() {
   return (
     <div className="guidance bg-theme-blue-light border border-theme-blue p-10 pt-4">
-      <h1 className="py-2 font semibold text-center font-general font-semibold text-lg md:text-xl">
+      <h1 className="py-2 font semibold font-general font-semibold text-lg md:text-xl">
         {" "}
         Writing a good open problem
       </h1>
@@ -42,8 +42,9 @@ function SubmitPage() {
         <QuestionGuidance />
         <hr className="pb-6" />
       </div>
-      <div className="pb-6">
-        <QuestionForm />
+      <div className="py-6">
+        {/* <QuestionForm /> */}
+        <OpenProblemForm />
       </div>
     </>
   );
