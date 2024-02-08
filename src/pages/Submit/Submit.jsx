@@ -42,7 +42,6 @@ function SubmitPage() {
         <hr className="pb-6" />
       </div>
       <div className="py-6">
-        {/* <QuestionForm /> */}
         <OpenProblemForm />
       </div>
     </>

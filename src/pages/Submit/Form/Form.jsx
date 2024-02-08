@@ -78,8 +78,8 @@ function OpenProblemForm() {
         <ReferenceInput
           name="references"
           id="references"
-          label="References:"
-          placeHolder="Required."
+          label="References (comma separated DOI or PMID):"
+          placeHolder="Example: PMID:12345678, DOI:10.1016/j.cell.2022.11.001, DOI:https://doi.org/10.1016/j.tem.2023.01.003"
           required={true}
           type="textarea"
         />
