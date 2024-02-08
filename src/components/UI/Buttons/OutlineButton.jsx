@@ -1,3 +1,10 @@
+/**
+ * Blue border  button with black text and shadow.
+ * @param {String} label - Text contained in button
+ * @param {Function} onClick - OnClick function
+ * @param {String} type - Type of button
+ * @returns {React.Component}
+ */
 function OutlinedButton({ label, onClick, type }) {
   return (
     <button

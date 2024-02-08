@@ -1,3 +1,10 @@
+/**
+ * Blue background filled button with white text and shadow.
+ * @param {String} label - Text contained in button
+ * @param {Function} onClick - OnClick function
+ * @param {String} type - Type of button
+ * @returns {React.Component}
+ */
 function FilledButton({ label, onClick, type }) {
   return (
     <button
