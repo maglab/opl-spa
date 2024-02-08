@@ -13,12 +13,7 @@ function regexTest(inputValue) {
   const doiRegex =
     /^(doi:|DOI:)(https:\/\/doi.org\/)?10\.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
   const pubmedIDPattern = /^(pmid:|PMID:)\d+$/;
-
-  if (doiRegex.test(inputValue) || pubmedIDPattern.test(inputValue)) {
-    return true;
-  } else {
-    return false;
-  }
+  return doiRegex.test(inputValue) || pubmedIDPattern.test(inputValue);
 }
 
 /**
@@ -46,16 +41,31 @@ function formatReferences(inputValues) {
  */
 function ValidationComponent({ inputValue, validUseState, invalidUseState }) {
   //Unpack useState return values
-  const { validReferences, setValidReferences } = validUseState;
+  const { setValidReferences } = validUseState;
   const { invalidReferences, setInvalidReferences } = invalidUseState;
   useEffect(() => {
-    if (inputValue.trim() === 0) return;
+    if (inputValue.trim(" ").length === 0) {
+      setValidReferences([]);
+      setInvalidReferences([]);
+    }
     const splitInputValues = inputValue
-      .trim(" ")
-      .split(",")
-      .filter((value) => value !== "");
-    const passedTests = splitInputValues.filter((split) => regexTest(split));
-    const failedTests = splitInputValues.filter((split) => !regexTest(split));
+      .trim("")
+      .split(/\s*,\s*/)
+      .filter(Boolean);
+    const passedTests = [];
+    const failedTests = [];
+
+    splitInputValues.forEach((value) => {
+      if (regexTest(value)) {
+        passedTests.push(value);
+      } else {
+        failedTests.push(value);
+      }
+    });
+    console.log(`passed tests: ${passedTests}`);
+    console.log(
+      `failed tests: ${failedTests}. Length of failed: ${failedTests.length}`
+    );
     setValidReferences(passedTests);
     setInvalidReferences(failedTests);
   }, [inputValue]);
@@ -146,20 +156,21 @@ function ReferenceInput({ id, name, label, placeHolder, type }) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setRetrievedReferences(INITIAL_STATE);
     if (invalidReferences.length > 0) return;
     const delayDebounceFunction = setTimeout(async () => {
       const formattedReferences = formatReferences(validReferences);
+      console.log(formattedReferences);
       try {
         const { data } = await apiReferences.verifyReferences({
           references: formattedReferences,
         });
+        console.log(data);
         setRetrievedReferences(data);
-        console.log(retrievedReferences);
       } catch (error) {
         setError(error);
       }
-    });
+      console.log(retrievedReferences);
+    }, 1200);
 
     return () => clearTimeout(delayDebounceFunction);
   }, [value]);
