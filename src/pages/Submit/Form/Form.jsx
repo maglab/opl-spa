@@ -1,9 +1,9 @@
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { initialValues } from "./functions/formik";
+import { initialValues, handleSubmit } from "./functions/formik";
 import formikValidation from "./functions/formik";
 import { TextArea, TextInput } from "./Inputs/Inputs";
 import TitleInput from "./Inputs/TitleInput";
@@ -56,7 +56,11 @@ function OpenProblemForm() {
   };
 
   return (
-    <Formik initialValues={initialValues} validate={formikValidation}>
+    <Formik
+      initialValues={initialValues}
+      validate={formikValidation}
+      onSubmit={handleSubmit}
+    >
       <Form className="bg-white p-6 py-14 shadow-md">
         <TitleInput
           name="title"
@@ -69,11 +73,7 @@ function OpenProblemForm() {
           name="description"
           id="description"
           label="Description:"
-          type="textarea"
           placeHolder="Required."
-          required={true}
-          rows={4}
-          paddingY={4}
         />
         <ReferenceInput
           name="references"
@@ -81,7 +81,6 @@ function OpenProblemForm() {
           label="References (comma separated DOI or PMID):"
           placeHolder="Example: PMID:12345678, DOI:10.1016/j.cell.2022.11.001"
           required={true}
-          type="textarea"
         />
         <hr />
         <ContactSection>
@@ -91,7 +90,6 @@ function OpenProblemForm() {
             type="text"
             id="organisation"
             label="Organisation:"
-            paddingY={4}
           />
           <TextInput
             name="email"
@@ -99,12 +97,10 @@ function OpenProblemForm() {
             id="email"
             label="Email:"
             placeHolder="Provide an email if you want to be updated on the status of this submission."
-            paddingY={4}
           />
         </ContactSection>
         <hr className="py-4" />
         <ReCaptchaSection />
-
         <div className="buttons flex flex-row justify-center gap-x-6 py-4">
           <OutlinedButton label="Exit" onClick={exitOnclick} type="button" />
           <FilledButton label="Submit" type="submit" />

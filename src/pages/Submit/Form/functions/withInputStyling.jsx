@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useViewWidth from "../../../../utils/hooks/useViewWidth";
 import { useField } from "formik";
 /**
@@ -18,6 +19,10 @@ const withInputStyling = (BaseComponent) => {
     const { isMobile } = useViewWidth();
     const [field, meta] = useField(name, type);
 
+    useEffect(() => {
+      console.log(meta);
+    }, [meta]);
+
     return (
       <div
         className={`grid py-${paddingY} items-center ${
@@ -27,15 +32,19 @@ const withInputStyling = (BaseComponent) => {
         <label htmlFor={id} className="font-semibold font-lg">
           {label}
         </label>
-        <BaseComponent
-          className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
-          name={name}
-          type={type}
-          placeHolder={placeHolder}
-          {...field}
-          rows={rows ? rows : null}
-        />
-        {meta.touched && meta.error && <div>{meta.error}</div>}
+        <div>
+          <BaseComponent
+            className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
+            name={name}
+            type={type && type}
+            placeHolder={placeHolder}
+            {...field}
+            rows={rows && rows}
+          />
+          {meta.touched && meta.error && (
+            <p className=" text-red-600">{meta.error}</p>
+          )}
+        </div>
       </div>
     );
   };

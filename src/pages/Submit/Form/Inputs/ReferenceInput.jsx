@@ -3,19 +3,7 @@ import { useField } from "formik";
 
 import useViewWidth from "../../../../utils/hooks/useViewWidth";
 import apiReferences from "../../../../api/apiReferences";
-
-/**
- * Regex test for DOI and PMID strings.
- * @param {String} inputValue - PMID or DOI string.
- * @returns {Boolean} True or false depending whether regex test passed.
- */
-function regexTest(inputValue) {
-  const doiRegex =
-    /^(doi:|DOI:)(https:\/\/doi.org\/)?10\.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
-  const pubmedIDPattern = /^(pmid:|PMID:)\d+$/;
-  return doiRegex.test(inputValue) || pubmedIDPattern.test(inputValue);
-}
-
+import regexTest from "../functions/referenceRegex";
 /**
  * Formats inputted DOIs and PMIDs suitable for api call to verify
  * @param {Array} - Array of DOIs and PMIDs.
@@ -116,7 +104,7 @@ function ReferenceList({ classNames, references, error }) {
         )}
         <ul className="text-sm">
           {verifiedReferences.map((reference) => (
-            <li>{reference.citation}</li>
+            <li key={reference.citation}>{reference.citation}</li>
           ))}
         </ul>
       </div>
@@ -199,6 +187,9 @@ function ReferenceInput({ id, name, label, placeHolder, type }) {
             {...field}
             className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
           />
+          {meta.touched && meta.error && (
+            <p className="text-red-500 ">{meta.error}</p>
+          )}
           <ReferenceList
             references={retrievedReferences}
             error={error}

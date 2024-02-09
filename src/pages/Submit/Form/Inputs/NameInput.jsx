@@ -1,6 +1,6 @@
-import useViewWidth from "../../../../utils/hooks/useViewWidth";
 import { useField } from "formik";
 
+import useViewWidth from "../../../../utils/hooks/useViewWidth";
 /**
  * Custom formik input for first name and last name.
  * @param {String} classNames - Additional classnames for tailwind css styling. Mainly for setting margin and padding.
