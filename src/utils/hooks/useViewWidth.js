@@ -13,7 +13,7 @@ function useViewWidth() {
         generalActions.setDimensions({
           viewWidth: window.innerWidth,
           viewHeight: window.innerHeight,
-        })
+        }),
       );
       dispatch(generalActions.setIsMobile());
     };

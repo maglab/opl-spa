@@ -18,7 +18,7 @@ function ChipSection({ id }) {
       all: true,
       problemId: id,
       fields: ["compound", "subject", "gene", "species"],
-    }
+    },
   );
 
   const annotations = useMemo(() => {
@@ -26,7 +26,7 @@ function ChipSection({ id }) {
     if (apiData && !error) {
       //We flatten by one level here
       const flattenedAnnotations = Object.entries(apiData).flatMap(
-        ([key, values]) => values.map((value) => ({ [key]: value[key] }))
+        ([key, values]) => values.map((value) => ({ [key]: value[key] })),
       );
       //Only parse if there are annotations present
       if (flattenedAnnotations.length == 0) return [];
@@ -37,7 +37,7 @@ function ChipSection({ id }) {
         const annotation_object = Object.values(annotation)[0];
         const extracted = extractAnnotationInformation(
           annotation_object,
-          category
+          category,
         );
 
         formattedAnnotations.push(extracted);

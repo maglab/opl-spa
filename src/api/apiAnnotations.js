@@ -12,7 +12,7 @@ const apiAnnotations = {
   getAnnotationDetails: async (params) => {
     const { annotation, annotationId } = params;
     return apiRequest(() =>
-      apiClient.get(`annotations/${annotation}/${annotationId}`)
+      apiClient.get(`annotations/${annotation}/${annotationId}`),
     );
   },
 
@@ -51,8 +51,8 @@ const apiAnnotations = {
     const { annotation, annotationId } = params;
     return apiRequest(() =>
       apiClient.get(
-        `annotations/${annotation}/filter/by-annotation:${annotationId}`
-      )
+        `annotations/${annotation}/filter/by-annotation:${annotationId}`,
+      ),
     );
   },
 

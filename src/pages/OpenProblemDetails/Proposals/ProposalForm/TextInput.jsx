@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { detailsActions } from "../../../../state/Details/detailsSlice";
 function TextInput() {
   const textState = useSelector(
-    (state) => state.details.submission.description
+    (state) => state.details.submission.description,
   );
   const dispatch = useDispatch();
   const descriptionHandler = (e) => {

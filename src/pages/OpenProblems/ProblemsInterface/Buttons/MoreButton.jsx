@@ -50,7 +50,7 @@ function MoreButton() {
       questionActions.concatenateArrays({
         key: "allProblems",
         array: openProblems,
-      })
+      }),
     );
     dispatch(questionActions.setState({ key: "nextPage", value: apiNextPage }));
     setLoading(false);

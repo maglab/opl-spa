@@ -28,7 +28,7 @@ function ProposalForm() {
               title: "Unsuccessful submission",
               message: errors.join("\n"),
               status: "failed",
-            })
+            }),
           );
         }
       })
@@ -40,7 +40,7 @@ function ProposalForm() {
             title: "Unsuccessful submission",
             message: "An unexpected error occurred during validation.",
             status: "failed",
-          })
+          }),
         );
       });
   };

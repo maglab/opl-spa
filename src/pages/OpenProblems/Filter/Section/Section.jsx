@@ -47,7 +47,7 @@ function Section({ section, classNames }) {
       questionActions.removeFilters({
         filter: section,
         id: e.currentTarget.value,
-      })
+      }),
     );
   };
 

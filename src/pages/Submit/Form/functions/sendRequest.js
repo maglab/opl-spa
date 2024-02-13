@@ -26,7 +26,7 @@ const sendRequest = async (formDetailsState, dispatch) => {
           status: "success",
           title: "Submitted",
           message: "Question information was submitted successfully.",
-        })
+        }),
       );
       //Toggle modal to display success status
       dispatch(formActions.toggleModalOpen());
@@ -38,7 +38,7 @@ const sendRequest = async (formDetailsState, dispatch) => {
         status: "failed",
         title: "Unsuccessful submission",
         message: error.message,
-      })
+      }),
     );
   }
 };

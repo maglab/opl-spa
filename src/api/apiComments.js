@@ -7,7 +7,7 @@ const apiComments = {
     try {
       const response = await apiClient.post(
         `posts/post/${submissionId}/comment/submit`,
-        postData
+        postData,
       );
       return response;
     } catch (error) {
@@ -18,7 +18,7 @@ const apiComments = {
     const submissionId = params.submissionId;
     try {
       const response = await apiClient.get(
-        `posts/get/${submissionId}/comments`
+        `posts/get/${submissionId}/comments`,
       );
       return response;
     } catch (error) {
@@ -29,7 +29,7 @@ const apiComments = {
     const submissionId = params.submissionId;
     try {
       const response = await apiClient.get(
-        `posts/get/${submissionId}/comments`
+        `posts/get/${submissionId}/comments`,
       );
       return response;
     } catch (error) {

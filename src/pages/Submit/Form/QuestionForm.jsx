@@ -51,7 +51,7 @@ function QuestionForm() {
             title: "Incomplete submission",
             message: "Please complete recaptcha.",
           },
-        })
+        }),
       );
     } else {
       const validToken = await apiProblems.verifyToken({ token });
@@ -68,7 +68,7 @@ function QuestionForm() {
                 title: "Incomplete submission",
                 message:
                   "Please enter required fields (title and description) and ensure that you have entered a valid email address and valid references.",
-              })
+              }),
             );
           });
       } else {
@@ -78,7 +78,7 @@ function QuestionForm() {
             status: "failed",
             title: "Failed Recaptcha",
             message: "Failed recaptcha test.",
-          })
+          }),
         );
       }
     }

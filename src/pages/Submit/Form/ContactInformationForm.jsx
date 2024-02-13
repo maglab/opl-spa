@@ -6,12 +6,12 @@ function ContactForm() {
   const dispatch = useDispatch();
   const firstNameChangeHandler = (e) => {
     dispatch(
-      formActions.inputChange({ id: "firstName", value: e.target.value })
+      formActions.inputChange({ id: "firstName", value: e.target.value }),
     );
   };
   const lastNameChangeHandler = (e) => {
     dispatch(
-      formActions.inputChange({ id: "lastName", value: e.target.value })
+      formActions.inputChange({ id: "lastName", value: e.target.value }),
     );
   };
   return (

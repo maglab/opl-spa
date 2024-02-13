@@ -32,7 +32,7 @@ const reducers = {
   },
   removeReference(state, actions) {
     const filtered = state.submission.references.filter(
-      (ref) => ref.id !== actions.payload.id
+      (ref) => ref.id !== actions.payload.id,
     );
     state.submission.references = filtered;
   },
@@ -44,7 +44,7 @@ const reducers = {
       reference.ref = value;
     }
     state.submission.references.map((ref) =>
-      ref.id === reference.id ? (ref = reference) : ref
+      ref.id === reference.id ? (ref = reference) : ref,
     );
   },
   setFormValue(state, actions) {

@@ -9,7 +9,7 @@ function TextArea(props) {
     dispatch(formActions.inputChange({ id: key, value: e.target.value }));
     if (key === "description") {
       dispatch(
-        formValidationActions.checkDescription({ description: e.target.value })
+        formValidationActions.checkDescription({ description: e.target.value }),
       );
     }
   };

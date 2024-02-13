@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const withOnChangeHandler = (WrappedComponent) => {
   return function WithOnChangeHandler(props) {
@@ -6,7 +6,6 @@ const withOnChangeHandler = (WrappedComponent) => {
     const onChangeHandler = (e) => {
       const value = e.target.value;
       setState(value);
-
     };
     return <WrappedComponent {...props} onChange={onChangeHandler} />;
   };

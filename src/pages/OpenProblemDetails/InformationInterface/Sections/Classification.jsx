@@ -19,11 +19,11 @@ const CLASSIFICATION_COMPONENTS = [
 const fetchAnnotationData = async (components, problemId) => {
   const fetchedData = await getAnnotations(
     components.map((item) => item.annotation),
-    problemId
+    problemId,
   );
   return components.map((component) => {
     const matchingAnnotation = fetchedData.find(
-      (annotation) => annotation.annotation === component.annotation
+      (annotation) => annotation.annotation === component.annotation,
     );
     return {
       ...component,
@@ -50,7 +50,7 @@ function Classification() {
       try {
         const annotations = await fetchAnnotationData(
           CLASSIFICATION_COMPONENTS,
-          openProblemId
+          openProblemId,
         );
         setAnnotationData(annotations);
       } catch (err) {

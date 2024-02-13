@@ -1,24 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
-    annotation: "",
-    details: {}
-}
+  annotation: "",
+  details: {},
+};
 
 const reducers = {
-    setState(state,actions){
-        state[actions.payload.key] = actions.payload.value; 
-    },
+  setState(state, actions) {
+    state[actions.payload.key] = actions.payload.value;
+  },
+};
 
-}
+const annotationSlice = createSlice({
+  name: "annotation",
+  initialState: INITIAL_STATE,
+  reducers: reducers,
+});
 
-const annotationSlice = createSlice(
-    {
-        name: "annotation", 
-        initialState: INITIAL_STATE,
-        reducers: reducers
-    }
-)
-
-export default annotationSlice; 
+export default annotationSlice;
 export const annotationActions = annotationSlice.actions;

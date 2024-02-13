@@ -22,7 +22,7 @@ function MenuList({ items, category, title }) {
   const [filteredItems, setFilteredItems] = useState([]);
   const [query, setQuery] = useState("");
   const selectedItems = useSelector(
-    (state) => state.question.filters[category]
+    (state) => state.question.filters[category],
   );
   const dispatch = useDispatch();
 
@@ -57,7 +57,7 @@ function MenuList({ items, category, title }) {
         filterItems(inputValue);
       }
     },
-    [fuseInstance]
+    [fuseInstance],
   );
 
   const onClickHandler = () => {
@@ -67,7 +67,7 @@ function MenuList({ items, category, title }) {
 
   const resetFilter = () => {
     setFilteredItems(
-      items.map((item) => extractAnnotationInformation(item, category))
+      items.map((item) => extractAnnotationInformation(item, category)),
     );
   };
 
@@ -83,7 +83,7 @@ function MenuList({ items, category, title }) {
   useEffect(() => {
     if (items.length) {
       const list = items.map((item) =>
-        extractAnnotationInformation(item, category)
+        extractAnnotationInformation(item, category),
       );
       const fuse = new Fuse(list, {
         keys: ["title"],
@@ -100,7 +100,7 @@ function MenuList({ items, category, title }) {
         value={selectedItems}
         onChange={(items) =>
           dispatch(
-            questionActions.updateFilters({ filter: category, value: items })
+            questionActions.updateFilters({ filter: category, value: items }),
           )
         }
         multiple

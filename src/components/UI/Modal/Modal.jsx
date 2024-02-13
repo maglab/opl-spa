@@ -33,7 +33,7 @@ function Modal({
         {children}
       </div>
     </>,
-    document.getElementById("root")
+    document.getElementById("root"),
   );
 }
 

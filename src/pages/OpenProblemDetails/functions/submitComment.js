@@ -12,7 +12,7 @@ function submitComment(submissionId, data, dispatch) {
             dispatch,
             "Success",
             "Your comment has been submitted successfully for review",
-            "success"
+            "success",
           );
           resolve();
         } else {

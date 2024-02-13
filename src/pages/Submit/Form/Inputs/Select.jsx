@@ -12,7 +12,7 @@ function Select(props) {
         formActions.chooseParent({
           chosenParentTitle: "",
           parentId: null,
-        })
+        }),
       );
     } else {
       const index = e.target.selectedIndex;
@@ -22,7 +22,7 @@ function Select(props) {
         formActions.chooseParent({
           chosenParentTitle: e.target.value,
           parentId: optionId,
-        })
+        }),
       );
     }
   };

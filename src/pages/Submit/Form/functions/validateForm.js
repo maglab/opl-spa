@@ -4,7 +4,7 @@ const validateForm = (dispatch, formDetailsState, validationState) => {
   dispatch(
     formValidationActions.checkDescription({
       description: formDetailsState.description,
-    })
+    }),
   );
   dispatch(formValidationActions.checkEmail({ email: formDetailsState.email }));
   if (!formDetailsState.email.trim()) {

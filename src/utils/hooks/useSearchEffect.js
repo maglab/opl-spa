@@ -36,11 +36,11 @@ export default function useSearchEffect(searchQuery) {
 
     if (results.length > 0) {
       dispatch(
-        questionActions.setState({ key: "filteredResults", value: results })
+        questionActions.setState({ key: "filteredResults", value: results }),
       );
     } else {
       dispatch(
-        questionActions.setState({ key: "filteredResults", value: null })
+        questionActions.setState({ key: "filteredResults", value: null }),
       );
     }
   }, [searchQuery]);

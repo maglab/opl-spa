@@ -24,7 +24,7 @@ function Home() {
   const { apiData: latest, error: errorLatest } = useGetApi(
     getProblemsData,
     "latest",
-    []
+    [],
   );
 
   const {

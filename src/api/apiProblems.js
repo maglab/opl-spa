@@ -9,7 +9,7 @@ const apiProblems = {
   getProblems: async (params) => {
     const queryParams = params.queryParams;
     return apiRequest(() =>
-      apiClient.get("open-problems", { params: queryParams })
+      apiClient.get("open-problems", { params: queryParams }),
     );
   },
   postProblem: async (params) => {

@@ -65,12 +65,12 @@ export default function QuestionList({ loading, setLoading }) {
   const problemsArray = useSelector((state) => state.question.allProblems);
   //displatedProblems for fuzzy search - however this will be soon removed
   const displayedProblems = useSelector(
-    (state) => state.question.filteredResults
+    (state) => state.question.filteredResults,
   );
   const filters = useSelector((state) => state.question.filters);
   const searchQuery = useSelector((state) => state.question.searchQuery);
   const selectedSorting = useSelector(
-    (state) => state.question.filters.sorting
+    (state) => state.question.filters.sorting,
   );
   const filtersOn = useSelector((state) => state.question.filterOpen);
   const [error, setError] = useState(false);

@@ -6,7 +6,7 @@ function ClassificationComponent({ annotationData }) {
 
   if (status === 200 && data && data.length > 0) {
     const annotationInformation = data.map((item) =>
-      extractAnnotationInformation(item[category], category)
+      extractAnnotationInformation(item[category], category),
     );
     content = annotationInformation.map((annotation) => (
       <li

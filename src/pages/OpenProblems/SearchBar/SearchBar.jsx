@@ -18,13 +18,13 @@ const SearchBar = ({ label, type = "text", value, ...rest }) => {
   };
 
   const onBlur = (e) => {
-    const string = e.target.value; 
+    const string = e.target.value;
     if (string.trim().length > 0) {
       setIsFocused(true);
     } else {
       setIsFocused(false);
     }
-  }
+  };
 
   return (
     <div className="relative w-full py-1">

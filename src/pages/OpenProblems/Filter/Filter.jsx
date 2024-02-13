@@ -17,7 +17,10 @@ function Filter({ config }) {
   const onClickHandler = () => {
     //Function to clear the filters applied from the sidenav
     dispatch(
-      questionActions.setState({ key: "filters", value: DEFAULT_STATE.filters })
+      questionActions.setState({
+        key: "filters",
+        value: DEFAULT_STATE.filters,
+      }),
     );
   };
 

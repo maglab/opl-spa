@@ -6,7 +6,7 @@ const apiReferences = {
     const openProblemId = params.openProblemId;
     try {
       const response = await apiClient.get(
-        `open-problems/${openProblemId}/references`
+        `open-problems/${openProblemId}/references`,
       );
       if (response.status === 204) {
         //If no content return null
@@ -47,7 +47,7 @@ const apiReferences = {
     const submissionId = params.submissionId;
     try {
       const response = await apiClient.get(
-        `posts/get/${submissionId}/submission/reference`
+        `posts/get/${submissionId}/submission/reference`,
       );
       if ((response.status = 200)) {
         return response.data;

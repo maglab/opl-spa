@@ -38,7 +38,7 @@ function ValidationComponent({ inputValue, onValidationComplete }) {
         .filter((reference) => reference !== "");
 
       setInvalidPrefixes(
-        splitReferences.filter((reference) => !validPrefixes(reference))
+        splitReferences.filter((reference) => !validPrefixes(reference)),
       );
       //All working as expected until here
 
@@ -54,7 +54,7 @@ function ValidationComponent({ inputValue, onValidationComplete }) {
       }
       // Invoke the onValidationComplete callback with the validation result
       onValidationComplete(
-        invalidReferences.length === 0 && invalidPrefixes.length === 0
+        invalidReferences.length === 0 && invalidPrefixes.length === 0,
       );
     }, 500);
 
@@ -127,7 +127,7 @@ function ReferencesInput() {
   const dispatch = useDispatch();
   // Remember that the validation component stores references in redux store when input values are valid.
   const referencesState = useSelector(
-    (state) => state.form.formDetails.references
+    (state) => state.form.formDetails.references,
   );
   const isMobileState = useSelector((state) => state.question.isMobile);
 

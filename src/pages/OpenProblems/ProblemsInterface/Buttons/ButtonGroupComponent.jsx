@@ -28,7 +28,7 @@ function ButtonGroupComponent({ openProblem, isRoot }) {
       formActions.chooseParent({
         chosenParentTitle: title,
         parentId: problemId,
-      })
+      }),
     );
   };
 
