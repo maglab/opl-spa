@@ -29,23 +29,18 @@ function NavMenu2() {
         </div>
       </a>
       <ul className="nav-list list-none flex flex-row items-center gap-6 h-full">
-        {menuList.map((item) => {
-          return (
-            <li
-              key={item.title}
-              className=" hover:bg-slate-200 p-2 rounded-sm  "
+        {menuList.map((item) => (
+          <li key={item.title} className=" hover:bg-slate-200 p-2 rounded-sm  ">
+            <a
+              href={item.route}
+              rel="noreferrer"
+              target=""
+              className="flex items-center h-full transition-colors duration-250 text-sm"
             >
-              <a
-                href={item.route}
-                rel="noreferrer"
-                target=""
-                className="flex items-center h-full transition-colors duration-250 text-sm"
-              >
-                {item.title}
-              </a>
-            </li>
-          );
-        })}
+              {item.title}
+            </a>
+          </li>
+        ))}
         <LoginButton />
         <ProblemsButton />
       </ul>

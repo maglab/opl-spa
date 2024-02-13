@@ -2,7 +2,7 @@ import apiClient, { apiRequest } from "./apiClient";
 
 const apiSubmissions = {
   getSubmissions: async (params) => {
-    const problemId = params.problemId;
+    const { problemId } = params;
     try {
       const response = await apiClient.get(`posts/${problemId}`);
       return response;
@@ -10,11 +10,9 @@ const apiSubmissions = {
       return error;
     }
   },
-  getAllSubmissions: async () => {
-    return apiRequest(() => apiClient.get("posts/all"));
-  },
+  getAllSubmissions: async () => apiRequest(() => apiClient.get("posts/all")),
   getSubmissionCount: async (params) => {
-    const problemId = params.problemId;
+    const { problemId } = params;
     try {
       const response = await apiClient.get(`posts/${problemId}/counts`);
       return response;
@@ -23,8 +21,8 @@ const apiSubmissions = {
     }
   },
   postSubmission: async (params) => {
-    const data = params.data;
-    const problemId = params.problemId;
+    const { data } = params;
+    const { problemId } = params;
     try {
       const response = await apiClient.post(`posts/${problemId}/submit`, data);
       return response;

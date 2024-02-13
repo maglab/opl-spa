@@ -6,9 +6,8 @@ async function checkReferenceLength(references) {
   return new Promise((resolve, reject) => {
     if (references.length > 0) {
       return resolve(references);
-    } else {
-      return reject(new Error("At least one reference is required."));
     }
+    return reject(new Error("At least one reference is required."));
   });
 }
 
@@ -24,7 +23,7 @@ async function validateReference(ref) {
 
 async function validation(data) {
   const text = data.description;
-  const references = data.references;
+  const { references } = data;
   const errors = [];
 
   try {

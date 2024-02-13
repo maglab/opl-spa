@@ -19,16 +19,16 @@ function Modal({
     <>
       <div
         className={`overlay z-1000 fixed inset-0 ${
-          overlayClasses ? overlayClasses : defaultOverlay
+          overlayClasses || defaultOverlay
         }`}
         onClick={closeHandler}
-      ></div>
+      />
       <div
         className={`z-2000 fixed ${
-          positionClasses ? positionClasses : defaultPositionClasses
+          positionClasses || defaultPositionClasses
         } -translate-y-1/2 animate-fadein bg-white p-10 ${
-          height ? "h-" + height : "h-max"
-        } ${width ? "w-" + width : "w-max"}`}
+          height ? `h-${height}` : "h-max"
+        } ${width ? `w-${width}` : "w-max"}`}
       >
         {children}
       </div>

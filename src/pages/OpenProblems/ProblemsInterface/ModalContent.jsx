@@ -24,15 +24,13 @@ function ModalContent(props) {
       </div>
 
       <div className="details">
-        {annotations.map((annot) => {
-          return (
-            <div className={`${annot}`}>
-              <h3 className=" text-base md:text-lg first-letter:capitalize py-2 underline">
-                {annot}:
-              </h3>
-            </div>
-          );
-        })}
+        {annotations.map((annot) => (
+          <div className={`${annot}`}>
+            <h3 className=" text-base md:text-lg first-letter:capitalize py-2 underline">
+              {annot}:
+            </h3>
+          </div>
+        ))}
       </div>
       <div className="buttons m-auto p-2 flex flex-col">
         <Button

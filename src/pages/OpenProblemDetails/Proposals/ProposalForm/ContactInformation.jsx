@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { detailsActions } from "../../../../state/Details/detailsSlice";
+
 function ContactInformation() {
   const dispatch = useDispatch();
   const { firstName, lastName, affiliation } = useSelector(
     (state) => state.details.submission,
   );
   const onChangeHandler = (e, id) => {
-    const value = e.target.value;
+    const { value } = e.target;
     dispatch(detailsActions.setFormValue({ id, value }));
   };
   return (
@@ -23,7 +24,7 @@ function ContactInformation() {
           id="firstName"
           onChange={(e) => onChangeHandler(e, "firstName")}
           value={firstName}
-        ></input>
+        />
         <input
           className="border border-theme-blue  p-1 w-6/12 text-sm ml-2"
           type="text"
@@ -31,7 +32,7 @@ function ContactInformation() {
           id="lastName"
           onChange={(e) => onChangeHandler(e, "lastName")}
           value={lastName}
-        ></input>
+        />
       </div>
       <div className="affiliation px-6 py-2">
         <input
@@ -41,7 +42,7 @@ function ContactInformation() {
           id="email"
           onChange={(e) => onChangeHandler(e, "affiliation")}
           value={affiliation}
-        ></input>
+        />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const submit = async (data, dispatch) => {
   const date = new Date();
   const requestData = {
     full_text: data.description,
-    date: date,
+    date,
     first_name: data.firstName,
     last_name: data.lastName,
     affiliation: data.affiliation,

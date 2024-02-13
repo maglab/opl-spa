@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { detailsActions } from "../../../../../state/Details/detailsSlice";
 import { useState, useEffect } from "react";
+import { detailsActions } from "../../../../../state/Details/detailsSlice";
 import apiReferences from "../../../../../api/apiReferences";
 
 function SourcesForm(props) {
-  const id = props.id;
+  const { id } = props;
   const dispatch = useDispatch();
 
   // Local state for singular input
@@ -14,20 +14,20 @@ function SourcesForm(props) {
 
   const removeHandler = (e) => {
     e.preventDefault();
-    dispatch(detailsActions.removeReference({ id: id }));
+    dispatch(detailsActions.removeReference({ id }));
   };
 
   const onChangeHandlerType = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     setSelected(value);
     setInput("");
     dispatch(detailsActions.setReference({ id, type: selected, value: input }));
   };
 
   const onChangeHandlerInput = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     setInput(value);
-    dispatch(detailsActions.setReference({ id, type: selected, value: value }));
+    dispatch(detailsActions.setReference({ id, type: selected, value }));
   };
 
   const verifyHandler = async () => {
@@ -62,28 +62,28 @@ function SourcesForm(props) {
       <div key={id} className="references flex flex-row py-2">
         <select
           onChange={onChangeHandlerType}
-          key={id + "sel"}
+          key={`${id}sel`}
           name="type"
           className="mr-4 border border-theme-blue px-4"
           value={selected}
         >
-          <option key={id + "opt2"} value="DOI">
+          <option key={`${id}opt2`} value="DOI">
             DOI
           </option>
-          <option key={id + "opt1"} value="PMID">
+          <option key={`${id}opt1`} value="PMID">
             PUBMED ID
           </option>
         </select>
         <input
           onChange={onChangeHandlerInput}
-          key={id + "inp"}
+          key={`${id}inp`}
           type="text"
           className="reference-input w-full border border-theme-blue px-2"
           value={input}
           maxLength={selected === "DOI" ? 100 : 8}
         />
         <button
-          key={id + "btn"}
+          key={`${id}btn`}
           onClick={removeHandler}
           className="pl-2 text-sm text-theme-blue underline"
         >

@@ -1,11 +1,11 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useGetApi from "../../../../../utils/hooks/useApi";
 import api from "../../../../../api/apiComments";
 import CommentComponent from "./CommentComponent";
 import AddCommentComponent from "./AddCommentComponent";
 import Modal from "../../../../../components/UI/Modal/Modal";
 import SubmissionModalContent from "../../../../../components/UI/Modal/SubmissionModalContent";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { generalActions } from "../../../../../state/generalStateSlice";
 
 function Comments() {
@@ -15,7 +15,7 @@ function Comments() {
   const submissionId = useSelector((state) => state.details.submissionId);
 
   // Get root comments first and then their children
-  //For now we cannot have comments replying to comments
+  // For now we cannot have comments replying to comments
   const { apiData: rootComments } = useGetApi(api.getRootComments, {
     submissionId,
   });

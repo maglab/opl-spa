@@ -1,5 +1,4 @@
-import apiClient from "./apiClient";
-import { apiRequest } from "./apiClient";
+import apiClient, { apiRequest } from "./apiClient";
 
 /**
  * Retrieves details of a specific annotation.

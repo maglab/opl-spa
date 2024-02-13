@@ -1,4 +1,5 @@
 import setDate from "../../../../../utils/functions/setDate";
+
 function CommentComponent(props) {
   const {
     comment_id: id,
@@ -14,7 +15,7 @@ function CommentComponent(props) {
         <p>{text}</p>
       </div>
       <div className="comment-data flex flex-row justify-between">
-        <p className="text-sm"> Submitted by: {alias ? alias : "Anonymous"}</p>
+        <p className="text-sm"> Submitted by: {alias || "Anonymous"}</p>
         <p className="text-sm"> Submitted: {date} </p>
       </div>
     </li>

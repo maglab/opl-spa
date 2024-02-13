@@ -1,9 +1,9 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
 import { Button } from "@mui/material";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useNavigate } from "react-router-dom";
+
 import { formActions } from "../../../state/Question/questionFormSlice";
 import { generalActions } from "../../../state/generalStateSlice";
 import FormContent from "./FormContent";
@@ -32,12 +32,12 @@ function QuestionForm() {
     scrollTo();
   }, []);
 
-  //Submission modal
+  // Submission modal
   const onSubmitModalClose = () => {
     dispatch(generalActions.toggleModal({ bool: false }));
   };
 
-  //Form submission handler - submits to database in the submitted questions database
+  // Form submission handler - submits to database in the submitted questions database
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const token = captchaRef.current.getValue();
@@ -56,7 +56,7 @@ function QuestionForm() {
     } else {
       const validToken = await apiProblems.verifyToken({ token });
       const successResponse = validToken.data;
-      const success = JSON.parse(successResponse).success;
+      const { success } = JSON.parse(successResponse);
       if (success) {
         validateForm(dispatch, formDetailsState, validationState)
           .then(() => sendRequest(formDetailsState, dispatch))
@@ -83,7 +83,7 @@ function QuestionForm() {
       }
     }
   };
-  //Exit button handler
+  // Exit button handler
   const exitButtonHandler = () => {
     dispatch(formActions.resetForm({ exit: true }));
     navigate("/open-problems");

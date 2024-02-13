@@ -1,8 +1,8 @@
-import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import ClassificationComponent from "./ClassificationComponents/ClassificationComponent";
 import getAnnotations from "../../functions/getAnnotations";
-import { useEffect, useState } from "react";
 import setUserName from "../../functions/setUserName";
 
 function TableRow({ children }) {
@@ -39,7 +39,7 @@ function Classification() {
   const contactParams = {
     firstName: data.contact?.first_name,
     lastName: data.contact?.last_name,
-  }; //For now no contact
+  }; // For now no contact
   const userName = setUserName(contactParams) ?? "-";
 
   const [annotationData, setAnnotationData] = useState(null);

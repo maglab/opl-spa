@@ -26,8 +26,8 @@ function MenuList({ items, category, title }) {
   );
   const dispatch = useDispatch();
 
-  //Handling outside click events for the menu list
-  const wrapperRef = useRef(null); //The ref to track outside click events
+  // Handling outside click events for the menu list
+  const wrapperRef = useRef(null); // The ref to track outside click events
   const outsideClickHandler = () => {
     if (menuOpen) {
       setMenuOpen(false);
@@ -61,7 +61,7 @@ function MenuList({ items, category, title }) {
   );
 
   const onClickHandler = () => {
-    //Handler to set the filter state to on when a filter is clicked;
+    // Handler to set the filter state to on when a filter is clicked;
     dispatch(questionActions.setState({ key: "filterOpen", value: true }));
   };
 

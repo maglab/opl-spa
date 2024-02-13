@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const DEFAULT_STATE = {
   submission: {
     description: "",
-    references: [{ type: "DOI", ref: "", id: 0 }], //Initialise with one empty reference
+    references: [{ type: "DOI", ref: "", id: 0 }], // Initialise with one empty reference
     firstName: "",
     lastName: "",
     affiliation: "",
@@ -48,8 +48,8 @@ const reducers = {
     );
   },
   setFormValue(state, actions) {
-    const id = actions.payload.id;
-    const value = actions.payload.value;
+    const { id } = actions.payload;
+    const { value } = actions.payload;
     state.submission[id] = value;
   },
   clearFormValues(state) {
@@ -97,7 +97,7 @@ const reducers = {
 const detailsSlice = createSlice({
   name: "details",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default detailsSlice;

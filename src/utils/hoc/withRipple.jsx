@@ -7,8 +7,8 @@ import "../../assets/css/Ripple.css";
  * @returns {React.FC} - Component wrapped with ripple functionality
  */
 
-const withRipple = (WrappedComponent) => {
-  return (props) => {
+const withRipple = (WrappedComponent) =>
+  function (props) {
     // Reference to the wrapping container to determine the position and size for the ripple
     const containerRef = useRef(null);
 
@@ -52,6 +52,5 @@ const withRipple = (WrappedComponent) => {
       </div>
     );
   };
-};
 
 export default withRipple;

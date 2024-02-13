@@ -1,4 +1,5 @@
 import heroImage from "../../../assets/images/question2.png";
+
 function Hero() {
   return (
     <div className="max-w-6xl flex flex-row justify-between items-center">

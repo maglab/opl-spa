@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { questionActions } from "../../../state/Question/questionSlice";
 import { formActions } from "../../../state/Question/questionFormSlice";
 import TooltipWrapper from "../../../components/UI/ToolTip/TooltipWrapper";
+
 function StatbarButtonGroupView() {
   const dispatch = useDispatch();
   const isMobileState = useSelector((state) => state.question.isMobile);
@@ -24,7 +25,7 @@ function StatbarButtonGroupView() {
     }
 
     dispatch(questionActions.setSearchResults({ results: null }));
-    dispatch(questionActions.setState({ key: "viewType", value: value }));
+    dispatch(questionActions.setState({ key: "viewType", value }));
   };
 
   return (

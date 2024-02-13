@@ -30,18 +30,18 @@ const reducers = {
     state.filters[selectedFilter] = removedArray;
   },
   updateFilters(state, actions) {
-    //The headless UI that uses this always returns an Array
+    // The headless UI that uses this always returns an Array
     const newArray = actions.payload.value;
-    //To ensure that there are always unique values:
+    // To ensure that there are always unique values:
     const unique = Array.from(new Set(newArray));
     state.filters[actions.payload.filter] = unique;
   },
   toggleTreeState(state) {
-    //Set the view type of the question to a hierarchical list
+    // Set the view type of the question to a hierarchical list
     state.viewType = "tree";
   },
   toggleListState(state) {
-    //Set the view type of the question as a list
+    // Set the view type of the question as a list
     state.viewType = "table";
   },
   setSorting(state, actions) {
@@ -64,7 +64,7 @@ const reducers = {
 const questionSlice = createSlice({
   name: "question",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default questionSlice;

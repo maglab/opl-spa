@@ -1,22 +1,19 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 // import About from './pages/About/About'
 // import RootOpenProblems from "./pages/Root/OpenProblems";
-import OpenProblems from "./pages/OpenProblems/OpenProblems";
-import SubmitPage from "./pages/Submit/Submit";
-import apiProblems from "./api/apiProblems";
-import Details from "./pages/OpenProblemDetails/Details";
-import AnnotationDetails from "./pages/AnnotationDetails/AnnotationDetails";
-import "./index.css";
 import apiAnnotations from "./api/apiAnnotations";
+import apiProblems from "./api/apiProblems";
+import "./index.css";
+import AnnotationDetails from "./pages/AnnotationDetails/AnnotationDetails";
 import Login from "./pages/Login/Login";
-import RootLayout from "./pages/Root/RootLayout";
+import Details from "./pages/OpenProblemDetails/Details";
+import OpenProblems from "./pages/OpenProblems/OpenProblems";
 import RootHome from "./pages/Root/RootHome";
+import RootLayout from "./pages/Root/RootLayout";
+import SubmitPage from "./pages/Submit/Submit";
+
 const router = createBrowserRouter([
   // { path: "/", element: <Navigate to={"open-problems"} /> },
   {
@@ -72,7 +69,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-//Uncompleted home pages:
+// Uncompleted home pages:
 
 function App() {
   return (

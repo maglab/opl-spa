@@ -4,7 +4,7 @@ import { formActions } from "../../../../state/Question/questionFormSlice";
 function Select(props) {
   const formDetailsState = useSelector((state) => state.form.formDetails);
   const isMobileState = useSelector((state) => state.question.isMobile);
-  const openProblems = props.openProblems;
+  const { openProblems } = props;
   const dispatch = useDispatch();
   const changeHandler = (e) => {
     if (e.target.value === "Submit as a root problem") {
@@ -59,7 +59,7 @@ function Select(props) {
             {problem.title}
           </option>
         ))}
-        <option value={"Submit as a root problem"} id="None">
+        <option value="Submit as a root problem" id="None">
           Submit as a root problem
         </option>
       </select>

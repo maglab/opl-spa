@@ -10,7 +10,7 @@
  * @returns {Object} - Returns a flattened object of the annotation and an array of ids. 
  */
 export default function sortQuery(filterObj) {
-  let flattenedObj = {};
+  const flattenedObj = {};
   for (const key in filterObj) {
     switch (key) {
       case "sorting" || "p":

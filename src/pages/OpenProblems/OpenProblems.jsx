@@ -19,13 +19,13 @@ function OpenProblems() {
   return (
     <div className="w-full flex flex-row pt-6">
       {/* Filter Side Navigation */}
-      <div className={`side-nav w-1/5 sticky`}>
+      <div className="side-nav w-1/5 sticky">
         <Filter config={config} />
       </div>
 
       {/* Main Content */}
       <div className="main w-full h-max overflow-auto">
-        <SearchBar label={"Search for an open problem"} />
+        <SearchBar label="Search for an open problem" />
         <Statbar className="statbar" />
         <ProblemsInterface />
       </div>

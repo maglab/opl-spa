@@ -42,10 +42,10 @@ const reducers = {
 const formValidationSlice = createSlice({
   name: "validation",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default formValidationSlice;
 export const formValidationActions = formValidationSlice.actions;
 
-//Is this needed?
+// Is this needed?

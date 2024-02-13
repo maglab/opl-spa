@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { questionActions } from "../../../state/Question/questionSlice";
 import { useDispatch } from "react-redux";
+import { questionActions } from "../../../state/Question/questionSlice";
 
-const SearchBar = ({ label, type = "text", value, ...rest }) => {
+function SearchBar({ label, type = "text", value, ...rest }) {
   const [isFocused, setIsFocused] = useState(false);
   const isActive = isFocused || value;
   const dispatch = useDispatch();
@@ -55,6 +55,6 @@ const SearchBar = ({ label, type = "text", value, ...rest }) => {
       )}
     </div>
   );
-};
+}
 
 export default SearchBar;

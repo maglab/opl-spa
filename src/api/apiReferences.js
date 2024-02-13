@@ -1,15 +1,14 @@
-import apiClient from "./apiClient";
-import { apiRequest } from "./apiClient";
+import apiClient, { apiRequest } from "./apiClient";
 
 const apiReferences = {
   getReferenceForProblem: async (params) => {
-    const openProblemId = params.openProblemId;
+    const { openProblemId } = params;
     try {
       const response = await apiClient.get(
         `open-problems/${openProblemId}/references`,
       );
       if (response.status === 204) {
-        //If no content return null
+        // If no content return null
         return null;
       }
       return response;
@@ -18,17 +17,18 @@ const apiReferences = {
     }
   },
   verifyReference: async (params) => {
-    const type = params.type;
-    const value = params.value;
+    const { type } = params;
+    const { value } = params;
     const data = {
-      type: type,
-      value: value,
+      type,
+      value,
     };
     try {
       const response = await apiClient.post(`posts/verify-reference`, data);
       if (response.status === 200) {
         return response;
-      } else if (response.status === 404) {
+      }
+      if (response.status === 404) {
         return "Unable to retrieve reference information";
       }
     } catch (error) {
@@ -37,14 +37,14 @@ const apiReferences = {
   },
 
   verifyReferences: async (params) => {
-    const references = params.references;
+    const { references } = params;
     const data = {
-      references: references,
+      references,
     };
     return apiRequest(() => apiClient.post("posts/verify-references", data));
   },
   getReferenceForSolution: async (params) => {
-    const submissionId = params.submissionId;
+    const { submissionId } = params;
     try {
       const response = await apiClient.get(
         `posts/get/${submissionId}/submission/reference`,

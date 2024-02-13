@@ -14,7 +14,7 @@ const reducers = {
 const annotationSlice = createSlice({
   name: "annotation",
   initialState: INITIAL_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default annotationSlice;

@@ -20,7 +20,7 @@ const reducers = {
     state.viewHeight = actions.payload.viewHeight;
   },
   setIsMobile(state) {
-    state.isMobile = state.viewWidth || state.viewHeight < 450 ? true : false;
+    state.isMobile = !!(state.viewWidth || state.viewHeight < 450);
   },
   toggleModal(state, actions) {
     if (actions.payload.bool) {
@@ -42,7 +42,7 @@ const reducers = {
 const generalSlice = createSlice({
   name: "general",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default generalSlice;

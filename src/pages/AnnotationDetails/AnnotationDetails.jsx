@@ -5,6 +5,7 @@ import AnnotationInterface from "./AnnotationInterface/AnnotationInterface";
 import dispatchAnnotationDetails from "./functions/dispatchAnnotationDetails";
 import AnnotationHeader from "./Header/AnnotationHeader";
 import BackButton from "../../components/UI/Buttons/BackButton";
+
 function AnnotationDetails() {
   const dispatch = useDispatch();
   const { category } = useParams();
@@ -20,7 +21,7 @@ function AnnotationDetails() {
     <div>
       <hr className="border-theme-blue" />
       <BackButton />
-      {<AnnotationHeader />}
+      <AnnotationHeader />
       <section className="annotation-interface">
         <AnnotationInterface />
       </section>

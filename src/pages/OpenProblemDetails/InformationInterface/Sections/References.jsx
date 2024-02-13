@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import apiReferences from "../../../../api/apiReferences";
-import { useEffect, useState } from "react";
 // import { useState } from "react";
 function References(props) {
-  const id = props.id;
+  const { id } = props;
   const [references, setReferences] = useState(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function References(props) {
   }, [id]);
 
   return (
-    <InterfaceTemplate title={"References"}>
+    <InterfaceTemplate title="References">
       <div className="references-list pt-2">
         <ul className="list-disc">
           {references ? (

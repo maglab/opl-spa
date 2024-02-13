@@ -11,14 +11,13 @@ import CardSkeleton from "../../components/UI/Loading/CardSkeleton";
  * @param {String} sorting - The sorting query parameter for the API.
  * @returns {Function} - Returns
  */
-const getProblemsData = async (sorting) => {
-  return apiProblems.getProblems({
+const getProblemsData = async (sorting) =>
+  apiProblems.getProblems({
     queryParams: {
       sorting,
       page_size: "6",
     },
   });
-};
 
 function Home() {
   const { apiData: latest, error: errorLatest } = useGetApi(

@@ -4,11 +4,10 @@
  * @param {Object} defaultSvgProps
  * @returns {React.Component} - Wrapped SVG component
  */
-const withSVG = (SvgContent, defaultSvgProps) => {
-  return function SvgComponent(props) {
+const withSVG = (SvgContent, defaultSvgProps) =>
+  function SvgComponent(props) {
     const combinedProps = { ...defaultSvgProps, ...props };
     return <SvgContent {...combinedProps} />;
   };
-};
 
 export default withSVG;

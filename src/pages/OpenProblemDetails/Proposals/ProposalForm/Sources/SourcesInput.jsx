@@ -1,10 +1,11 @@
-import SourcesForm from "./SourcesForm";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { detailsActions } from "../../../../../state/Details/detailsSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 import { v4 as uuidv4 } from "uuid";
+import { detailsActions } from "../../../../../state/Details/detailsSlice";
+import SourcesForm from "./SourcesForm";
+
 function SourcesInput() {
-  //Redux state to track references
+  // Redux state to track references
   const references = useSelector(
     (state) => state.details.submission.references,
   );
@@ -13,7 +14,7 @@ function SourcesInput() {
   const addRefHandler = (e) => {
     e.preventDefault();
     const id = uuidv4();
-    dispatch(detailsActions.addReference({ type: "", ref: "", id: id }));
+    dispatch(detailsActions.addReference({ type: "", ref: "", id }));
   };
 
   return (

@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
+
 function SubmissionModalContent(props) {
   const onSubmitClose = props.close;
-  const submitStatus = props.submitStatus;
+  const { submitStatus } = props;
   return (
     <div className="p-2">
       <h1 className="text-center text-lg font-bold md:text-2xl">

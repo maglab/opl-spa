@@ -1,7 +1,7 @@
 import { formActions } from "../../../../state/Question/questionFormSlice";
 import apiProblems from "../../../../api/apiProblems";
 
-//Send request to the database using formData
+// Send request to the database using formData
 const sendRequest = async (formDetailsState, dispatch) => {
   const data = {
     title: formDetailsState.title,
@@ -20,7 +20,7 @@ const sendRequest = async (formDetailsState, dispatch) => {
   try {
     const response = await apiProblems.postProblem({ data });
     if (response.status === 201) {
-      //Creates a success status
+      // Creates a success status
       dispatch(
         formActions.setSubmitStatus({
           status: "success",
@@ -28,7 +28,7 @@ const sendRequest = async (formDetailsState, dispatch) => {
           message: "Question information was submitted successfully.",
         }),
       );
-      //Toggle modal to display success status
+      // Toggle modal to display success status
       dispatch(formActions.toggleModalOpen());
     }
   } catch (error) {

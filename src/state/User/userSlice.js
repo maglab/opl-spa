@@ -22,7 +22,7 @@ const reducers = {
 const userSlice = createSlice({
   name: "user",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default userSlice;

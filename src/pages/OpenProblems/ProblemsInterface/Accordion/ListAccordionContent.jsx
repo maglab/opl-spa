@@ -1,9 +1,10 @@
 import ItemComponent from "../List/ItemComponent/ItemComponent";
 import ButtonGroupComponent from "../Buttons/ButtonGroupComponent";
+
 function ListAccordionContent({ openProblem }) {
-  const children = openProblem.children;
+  const { children } = openProblem;
   const parent = openProblem.parent_problem;
-  const isRoot = parent ? true : false;
+  const isRoot = !!parent;
 
   return (
     <>

@@ -1,10 +1,11 @@
+import { useDispatch } from "react-redux";
 import TextArea from "./Inputs/TextArea";
-import TextInput from "./Inputs/TextInput";
-import { TextInputTitle } from "./Inputs/TextInput";
+import TextInput, { TextInputTitle } from "./Inputs/TextInput";
+
 import ReferencesInput from "./Inputs/ReferencesInput";
 import ContactForm from "./ContactInformationForm";
-import { useDispatch } from "react-redux";
 import { formActions } from "../../../state/Question/questionFormSlice";
+
 function FormContent() {
   const dispatch = useDispatch();
   const clearFormHandler = () => {

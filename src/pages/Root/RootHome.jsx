@@ -4,6 +4,7 @@ import Hero from "../Home/Hero/Hero";
 import Footer from "./Footer/Footer";
 import useViewWidth from "../../utils/hooks/useViewWidth";
 import bg from "../../assets/svg/wave-haikei.svg";
+
 function RootHome() {
   const bgImport = { backgroundImage: `url(${bg})` };
   const { isMobile } = useViewWidth();
@@ -16,7 +17,7 @@ function RootHome() {
         <Hero />
       </section>
       <div className="w-full flex justify-center">
-        <main className={`w-full`}>
+        <main className="w-full">
           <Outlet />
         </main>
       </div>

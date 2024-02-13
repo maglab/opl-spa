@@ -1,5 +1,6 @@
 import { HashLink } from "react-router-hash-link";
 import extractAnnotationInformation from "../../../../../utils/functions/extractAnnotationInformation";
+
 function ClassificationComponent({ annotationData }) {
   const { annotation: category, status, data } = annotationData;
   let content;

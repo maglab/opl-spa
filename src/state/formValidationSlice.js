@@ -34,7 +34,7 @@ const reducers = {
 const formValidationSlice = createSlice({
   name: "validation",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default formValidationSlice;

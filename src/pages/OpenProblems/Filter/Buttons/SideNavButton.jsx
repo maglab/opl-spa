@@ -1,10 +1,11 @@
 import { useState } from "react";
 import withRipple from "../../../../utils/hoc/withRipple";
+
 function SideNavButton({ children, classNames, onClick }) {
   const [isActive, setActive] = useState(false);
   const onClickHandler = () => {
     setActive((prev) => !prev);
-    onClick && onClick({ isActive, setActive }); //Addditional onClick from the parent with optional argument for its active state
+    onClick && onClick({ isActive, setActive }); // Addditional onClick from the parent with optional argument for its active state
   };
   return (
     <button

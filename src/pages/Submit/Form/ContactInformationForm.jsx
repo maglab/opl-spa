@@ -1,7 +1,8 @@
 import { Fragment } from "react";
-import TextInput from "./Inputs/TextInput";
 import { useDispatch } from "react-redux";
+import TextInput from "./Inputs/TextInput";
 import { formActions } from "../../../state/Question/questionFormSlice";
+
 function ContactForm() {
   const dispatch = useDispatch();
   const firstNameChangeHandler = (e) => {
@@ -15,7 +16,7 @@ function ContactForm() {
     );
   };
   return (
-    <Fragment>
+    <>
       <h1 className="p-8 text-lg font-bold md:text-xl">
         Contact Information (optional)
       </h1>
@@ -52,7 +53,7 @@ function ContactForm() {
         label="Please provide your email if you would like to recieve notifications"
         labelText="Email:"
       />
-    </Fragment>
+    </>
   );
 }
 

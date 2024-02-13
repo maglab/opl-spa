@@ -5,7 +5,7 @@ function CheckBoxForm({ items }) {
       <ul>
         {items.map((item) => (
           <li key={item.id} className="flex flex-row justify-between">
-            <label for={item.title}>{item.title}</label>
+            <label htmlFor={item.title}>{item.title}</label>
             <input
               type="checkbox"
               id={item.title}

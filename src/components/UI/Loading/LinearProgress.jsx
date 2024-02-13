@@ -1,6 +1,6 @@
 import React from "react";
 
-const LinearProgress = ({ value, max }) => {
+function LinearProgress({ value, max }) {
   const width = (value / max) * 100;
 
   return (
@@ -8,9 +8,9 @@ const LinearProgress = ({ value, max }) => {
       <div
         className="bg-blue-600 h-2.5 rounded-full"
         style={{ width: `${width}%` }}
-      ></div>
+      />
     </div>
   );
-};
+}
 
 export default LinearProgress;

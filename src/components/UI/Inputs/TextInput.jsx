@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import withOnChangeHandler from '../../../utils/hoc/withOnChangeHandler';
+import { useState } from "react";
+import withOnChangeHandler from "../../../utils/hoc/withOnChangeHandler";
 
 function textInput(props) {
   return (
@@ -17,7 +17,7 @@ const TextInput = withOnChangeHandler(textInput);
 
 export function TextInputStyled({
   label,
-  type = 'text',
+  type = "text",
   value,
   onChangeHandler,
   ...rest
@@ -53,9 +53,9 @@ export function TextInputStyled({
         onFocus={() => setIsFocused(true)}
         onBlur={onBlur}
         className={`w-full px-4 py-2 bg-gray-300 bg-opacity-30 shadow border-b rounded-t-md outline-none transition-all duration-300 ${
-          isActive ? 'pt-4' : ''
+          isActive ? "pt-4" : ""
         } ${
-          isFocused ? 'border-indigo-500 shadow-theme-blue' : 'border-gray-300'
+          isFocused ? "border-indigo-500 shadow-theme-blue" : "border-gray-300"
         } `}
         {...rest}
       />
@@ -63,10 +63,10 @@ export function TextInputStyled({
         <label
           className={`absolute left-3 bg-inherit transition-all duration-300 pointer-events-none  px-1 ${
             isActive
-              ? 'top-1 text-xs text-indigo-500'
-              : 'top-5 text-sm text-gray-500'
+              ? "top-1 text-xs text-indigo-500"
+              : "top-5 text-sm text-gray-500"
           }`}
-          style={{ transformOrigin: '0 0' }}
+          style={{ transformOrigin: "0 0" }}
         >
           {label}
         </label>

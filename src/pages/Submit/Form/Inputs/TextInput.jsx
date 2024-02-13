@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { HashLink } from "react-router-hash-link";
-import { LinearProgress } from "@mui/material";
+import { LinearProgress, IconButton } from "@mui/material";
 
+import CloseIcon from "@mui/icons-material/Close";
 import { questionActions } from "../../../../state/Question/questionSlice";
 import { formActions } from "../../../../state/Question/questionFormSlice";
 import apiProblems from "../../../../api/apiProblems";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
 function ExitIcon({ setState }) {
   const onClickHandler = () => {
@@ -57,12 +56,7 @@ function ProblemsList({ similarProblems, setToDisplay }) {
           >
             <HashLink
               smooth
-              to={
-                "/open-problems/" +
-                problem.problem_id +
-                "#title" +
-                problem.problem_id
-              }
+              to={`/open-problems/${problem.problem_id}#title${problem.problem_id}`}
               className="hover:text-theme-blue hover:underline"
             >
               {problem.title}
@@ -93,12 +87,12 @@ export function TextInputTitle({ id, label, labelText, required }) {
   const [error, setError] = useState(false);
   const [toDisplay, setToDisplay] = useState(false);
 
-  //Search
+  // Search
   useEffect(() => {
     setLoading(true);
     async function searchProblems(searchQuery) {
       try {
-        //Remember that results from the API are paginated!!
+        // Remember that results from the API are paginated!!
         const queryParams = { search: searchQuery };
         const response = await apiProblems.getProblems({ queryParams });
         setSimilarProblems(response.data.results);
@@ -167,7 +161,7 @@ function TextInput({ id, label, labelText, required }) {
   const dispatch = useDispatch();
 
   const onChangeHandler = (e) => {
-    dispatch(formActions.inputChange({ id: id, value: e.target.value }));
+    dispatch(formActions.inputChange({ id, value: e.target.value }));
     dispatch(questionActions.setState({ key: "filterOpen", value: false }));
   };
 

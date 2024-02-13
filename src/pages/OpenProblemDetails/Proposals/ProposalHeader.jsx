@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+
 function ProposalHeader() {
   const submissionLength = useSelector(
     (state) => state.details.postSubmissions.length,

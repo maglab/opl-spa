@@ -1,6 +1,8 @@
 function extractAnnotationInformation(annotation, category) {
   // Declare title and id variables before the switch statement
-  let title, id, parent;
+  let title;
+  let id;
+  let parent;
 
   // Function to extract titles and ids from annotation data to be used in the interface
   switch (category) {

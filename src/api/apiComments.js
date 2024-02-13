@@ -1,8 +1,8 @@
-import apiClient from "./apiClient";
-import { apiRequest } from "./apiClient";
+import apiClient, { apiRequest } from "./apiClient";
+
 const apiComments = {
   postComment: async (params) => {
-    const submissionId = params.submissionId;
+    const { submissionId } = params;
     const postData = params.data;
     try {
       const response = await apiClient.post(
@@ -15,7 +15,7 @@ const apiComments = {
     }
   },
   getComments: async (params) => {
-    const submissionId = params.submissionId;
+    const { submissionId } = params;
     try {
       const response = await apiClient.get(
         `posts/get/${submissionId}/comments`,
@@ -26,7 +26,7 @@ const apiComments = {
     }
   },
   getRootComments: async (params) => {
-    const submissionId = params.submissionId;
+    const { submissionId } = params;
     try {
       const response = await apiClient.get(
         `posts/get/${submissionId}/comments`,

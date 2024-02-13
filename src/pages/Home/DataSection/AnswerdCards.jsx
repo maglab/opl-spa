@@ -1,5 +1,6 @@
 import OpenProblemCard from "../../../components/UI/Card/OpenProblemCard";
 import CardSkeleton from "../../../components/UI/Loading/CardSkeleton";
+
 function AnsweredCard({ solutions, error, loading }) {
   if (loading) {
     return (

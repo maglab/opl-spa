@@ -1,4 +1,5 @@
 import { annotationActions } from "../../../state/Annotation/annotationSlice";
+
 function dispatchAnnotationDetails(dispatch, category, data) {
   dispatch(annotationActions.setState({ key: "annotation", value: category }));
   switch (category) {

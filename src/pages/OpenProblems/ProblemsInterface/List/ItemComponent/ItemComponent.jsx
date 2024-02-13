@@ -1,11 +1,10 @@
-import ChipSection from "./ChipSection";
-import ListAccordionContent from "../../Accordion/ListAccordionContent";
-
 import { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { Collapse } from "@mui/material";
-import { ExpandLess } from "@mui/icons-material";
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+
+import ListAccordionContent from "../../Accordion/ListAccordionContent";
+import ChipSection from "./ChipSection";
 
 function ItemComponent({ openProblem }) {
   const { problem_id: id, title } = openProblem;

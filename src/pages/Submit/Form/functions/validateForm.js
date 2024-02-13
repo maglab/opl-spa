@@ -1,4 +1,5 @@
 import { formValidationActions } from "../../../../state/Question/formValidationSlice";
+
 const validateForm = (dispatch, formDetailsState, validationState) => {
   dispatch(formValidationActions.checkTitle({ title: formDetailsState.title }));
   dispatch(
@@ -15,15 +16,14 @@ const validateForm = (dispatch, formDetailsState, validationState) => {
         ? resolve()
         : reject();
     });
-  } else {
-    return new Promise((resolve, reject) => {
-      validationState.title &&
-      validationState.email &&
-      validationState.description
-        ? resolve()
-        : reject();
-    });
   }
+  return new Promise((resolve, reject) => {
+    validationState.title &&
+    validationState.email &&
+    validationState.description
+      ? resolve()
+      : reject();
+  });
 };
 
 export default validateForm;

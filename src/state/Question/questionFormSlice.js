@@ -27,7 +27,7 @@ const DEFAULT_STATE = {
     message: null,
   },
 };
-//Paylod data structure: {hasParent: boolean, parent: 'id-string'}
+// Paylod data structure: {hasParent: boolean, parent: 'id-string'}
 const reducers = {
   chooseParent(state, action) {
     state.chosenParent = true;
@@ -71,7 +71,7 @@ const reducers = {
     state.formDetails.validReferences = action.payload.validReferences;
   },
   resetForm: (state, actions) => {
-    const exit = actions.payload.exit;
+    const { exit } = actions.payload;
     if (state.submitFormOpen && !exit) {
       // Preserve parentTitle and parentId, and reset everything else
       state.formDetails = {
@@ -107,7 +107,7 @@ const reducers = {
 const formSlice = createSlice({
   name: "form",
   initialState: DEFAULT_STATE,
-  reducers: reducers,
+  reducers,
 });
 
 export default formSlice;

@@ -1,7 +1,8 @@
-import { Nav2 } from "../../components/UI/Nav/Nav";
 import { Outlet } from "react-router-dom";
+import { Nav2 } from "../../components/UI/Nav/Nav";
 import Footer from "./Footer/Footer";
 import useViewWidth from "../../utils/hooks/useViewWidth";
+
 function RootLayout() {
   const { isMobile } = useViewWidth();
   return (

@@ -28,7 +28,7 @@ function ValidationComponent({ inputValue, onValidationComplete }) {
   const [invalidPrefixes, setInvalidPrefixes] = useState([]);
   const dispatch = useDispatch();
 
-  //Timed validation. First check for invalid prefixes, when there is none we then validate the references.
+  // Timed validation. First check for invalid prefixes, when there is none we then validate the references.
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (inputValue.trim().length === 0) return;
@@ -40,11 +40,11 @@ function ValidationComponent({ inputValue, onValidationComplete }) {
       setInvalidPrefixes(
         splitReferences.filter((reference) => !validPrefixes(reference)),
       );
-      //All working as expected until here
+      // All working as expected until here
 
-      //Validate each reference if there are no invalid prefixed references, save valid references
+      // Validate each reference if there are no invalid prefixed references, save valid references
       if (invalidPrefixes.length == 0) {
-        const { valid, invalid } = await validateReferences(splitReferences); //Linter is saying no effect but validateReferences returns a promise.
+        const { valid, invalid } = await validateReferences(splitReferences); // Linter is saying no effect but validateReferences returns a promise.
         setValidReferences(valid);
         setInvalidReferences(invalid);
         if (invalid.length === 0) {
@@ -133,15 +133,15 @@ function ReferencesInput() {
 
   const [inputValues, setInputValues] = useState("");
   const [convertedReferences, setConvertedReferences] = useState([]);
-  const [unconvertedReferences, setUnconvertedReferences] = useState([]); //Not used for now
-  //State for input DOI/PMIDS prefixes set by validation component
+  const [unconvertedReferences, setUnconvertedReferences] = useState([]); // Not used for now
+  // State for input DOI/PMIDS prefixes set by validation component
   const [referencesIsValid, setReferencesIsValid] = useState(true);
 
   const onChangeHandler = (e) => {
     setInputValues(e.target.value);
   };
 
-  //Use effect for retrieving reference data from API. Should only be called when there are no invalid prefixes.
+  // Use effect for retrieving reference data from API. Should only be called when there are no invalid prefixes.
   useEffect(() => {
     if (inputValues.trim().length === 0) setReferencesIsValid(true);
     if (!referencesIsValid) {

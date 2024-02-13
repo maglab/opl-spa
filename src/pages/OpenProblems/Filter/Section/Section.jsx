@@ -74,33 +74,37 @@ function Section({ section, classNames }) {
   );
 }
 
-const Header = ({ title }) => (
-  <div className="flex flex-row justify-between text-base">
-    <h1 className="">{title}</h1>
-  </div>
-);
+function Header({ title }) {
+  return (
+    <div className="flex flex-row justify-between text-base">
+      <h1 className="">{title}</h1>
+    </div>
+  );
+}
 
-const SelectedItems = ({ items, onClick }) => (
-  <div className="selected">
-    {items?.length > 0 && (
-      <p className=" text-sm underline text-theme-blue"> Selected:</p>
-    )}
-    <ul className="text-sm text-theme-blue">
-      {items?.map((item) => (
-        <SelectedButton
-          value={item.id}
-          onClick={onClick}
-          key={item.id}
-          classNames={"w-full hover:theme-blue text-left"}
-        >
-          {item.title}
-        </SelectedButton>
-      ))}
-    </ul>
-  </div>
-);
+function SelectedItems({ items, onClick }) {
+  return (
+    <div className="selected">
+      {items?.length > 0 && (
+        <p className=" text-sm underline text-theme-blue"> Selected:</p>
+      )}
+      <ul className="text-sm text-theme-blue">
+        {items?.map((item) => (
+          <SelectedButton
+            value={item.id}
+            onClick={onClick}
+            key={item.id}
+            classNames="w-full hover:theme-blue text-left"
+          >
+            {item.title}
+          </SelectedButton>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-const Menus = ({ isHierarchical, data, category }) => {
+function Menus({ isHierarchical, data, category }) {
   if (isHierarchical) {
     return (
       <div className="menus">
@@ -128,6 +132,6 @@ const Menus = ({ isHierarchical, data, category }) => {
       />
     </div>
   );
-};
+}
 
 export default Section;

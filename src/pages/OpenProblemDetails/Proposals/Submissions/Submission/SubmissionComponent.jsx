@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import SourcesList from "./SourcesList";
 import setUserName from "../../../functions/setUserName";
 import CommentsButton from "../Comments/CommentsButton";
 import Comments from "../Comments/Comments";
 import setDate from "../../../../../utils/functions/setDate";
-import { useDispatch } from "react-redux";
 import { detailsActions } from "../../../../../state/Details/detailsSlice";
 
 function SubmissionComponent(props) {

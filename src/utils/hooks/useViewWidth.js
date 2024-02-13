@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { generalActions } from "../../state/generalStateSlice";
+
 function useViewWidth() {
   const dispatch = useDispatch();
   const viewWidth = useSelector((state) => state.general.viewWidth);
@@ -20,7 +21,7 @@ function useViewWidth() {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize); //Cleanup function to prevent memory leak
+      window.removeEventListener("resize", handleResize); // Cleanup function to prevent memory leak
     };
   }, [dispatch, viewWidth]);
   return { viewWidth, isMobile };

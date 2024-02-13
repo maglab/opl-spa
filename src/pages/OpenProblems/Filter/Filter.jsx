@@ -1,7 +1,9 @@
-import Section from "./Section/Section";
 import { useDispatch } from "react-redux";
-import { DEFAULT_STATE } from "../../../state/Question/questionSlice";
-import { questionActions } from "../../../state/Question/questionSlice";
+import Section from "./Section/Section";
+import {
+  DEFAULT_STATE,
+  questionActions,
+} from "../../../state/Question/questionSlice";
 
 function ClearButton({ children, onClick, className }) {
   return (
@@ -12,10 +14,10 @@ function ClearButton({ children, onClick, className }) {
 }
 
 function Filter({ config }) {
-  //Will have to create redux state to track whether this is open or not?
+  // Will have to create redux state to track whether this is open or not?
   const dispatch = useDispatch();
   const onClickHandler = () => {
-    //Function to clear the filters applied from the sidenav
+    // Function to clear the filters applied from the sidenav
     dispatch(
       questionActions.setState({
         key: "filters",
