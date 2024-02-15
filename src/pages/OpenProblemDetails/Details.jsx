@@ -1,27 +1,27 @@
-import { useLoaderData } from "react-router-dom";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useLoaderData, Link } from "react-router-dom";
+import { useRef, useEffect } from "react";
+
 import { useDispatch } from "react-redux";
 import { detailsActions } from "../../state/Details/detailsSlice";
 
 import InformationSection from "./InformationInterface/InformationSection";
 import Likes from "../../components/Likes/Likes";
+
 function Details() {
   const { data } = useLoaderData();
-  const description = data.description;
+  const { description } = data;
   const id = data.problem_id;
-  const title = data.title;
-  const children = data.children;
+  const { title } = data;
+  const { children } = data;
   const parent = data.parent_problem;
-  const isRoot = parent ? false : true;
+  const isRoot = !parent;
 
   const dispatch = useDispatch();
 
   // Dispatch loader data into redux store to be used by other components
   useEffect(() => {
     dispatch(detailsActions.resetState());
-    dispatch(detailsActions.setOpenProblem({ id: id }));
+    dispatch(detailsActions.setOpenProblem({ id }));
   }, [id, dispatch]);
   // Select the title of the open problem to use as the anchor for the scrollToView function
   const ref = useRef(null);
