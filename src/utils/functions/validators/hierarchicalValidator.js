@@ -4,9 +4,9 @@
  * @returns {boolean}
  */
 function hierarchicalValidator(data) {
-  //For now we can use a simple check to find if the data array objects contains the attribute data
+  // For now we can use a simple check to find if the data array objects contains the attribute data
   const hierarchical = data.some(
-    (item) => item.hasOwnProperty("parent") === true
+    (item) => item.hasOwnProperty("parent") === true,
   );
   return hierarchical;
 }
