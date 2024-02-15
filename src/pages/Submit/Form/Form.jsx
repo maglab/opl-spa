@@ -1,7 +1,8 @@
 import { Formik, Form } from "formik";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useRef } from "react";
+import { useRef, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { initialValues, handleSubmit } from "./functions/formik";
 import formikValidation from "./functions/formik";
@@ -33,7 +34,7 @@ function ContactSection({ children }) {
  * @param {React.MutableRefObject} ref - useRef mutable object, to track recpatcha value.
  * @returns {React.Component}
  */
-function ReCaptchaSection({ ref }) {
+const ReCaptchaSection = forwardRef((props, ref) => {
   return (
     <div className="RECAPTCHA w-full flex justify-center">
       <ReCAPTCHA
@@ -43,13 +44,14 @@ function ReCaptchaSection({ ref }) {
       />
     </div>
   );
-}
+});
 
 function OpenProblemForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //Use formik requires initial values and validation functions
   // Will have to manually track for Recaptcha using ref
-  const ref = useRef(null);
+  const catpchaRef = useRef("test");
   const exitOnclick = (event) => {
     event.preventDefault(); //Prevent the submit
     navigate(-1);
@@ -59,7 +61,9 @@ function OpenProblemForm() {
     <Formik
       initialValues={initialValues}
       validate={formikValidation}
-      onSubmit={handleSubmit}
+      onSubmit={(values, actions) =>
+        handleSubmit(values, actions, catpchaRef, dispatch)
+      }
     >
       <Form className="bg-white p-6 py-14 shadow-md">
         <TitleInput
@@ -84,12 +88,20 @@ function OpenProblemForm() {
         />
         <hr />
         <ContactSection>
-          <NameInput paddingY={4} />
+          <NameInput paddingY={2} />
           <TextInput
             name="organisation"
             type="text"
             id="organisation"
             label="Organisation:"
+            paddingY={2}
+          />
+          <TextInput
+            name="job_field"
+            type="text"
+            id="jobField"
+            label="Job Field:"
+            paddingY={2}
           />
           <TextInput
             name="email"
@@ -97,10 +109,11 @@ function OpenProblemForm() {
             id="email"
             label="Email:"
             placeHolder="Provide an email if you want to be updated on the status of this submission."
+            paddingY={2}
           />
         </ContactSection>
         <hr className="py-4" />
-        <ReCaptchaSection />
+        <ReCaptchaSection ref={catpchaRef} />
         <div className="buttons flex flex-row justify-center gap-x-6 py-4">
           <OutlinedButton label="Exit" onClick={exitOnclick} type="button" />
           <FilledButton label="Submit" type="submit" />
@@ -111,8 +124,3 @@ function OpenProblemForm() {
 }
 
 export default OpenProblemForm;
-
-// Track change with formik.handleChange
-// Track touched with formik.handleBlur
-// Track values with formik.values.ValueKey
-// Reduce boilerplate with formik.getFieldProps
