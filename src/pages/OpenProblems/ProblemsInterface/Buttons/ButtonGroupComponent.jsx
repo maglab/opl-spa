@@ -1,11 +1,10 @@
-import ButtonGroup from "@mui/material/ButtonGroup";
-import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import { Button, Tooltip } from "@mui/material";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { HashLink } from "react-router-hash-link";
-import { useEffect, useState } from "react";
-import { formActions } from "../../../../state/Question/questionFormSlice";
 import apiSubmissions from "../../../../api/apiSubmissions";
 
 function ButtonGroupComponent({ openProblem, isRoot }) {
@@ -29,7 +28,7 @@ function ButtonGroupComponent({ openProblem, isRoot }) {
       formActions.chooseParent({
         chosenParentTitle: title,
         parentId: problemId,
-      }),
+      })
     );
   };
 
