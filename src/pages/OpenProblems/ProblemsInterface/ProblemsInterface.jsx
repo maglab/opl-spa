@@ -16,12 +16,9 @@ function ProblemsInterface() {
 
   return (
     <div className="flex flex-col">
-      {!formState.submitFormOpen && (
-        <div className="sort-problems flex flex-row items-center justify-center px-4 pt-2">
-          <SortingInputs />
-        </div>
-      )}
-
+      <div className="sort-problems flex flex-row items-center justify-center px-4 pt-2">
+        <SortingInputs />
+      </div>
       <div className="questions-container px-4 py-2">
         <>
           <QuestionList loading={loading} setLoading={setLoading} />
