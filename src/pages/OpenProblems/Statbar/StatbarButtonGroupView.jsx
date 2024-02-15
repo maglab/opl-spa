@@ -2,9 +2,7 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { useDispatch, useSelector } from "react-redux";
-
 import { questionActions } from "../../../state/Question/questionSlice";
-import { formActions } from "../../../state/Question/questionFormSlice";
 import TooltipWrapper from "../../../components/UI/ToolTip/TooltipWrapper";
 function StatbarButtonGroupView() {
   const dispatch = useDispatch();
@@ -12,7 +10,6 @@ function StatbarButtonGroupView() {
   const viewState = useSelector((state) => state.question.viewType);
 
   const handleView = (e, value) => {
-    dispatch(formActions.toggleFalse({ key: "submitFormOpen" }));
     switch (value) {
       case "tree":
         dispatch(questionActions.setSorting({ value: "root" }));
