@@ -12,10 +12,10 @@ import sortQuery from "../functions/dataManipulation/sortQuery";
  */
 
 function checkFilters(filterObj, dispatch, trueAction, falseAction) {
-  //Iterate through filter filterObj and determine whether there are user selected filters
-  for (let key in filterObj) {
+  // Iterate through filter filterObj and determine whether there are user selected filters
+  for (const key in filterObj) {
     if (Array.isArray(filterObj[key]) && filterObj[key].length > 0) {
-      //We check for arrays and ids within the arrays to determine applied filters, execute relevant function here
+      // We check for arrays and ids within the arrays to determine applied filters, execute relevant function here
       dispatch(trueAction.action(trueAction.params));
       return;
     }
@@ -35,9 +35,9 @@ async function applyFilters(api, dispatch, action, setStates) {
   const { apiCall, queryParams } = api;
   try {
     const response = await apiCall({ queryParams });
-    const data = response.data;
+    const { data } = response;
     if (response.status === 200) {
-      //The dispatch action
+      // The dispatch action
       dispatch(action({ key: "allProblems", value: data.results }));
       dispatch(action({ key: "count", value: data.count }));
       dispatch(action({ key: "nextPage", value: data.next }));
@@ -66,7 +66,7 @@ export default function useFiltersEffect({
 }) {
   const dispatch = useDispatch();
 
-  //Check if filters have been applied first
+  // Check if filters have been applied first
   useEffect(() => {
     const trueAction = { action: questionActions.setState, params: true };
     const falseAction = { ...trueAction, params: false };
