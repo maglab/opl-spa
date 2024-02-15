@@ -1,11 +1,14 @@
 import regexTest from "./referenceRegex";
+import apiProblems from "../../../../api/apiProblems";
+import { generalActions } from "../../../../state/generalStateSlice";
 export const initialValues = {
   title: "",
   description: "",
   references: "",
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   organisation: "",
+  job_field: "",
   email: "",
 };
 
@@ -29,7 +32,23 @@ function formikValidation(values) {
     errors.references = "Cannot submit. Incorrect PMID or DOI formats.";
   }
 
-  //No validation for names or organisation for now
+  //Names - Need both first name and last name not either or
+  if (values.first_name) {
+    if (!values.last_name) {
+      errors.lastName = "Last name must be filled if first name is filled.";
+    }
+    if (values.first_name.length > 50) {
+      errors.first_name = "First name must be fewer than 50 characters.";
+    }
+  }
+  if (values.last_name) {
+    if (!values.first_name) {
+      errors.first_name = "First name must be filled if last name is filled.";
+    }
+    if (values.last_name.length > 50) {
+      errors.last_name = "Last name must be fewer than 50 characters.";
+    }
+  }
 
   //Email - validate if entered
   if (
@@ -42,8 +61,25 @@ function formikValidation(values) {
   return errors;
 }
 
-export function handleSubmit(values, actions) {
-  console.log(values);
+export async function handleSubmit(values, actions, ref, dispatch) {
+  dispatch(generalActions.toggleModal({ bool: true }));
+  //Let's grab the recaptcha token
+  const token = ref.current.getValue();
+  ref.current.reset();
+  try {
+    const response = await apiProblems.verifyToken({ token: token });
+    const parsedResponse = JSON.parse(response.data);
+    if (parsedResponse.success) {
+      console.log(values);
+      //Send the form data
+      const response = await apiProblems.postProblem({ values });
+      console.log(response.data);
+    } else {
+    }
+  } catch (error) {
+    // Something
+    console.log(error);
+  }
 }
 
 export default formikValidation;
