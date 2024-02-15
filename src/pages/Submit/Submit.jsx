@@ -1,8 +1,8 @@
+import { Container } from "@mui/material";
+import { useSelector } from "react-redux";
 import { SubmissionModal } from "../../components/UI/Modal/Modal";
-import { useSelector, useDispatch } from "react-redux";
 
 import OpenProblemForm from "./Form/Form";
-import { generalActions } from "../../state/generalStateSlice";
 function QuestionGuidance() {
   return (
     <div className="guidance bg-theme-blue-light border border-theme-blue p-10 pt-4">
@@ -38,7 +38,7 @@ function QuestionGuidance() {
 function SubmitPage() {
   const modalOpen = useSelector((state) => state.general.modal.isOpen);
   return (
-    <>
+    <Container>
       <div className="header items-center">
         <h1 className="form-title text-center text-xl font-bold md:text-2xl pb-4 pt-10">
           Submit an open problem
@@ -55,7 +55,7 @@ function SubmitPage() {
         response="Vero optio autem quibusdam asperiores atque iusto Ducimus, tempora? Veniam reiciendis velit officiis sint impedit hic.
         "
       />
-    </>
+    </Container>
   );
 }
 export default SubmitPage;
