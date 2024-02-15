@@ -5,11 +5,12 @@ import Proposals from "../Proposals/Proposals";
 import ProposalHeader from "../Proposals/ProposalHeader";
 import Submissions from "../Proposals/Submissions/Submissions";
 import ProposalForm from "../Proposals/ProposalForm/ProposalForm";
+
 function InformationSection(props) {
-  const children = props.children;
-  const id = props.id;
-  const isRoot = props.isRoot;
-  const parent = props.parent;
+  const { children } = props;
+  const { id } = props;
+  const { isRoot } = props;
+  const { parent } = props;
 
   return (
     <>
