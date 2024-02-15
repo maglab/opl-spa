@@ -1,15 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const withOnChangeHandler = (WrappedComponent) => {
-  return function WithOnChangeHandler(props) {
-    const setState = props.setState;
+const withOnChangeHandler = (WrappedComponent) =>
+  function WithOnChangeHandler(props) {
+    const { setState } = props;
     const onChangeHandler = (e) => {
-      const value = e.target.value;
+      const { value } = e.target;
       setState(value);
-
     };
     return <WrappedComponent {...props} onChange={onChangeHandler} />;
   };
-};
 
 export default withOnChangeHandler;
