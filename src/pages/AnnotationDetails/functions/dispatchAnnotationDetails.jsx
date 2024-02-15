@@ -1,4 +1,5 @@
 import { annotationActions } from "../../../state/Annotation/annotationSlice";
+
 function dispatchAnnotationDetails(dispatch, category, data) {
   dispatch(annotationActions.setState({ key: "annotation", value: category }));
   switch (category) {
@@ -12,7 +13,7 @@ function dispatchAnnotationDetails(dispatch, category, data) {
             description: data.description,
             parent: data.parent,
           },
-        })
+        }),
       );
       break;
 
@@ -26,7 +27,7 @@ function dispatchAnnotationDetails(dispatch, category, data) {
             geneSymbol: data.gene_symbol,
             species: data.gene_species,
           },
-        })
+        }),
       );
       break;
     case "protein":
@@ -38,7 +39,7 @@ function dispatchAnnotationDetails(dispatch, category, data) {
             title: data.protein_name,
             species: data.species,
           },
-        })
+        }),
       );
   }
   dispatch(annotationActions.setState({ key: "annotation", value: category }));
