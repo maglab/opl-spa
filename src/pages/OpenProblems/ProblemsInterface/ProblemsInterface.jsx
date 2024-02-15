@@ -1,15 +1,14 @@
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
+import MoreButton from "./Buttons/MoreButton";
 import QuestionList from "./List/QuestionList";
 import SortingInputs from "./Sorting/SortingInputs";
-import MoreButton from "./Buttons/MoreButton";
 /**
  * Wrapper component for the interface of the open problems list.
  * @returns - Open Problems Interface Component
  */
 function ProblemsInterface() {
-  const formState = useSelector((state) => state.form);
   const nextPage = useSelector((state) => state.question.nextPage);
   // We track the loading state
   const [loading, setLoading] = useState(true);
