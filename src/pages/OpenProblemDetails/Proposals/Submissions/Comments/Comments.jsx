@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useGetApi from "../../../../../utils/hooks/useApi";
 import api from "../../../../../api/apiComments";
-import CommentComponent from "./CommentComponent";
-import AddCommentComponent from "./AddCommentComponent";
 import Modal from "../../../../../components/UI/Modal/Modal";
-// import SubmissionModalContent from "../../../../../components/UI/Modal/SubmissionModalContent";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { generalActions } from "../../../../../state/generalStateSlice";
+import useGetApi from "../../../../../utils/hooks/useApi";
+import AddCommentComponent from "./AddCommentComponent";
+import CommentComponent from "./CommentComponent";
 
 function Comments() {
   const dispatch = useDispatch();
