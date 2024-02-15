@@ -1,17 +1,17 @@
+import { useMsal } from "@azure/msal-react";
 import withSVG from "../../utils/hoc/withSVG";
 import MSLogo from "../../assets/svg/ms-symbollockup_mssymbol_19.svg?react";
 import { TextInputStyled } from "../../components/UI/Inputs/TextInput";
 import { loginRequest } from "../../authConfig.js";
-import { useMsal } from "@azure/msal-react";
 
-//SVG to information
+// SVG to information
 const defaultProps = {
   h: 4,
   w: 4,
 };
 const MicrosoftIcon = withSVG(MSLogo, defaultProps);
 function Login() {
-  //Need to redirect when user is already logged in
+  // Need to redirect when user is already logged in
   const { instance } = useMsal();
   const handleLogin = async (e) => {
     try {
