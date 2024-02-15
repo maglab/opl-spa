@@ -1,10 +1,9 @@
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import withRipple from "../../../../utils/hoc/withRipple";
 import apiClient, { apiRequest } from "../../../../api/apiClient";
 import { questionActions } from "../../../../state/Question/questionSlice";
 import Spinner from "../../../../components/UI/Loading/Spinner";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
 
 async function getNextPage(url) {
   return apiRequest(() => apiClient.get(url));
@@ -30,7 +29,7 @@ function Button({ onClickHandler }) {
   );
 }
 
-//The button turns into a loading spinner instead when loading
+// The button turns into a loading spinner instead when loading
 function MoreButton() {
   const dispatch = useDispatch();
   const nextPage = useSelector((state) => state.question.nextPage);
@@ -41,8 +40,8 @@ function MoreButton() {
   const onClickHandler = async () => {
     if (!nextPage) return;
     setLoading(true);
-    //Call the api for the next page and then concatenate the array of results to the redux store.
-    //The nextpage url given by the api retains all the query parameters so we can just use the stored url
+    // Call the api for the next page and then concatenate the array of results to the redux store.
+    // The nextpage url given by the api retains all the query parameters so we can just use the stored url
     const { data } = await getNextPage(nextPage);
     const openProblems = data.results;
     const apiNextPage = data.next;
@@ -50,7 +49,7 @@ function MoreButton() {
       questionActions.concatenateArrays({
         key: "allProblems",
         array: openProblems,
-      })
+      }),
     );
     dispatch(questionActions.setState({ key: "nextPage", value: apiNextPage }));
     setLoading(false);
