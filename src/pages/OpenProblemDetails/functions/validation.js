@@ -2,15 +2,13 @@ import emptyTextValidator from "../../../utils/functions/validators/emptyTextVal
 import doiValidator from "../../../utils/functions/validators/doiValidator";
 import pubmedValidator from "../../../utils/functions/validators/pubmedIDValidator";
 
-
-async function checkReferenceLength(references){
+async function checkReferenceLength(references) {
   return new Promise((resolve, reject) => {
-    if(references.length > 0){
-      return resolve(references)
-    }else{
-      return reject(new Error("At least one reference is required."))
+    if (references.length > 0) {
+      return resolve(references);
     }
-  })
+    return reject(new Error("At least one reference is required."));
+  });
 }
 
 async function validateReference(ref) {
@@ -25,7 +23,7 @@ async function validateReference(ref) {
 
 async function validation(data) {
   const text = data.description;
-  const references = data.references;
+  const { references } = data;
   const errors = [];
 
   try {
@@ -36,23 +34,23 @@ async function validation(data) {
 
     // Validate each reference individually
     const referenceValidationPromises = references.map((ref) =>
-    validateReference(ref)
-  );
+      validateReference(ref),
+    );
 
     // Wait for all reference validations to complete
     const referenceValidationResults = await Promise.all(
-      referenceValidationPromises
+      referenceValidationPromises,
     );
 
     // Collect individual errors from reference validations
-    errors.push(...referenceValidationResults.filter((result) => result instanceof Error));
+    errors.push(
+      ...referenceValidationResults.filter((result) => result instanceof Error),
+    );
   } catch (error) {
     errors.push(error);
   }
 
   return errors;
-
-  }
-
+}
 
 export default validation;
