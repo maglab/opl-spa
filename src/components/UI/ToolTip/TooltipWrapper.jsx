@@ -1,6 +1,7 @@
 import { Tooltip } from "@mui/material";
+
 function TooltipWrapper(props) {
-  const message = props.message;
+  const { message } = props;
   return <Tooltip title={message}>{props.children}</Tooltip>;
 }
 
