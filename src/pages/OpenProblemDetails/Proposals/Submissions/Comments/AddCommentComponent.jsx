@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
-import TextAreaChangeHandler from "../../../../../components/UI/Inputs/TextArea";
-import TextInput from "../../../../../components/UI/Inputs/TextInput";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import TextAreaChangeHandler from "../../../../../components/UI/Inputs/TextArea";
+import TextInput from "../../../../../components/UI/Inputs/TextInput";
 import submitComment from "../../../functions/submitComment";
 
 function AddCommentComponent(props) {
@@ -22,7 +22,7 @@ function AddCommentComponent(props) {
     const data = {
       parent: null,
       full_text: comment,
-      alias: alias,
+      alias,
     };
     try {
       await submitComment(submissionId, data, dispatch);
