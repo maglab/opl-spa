@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { Button } from "@mui/material";
+import { useLoaderData } from "react-router-dom";
 import validation from "../../functions/validation";
 import submit from "../../functions/submit";
 import TextInput from "./TextInput";
 import SourcesInput from "./Sources/SourcesInput";
 import ContactInformation from "./ContactInformation";
-import { Button } from "@mui/material";
 import { detailsActions } from "../../../../state/Details/detailsSlice";
 import Modal from "../../../../components/UI/Modal/Modal";
 import { SubmissionModal } from "../../../../components/UI/Modal/Modal";
@@ -45,20 +46,20 @@ function ProposalForm() {
       });
   };
 
-  //Set open problem id in form state on load
+  // Set open problem id in form state on load
   const { data } = useLoaderData();
   const openProblemId = data.problem_id;
   useEffect(() => {
     dispatch(detailsActions.setOpenProblem({ id: openProblemId }));
   }, []);
 
-  //State for modal to display successful and unsuccessful submission
+  // State for modal to display successful and unsuccessful submission
   const modalState = useSelector((state) => state.details.modal);
 
-  //Submit status state
+  // Submit status state
   const submitStatus = useSelector((state) => state.details.submitStatus);
 
-  //Onclick handler for modal to exit modal
+  // Onclick handler for modal to exit modal
   const onClickHandlerModal = () => {
     dispatch(detailsActions.toggleModalClose());
   };
