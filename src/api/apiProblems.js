@@ -1,13 +1,13 @@
-import apiClient, { apiRequest } from "./apiClient";
 import { RECAPTCHA_SECRET_KEY } from "../config";
+import apiClient, { apiRequest } from "./apiClient";
 
 const apiProblems = {
   getDetails: async (params) => {
-    const id = params.id;
-    return apiRequest(() => apiClient.get("open-problems/" + id));
+    const { id } = params;
+    return apiRequest(() => apiClient.get(`open-problems/${id}`));
   },
   getProblems: async (params) => {
-    const queryParams = params.queryParams;
+    const { queryParams } = params;
     return apiRequest(() =>
       apiClient.get("open-problems", { params: queryParams })
     );
