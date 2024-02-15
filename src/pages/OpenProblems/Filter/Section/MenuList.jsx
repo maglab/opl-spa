@@ -22,12 +22,12 @@ function MenuList({ items, category, title }) {
   const [filteredItems, setFilteredItems] = useState([]);
   const [query, setQuery] = useState("");
   const selectedItems = useSelector(
-    (state) => state.question.filters[category]
+    (state) => state.question.filters[category],
   );
   const dispatch = useDispatch();
 
-  //Handling outside click events for the menu list
-  const wrapperRef = useRef(null); //The ref to track outside click events
+  // Handling outside click events for the menu list
+  const wrapperRef = useRef(null); // The ref to track outside click events
   const outsideClickHandler = () => {
     if (menuOpen) {
       setMenuOpen(false);
@@ -57,17 +57,17 @@ function MenuList({ items, category, title }) {
         filterItems(inputValue);
       }
     },
-    [fuseInstance]
+    [fuseInstance],
   );
 
   const onClickHandler = () => {
-    //Handler to set the filter state to on when a filter is clicked;
+    // Handler to set the filter state to on when a filter is clicked;
     dispatch(questionActions.setState({ key: "filterOpen", value: true }));
   };
 
   const resetFilter = () => {
     setFilteredItems(
-      items.map((item) => extractAnnotationInformation(item, category))
+      items.map((item) => extractAnnotationInformation(item, category)),
     );
   };
 
@@ -83,7 +83,7 @@ function MenuList({ items, category, title }) {
   useEffect(() => {
     if (items.length) {
       const list = items.map((item) =>
-        extractAnnotationInformation(item, category)
+        extractAnnotationInformation(item, category),
       );
       const fuse = new Fuse(list, {
         keys: ["title"],
@@ -100,7 +100,7 @@ function MenuList({ items, category, title }) {
         value={selectedItems}
         onChange={(items) =>
           dispatch(
-            questionActions.updateFilters({ filter: category, value: items })
+            questionActions.updateFilters({ filter: category, value: items }),
           )
         }
         multiple
