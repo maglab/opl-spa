@@ -1,5 +1,6 @@
-import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import { HashLink } from "react-router-hash-link";
+import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
+
 function ConnectedProblems(props) {
   const directChildren = props.children;
   const { parent } = props.parent;
@@ -7,7 +8,7 @@ function ConnectedProblems(props) {
   const parentId = parent ? parent.problem_id : null;
   const parentTitle = parent ? parent.title : null;
   return (
-    <InterfaceTemplate title={"Connected Problems"}>
+    <InterfaceTemplate title="Connected Problems">
       <div className="description pb-2 text-sm md:text-base">
         Each "Connected Problem" represents a focused inquiry, providing
         valuable insights and a comprehensive understanding of broader problems.
@@ -20,7 +21,7 @@ function ConnectedProblems(props) {
           {parent && (
             <HashLink
               smooth
-              to={"../" + parentId + "#" + parentId}
+              to={`../${parentId}#${parentId}`}
               className="pl-2 text-sm font-semibold hover:text-theme-blue hover:underline md:text-base"
             >
               <li className="parent" key={parentId}>
@@ -33,7 +34,7 @@ function ConnectedProblems(props) {
               <HashLink
                 className=" pl-2 text-sm font-semibold hover:text-theme-blue hover:underline md:text-base"
                 smooth
-                to={"../" + child.problem_id + `#${child.problem_id}`}
+                to={`../${child.problem_id}#${child.problem_id}`}
               >
                 <p>{child.title}</p>
               </HashLink>
