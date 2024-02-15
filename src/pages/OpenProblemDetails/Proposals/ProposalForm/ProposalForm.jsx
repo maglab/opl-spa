@@ -1,16 +1,14 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { Button } from "@mui/material";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoaderData } from "react-router-dom";
-import validation from "../../functions/validation";
-import submit from "../../functions/submit";
-import TextInput from "./TextInput";
-import SourcesInput from "./Sources/SourcesInput";
-import ContactInformation from "./ContactInformation";
-import { detailsActions } from "../../../../state/Details/detailsSlice";
-import Modal from "../../../../components/UI/Modal/Modal";
 import { SubmissionModal } from "../../../../components/UI/Modal/Modal";
-import { useLoaderData } from "react-router-dom";
+import { detailsActions } from "../../../../state/Details/detailsSlice";
+import submit from "../../functions/submit";
+import validation from "../../functions/validation";
+import ContactInformation from "./ContactInformation";
+import SourcesInput from "./Sources/SourcesInput";
+import TextInput from "./TextInput";
 function ProposalForm() {
   const formValues = useSelector((state) => state.details.submission);
   const dispatch = useDispatch();
