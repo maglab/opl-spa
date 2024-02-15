@@ -22,14 +22,14 @@ export function NameInput({ paddingY }) {
       <div className="flex flex-row gap-x-4 ">
         <input
           {...fieldFirst}
-          name="firstName"
+          name="first_name"
           type="text"
           className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
           placeholder="First name"
         />
         <input
           {...fieldLast}
-          name="lastName"
+          name="last_name"
           type="text"
           className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
           placeholder="Last name"
