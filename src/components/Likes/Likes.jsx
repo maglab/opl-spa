@@ -1,6 +1,7 @@
 import withSVG from "../../utils/hoc/withSVG";
-import LikeUp from "../../components/UI/Icons/LikeUp";
-import LikeDown from "../../components/UI/Icons/LikeDown";
+import LikeUp from "../UI/Icons/LikeUp";
+import LikeDown from "../UI/Icons/LikeDown";
+
 const UpIcon = withSVG(LikeUp);
 const DownIcon = withSVG(LikeDown);
 function Likes({ numberOfLikes = 0 }) {
