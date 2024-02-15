@@ -7,7 +7,7 @@ function textArea(props) {
       placeholder={props.placeHolder}
       value={props.value}
       onChange={props.onChange}
-    ></textarea>
+    />
   );
 }
 
@@ -23,7 +23,7 @@ export function TextAreaNoChangeHandler({
       placeholder={placeHolder}
       onChange={onChange}
       value={value}
-    ></textarea>
+    />
   );
 }
 
