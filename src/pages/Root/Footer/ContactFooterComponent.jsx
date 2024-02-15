@@ -15,17 +15,22 @@ function ContactFooterComponent() {
         <div className="contact-info">
           <div className="contact-pedro pb-2">
             <p className="font-semibold">João Pedro de Magalhães</p>
-            <a href="mailto:j.p.magalhaes@bham.ac.uk" className="text-sm md:text-base hover:text-theme-blue underline">
+            <a
+              href="mailto:j.p.magalhaes@bham.ac.uk"
+              className="text-sm md:text-base hover:text-theme-blue underline"
+            >
               j.p.magalhaes@bham.ac.uk{" "}
             </a>
           </div>
           <div className="contact-angelo">
             <p className="font-semibold">Angelo Talay</p>
-            <a href="mailto:a.g.talay@bham.ac.uk" className="text:sm md:text-base hover:text-theme-blue underline">a.g.talay@bham.ac.uk</a>
-
-
+            <a
+              href="mailto:a.g.talay@bham.ac.uk"
+              className="text:sm md:text-base hover:text-theme-blue underline"
+            >
+              a.g.talay@bham.ac.uk
+            </a>
           </div>
-
         </div>
       </div>
     </div>
