@@ -5,7 +5,7 @@ const defaultProps = {
   h: 4,
   w: 4,
 };
-//Create the icon and adjust the size with default props
+// Create the icon and adjust the size with default props
 const XIcon = withSVG(XSvg, defaultProps);
 
 function SelectedButton({ value, children, classNames, onClick }) {
@@ -14,9 +14,9 @@ function SelectedButton({ value, children, classNames, onClick }) {
   };
   return (
     <button
-      value={value ? value : null}
+      value={value || null}
       className={`flex flex-row justify-between ${classNames && classNames}`}
-      onClick={onClick ? onClick : defaultOnClick}
+      onClick={onClick || defaultOnClick}
     >
       {children}
       <XIcon />
