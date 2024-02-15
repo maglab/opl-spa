@@ -6,9 +6,9 @@ class Tree {
   }
 
   buildTree() {
-    let map = {},
-      node,
-      roots = [];
+    const map = {};
+    let node;
+    const roots = [];
 
     this.objArray.forEach((node, index) => {
       node.children = [];
@@ -29,7 +29,7 @@ class Tree {
   }
 
   flattenTree() {
-    let result = [];
+    const result = [];
     const recurse = (nodeArray) => {
       nodeArray.forEach((node) => {
         result.push(node);
