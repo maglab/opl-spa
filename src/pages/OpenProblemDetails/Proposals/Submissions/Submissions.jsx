@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+
 import { detailsActions } from "../../../../state/Details/detailsSlice";
 import apiSubmissions from "../../../../api/apiSubmissions";
 import SubmissionComponent from "./Submission/SubmissionComponent";
+
 function Submissions(props) {
   const problemId = props.id;
   const dispatch = useDispatch();
@@ -14,9 +15,9 @@ function Submissions(props) {
     async function getSubmissionsLength() {
       try {
         const response = await apiSubmissions.getSubmissions({
-          problemId: problemId,
+          problemId,
         });
-        const data = response.data;
+        const { data } = response;
         dispatch(detailsActions.setPostsLength({ length: data.length }));
       } catch (error) {
         dispatch(detailsActions.setPostsLength({ length: "error loading" }));
@@ -25,10 +26,10 @@ function Submissions(props) {
     async function getSubmissions() {
       try {
         const response = await apiSubmissions.getSubmissions({
-          problemId: problemId,
+          problemId,
         });
         if (response.status === 202 || 200) {
-          const data = response.data;
+          const { data } = response;
           setSubmissions(data);
         }
       } catch (error) {
