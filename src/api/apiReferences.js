@@ -1,5 +1,4 @@
-import apiClient from "./apiClient";
-import { apiRequest } from "./apiClient";
+import apiClient, { apiRequest } from "./apiClient";
 
 const apiReferences = {
   getReferenceForProblem: async (params) => {
@@ -9,19 +8,19 @@ const apiReferences = {
     );
   },
   verifyReference: async (params) => {
-    const type = params.type;
-    const value = params.value;
+    const { type } = params;
+    const { value } = params;
     const data = {
-      type: type,
-      value: value,
+      type,
+      value,
     };
     return () => apiClient.post(`posts/verify-reference`, data);
   },
 
   verifyReferences: async (params) => {
-    const references = params.references;
+    const { references } = params;
     const data = {
-      references: references,
+      references,
     };
     return apiRequest(() => apiClient.post("posts/verify-references", data));
   },
