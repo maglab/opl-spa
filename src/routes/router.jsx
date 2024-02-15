@@ -1,17 +1,13 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 // import apiAnnotations from "../api/apiAnnotations";
-import apiProblems from "../api/apiProblems";
 import SharedLayout from "../components/sharedLayout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
 import Hero from "../pages/Home/Hero/Hero";
 import Login from "../pages/Login/Login";
-import Details from "../pages/OpenProblemDetails/Details";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
-// import RootLayout from "../pages/Root/RootLayout";
-// import SubmitPage from "../pages/Submit/Submit";
-
+import SubmitPage from "../pages/Submit/Submit";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,21 +15,18 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        index: true,
         element: <Hero />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/open-problems",
+        path: "open-problems",
         element: <OpenProblems />,
       },
-      {
-        path: "open-problems/:id",
-        element: <Details />,
-        loader: ({ params }) => apiProblems.getDetails({ id: params.id }),
-      },
+      { path: "open-problems/submit", element: <SubmitPage /> },
     ],
   },
 ]);
