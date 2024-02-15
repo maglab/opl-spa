@@ -1,12 +1,13 @@
-import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import useGetApi from "../../../../utils/hooks/useApi";
+
 function RelatedReferences(props) {
   const annotation = useSelector((state) => state.annotation.annotation);
   const { title, id } = props.annotationData;
 
-  //State for number of references
+  // State for number of references
   const [referencesLength, setReferencesLength] = useState(0);
 
   return (
