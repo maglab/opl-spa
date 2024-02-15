@@ -1,8 +1,7 @@
-import { questionActions } from "../../state/Question/questionSlice";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import Fuse from "fuse.js";
+import { questionActions } from "../../state/Question/questionSlice";
 /**
  * Helper function. Sets up fuse instance for fuzzy searching results.
  * @param {Object} fuseOptions - Options for finetuning Fuse instance
@@ -36,11 +35,11 @@ export default function useSearchEffect(searchQuery) {
 
     if (results.length > 0) {
       dispatch(
-        questionActions.setState({ key: "filteredResults", value: results })
+        questionActions.setState({ key: "filteredResults", value: results }),
       );
     } else {
       dispatch(
-        questionActions.setState({ key: "filteredResults", value: null })
+        questionActions.setState({ key: "filteredResults", value: null }),
       );
     }
   }, [searchQuery]);
