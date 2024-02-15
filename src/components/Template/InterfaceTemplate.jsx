@@ -1,11 +1,11 @@
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { Button } from "@mui/material";
-import { Collapse } from "@mui/material";
+import { Button, Collapse } from "@mui/material";
+
 import { useState } from "react";
 
 function InterfaceTemplate(props) {
-  const title = props.title;
+  const { title } = props;
 
   // States for button
   const [openSection, setOpenSection] = useState(true);
