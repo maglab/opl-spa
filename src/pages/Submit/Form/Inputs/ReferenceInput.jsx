@@ -50,10 +50,6 @@ function ValidationComponent({ inputValue, validUseState, invalidUseState }) {
         failedTests.push(value);
       }
     });
-    console.log(`passed tests: ${passedTests}`);
-    console.log(
-      `failed tests: ${failedTests}. Length of failed: ${failedTests.length}`
-    );
     setValidReferences(passedTests);
     setInvalidReferences(failedTests);
   }, [inputValue]);
@@ -138,7 +134,7 @@ function ReferenceInput({ id, name, label, placeHolder, type }) {
   const [validReferences, setValidReferences] = useState([]);
   const [invalidReferences, setInvalidReferences] = useState([]);
 
-  //Set the default value to the response to the API. Assume an empty response on start.
+  //Set the default value to mirror the response to the API. Assume an empty response on start.
   const INITIAL_STATE = { verified_references: [], unverified_references: [] };
   const [retrievedReferences, setRetrievedReferences] = useState(INITIAL_STATE);
   const [error, setError] = useState(false);
@@ -147,17 +143,14 @@ function ReferenceInput({ id, name, label, placeHolder, type }) {
     if (invalidReferences.length > 0) return;
     const delayDebounceFunction = setTimeout(async () => {
       const formattedReferences = formatReferences(validReferences);
-      console.log(formattedReferences);
       try {
         const { data } = await apiReferences.verifyReferences({
           references: formattedReferences,
         });
-        console.log(data);
         setRetrievedReferences(data);
       } catch (error) {
         setError(error);
       }
-      console.log(retrievedReferences);
     }, 1200);
 
     return () => clearTimeout(delayDebounceFunction);
