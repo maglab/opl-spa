@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { generalActions } from "../../state/generalStateSlice";
-import SubmissionModalContent from "../../components/UI/Modal/SubmissionModalContent";
 import Statbar from "./Statbar/Statbar";
 import SearchBar from "./SearchBar/SearchBar";
 import ProblemsInterface from "./ProblemsInterface/ProblemsInterface";
@@ -22,21 +21,12 @@ function OpenProblems() {
       <div className={`side-nav w-1/5 sticky`}>
         <Filter config={config} />
       </div>
-
       {/* Main Content */}
       <div className="main w-full h-max overflow-auto">
         <SearchBar label={"Search for an open problem"} />
         <Statbar className="statbar" />
         <ProblemsInterface />
       </div>
-
-      {/* Modal */}
-      <Modal open={modalState} close={modalCloseHandler}>
-        <SubmissionModalContent
-          questionDetails={questionDetails}
-          close={modalCloseHandler}
-        />
-      </Modal>
     </div>
   );
 }
