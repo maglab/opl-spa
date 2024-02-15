@@ -4,8 +4,10 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import { Button, Tooltip } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { HashLink } from "react-router-hash-link";
-import apiSubmissions from "../../../../api/apiSubmissions";
 import { useEffect, useState } from "react";
+import { formActions } from "../../../../state/Question/questionFormSlice";
+import apiSubmissions from "../../../../api/apiSubmissions";
+
 function ButtonGroupComponent({ openProblem, isRoot }) {
   const { problem_id: problemId, title } = openProblem;
   const dispatch = useDispatch();
@@ -27,29 +29,27 @@ function ButtonGroupComponent({ openProblem, isRoot }) {
       formActions.chooseParent({
         chosenParentTitle: title,
         parentId: problemId,
-      })
+      }),
     );
   };
 
   return (
-    <>
-      <ButtonGroup size="small" variant="outlined">
-        {isRoot && (
-          <Tooltip title="view solutions">
-            <Button sx={{ fontsize: 10 }}>
-              <HashLink smooth to={`${problemId}#researchProposals`}>
-                <ModeCommentIcon fontSize="small" /> {counts} Solutions
-              </HashLink>
-            </Button>
-          </Tooltip>
-        )}
-        <Tooltip title="Add a connected problem">
-          <Button onClick={onClickHandlerForm} sx={{ fontSize: 10 }}>
-            <AddBoxIcon fontSize="small" /> Add Problem
+    <ButtonGroup size="small" variant="outlined">
+      {isRoot && (
+        <Tooltip title="view solutions">
+          <Button sx={{ fontsize: 10 }}>
+            <HashLink smooth to={`${problemId}#researchProposals`}>
+              <ModeCommentIcon fontSize="small" /> {counts} Solutions
+            </HashLink>
           </Button>
         </Tooltip>
-      </ButtonGroup>
-    </>
+      )}
+      <Tooltip title="Add a connected problem">
+        <Button onClick={onClickHandlerForm} sx={{ fontSize: 10 }}>
+          <AddBoxIcon fontSize="small" /> Add Problem
+        </Button>
+      </Tooltip>
+    </ButtonGroup>
   );
 }
 
