@@ -6,7 +6,7 @@ const submit = async (data, dispatch) => {
   const date = new Date();
   const requestData = {
     full_text: data.description,
-    date: date,
+    date,
     first_name: data.firstName,
     last_name: data.lastName,
     affiliation: data.affiliation,
@@ -26,7 +26,7 @@ const submit = async (data, dispatch) => {
           title: "Post submitted",
           message: "This post has been submitted for review",
           status: "success",
-        })
+        }),
       );
     }
   } catch (error) {
@@ -36,7 +36,7 @@ const submit = async (data, dispatch) => {
         title: "Unsuccessful submission",
         message: `${error.message}`,
         status: "failed",
-      })
+      }),
     );
   }
 };
