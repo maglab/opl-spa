@@ -1,8 +1,9 @@
-import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
 import { useSelector } from "react-redux";
-import apiAnnotations from "../../../../api/apiAnnotations";
 import { useEffect, useState } from "react";
 import { HashLink } from "react-router-hash-link";
+import apiAnnotations from "../../../../api/apiAnnotations";
+import InterfaceTemplate from "../../../../components/Template/InterfaceTemplate";
+
 function RelatedProblems(props) {
   const category = useSelector((state) => state.annotation.annotation);
   const { title, id } = props.annotationData;
@@ -12,7 +13,7 @@ function RelatedProblems(props) {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //State for getting the number of open problems for the annotation
+  // State for getting the number of open problems for the annotation
   const [openProblemsLength, setOpenProblemsLength] = useState(0);
 
   // Only making the API call when params is not null (i.e., id is available)
@@ -24,7 +25,7 @@ function RelatedProblems(props) {
             annotation: category,
             annotationId: id,
           });
-          const data = response.data;
+          const { data } = response;
           setApiData(data);
           setOpenProblemsLength(data.length);
         } catch (error) {
