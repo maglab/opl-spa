@@ -14,16 +14,17 @@ const apiProblems = {
   },
   postProblem: async (params) => {
     const data = params.data;
-    return apiRequest(() => apiClient.get("open-problems/submit", data));
+    return apiRequest(() => apiClient.post("open-problems/submit", data));
   },
   verifyToken: async (params) => {
     const SECRET_KEY = RECAPTCHA_SECRET_KEY;
     const token = params.token;
-    return () =>
-      apiClient.get("open-problems/verify-token", {
+    return apiRequest(() =>
+      apiClient.post("open-problems/verify-token", {
         secret: SECRET_KEY,
-        resposne: token,
-      });
+        response: token,
+      })
+    );
   },
 };
 
