@@ -4,20 +4,17 @@ import withOnChangeHandler from "../../../utils/hoc/withOnChangeHandler";
 
 const boxStyles = {
   alignItems: "center",
-  paddingTop: "2rem",
-  paddingBottom: "2rem",
 };
 
 const labelStyles = {
   fontSize: 18,
 };
 export function InputWithFormLabelMultiline({
+  id,
   label,
-  onChange,
-  onBlur,
-  error,
   name,
   required,
+  placeHolder,
 }) {
   const [field, meta] = useField(name, "textarea");
 
@@ -25,14 +22,16 @@ export function InputWithFormLabelMultiline({
     <Box sx={boxStyles}>
       <FormLabel sx={labelStyles}>{label}</FormLabel>
       <FilledInput
+        id={id}
         fullWidth
         name={name}
         onChange={field.onChange}
         onBlur={field.onBlur}
-        error={meta.error}
+        error={meta.touched && Boolean(meta.error)}
         required={required}
         multiline={true}
         minRows={3}
+        placeholder={placeHolder}
       />
       <FormHelperText>{meta.error}</FormHelperText>
     </Box>
