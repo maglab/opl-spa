@@ -15,7 +15,7 @@ export default function Footer() {
 
   return (
     <DefaultMargin bgcolor={blueGrey[900]} yPadding={2}>
-      <Grid container maxWidth="md" spacing={6}>
+      <Grid container maxWidth="md" rowSpacing={6}>
         <Grid item xs={12}>
           <Typography color={primaryColor} align="center" variant="h4">
             Contact Us
@@ -35,7 +35,7 @@ export default function Footer() {
             container
             justifyContent={{
               xs: "center",
-              md: "flex-end",
+              sm: "flex-end",
             }}
           >
             <Grid item>
