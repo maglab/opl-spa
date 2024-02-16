@@ -1,18 +1,32 @@
-import { Formik, Form } from "formik";
+import { Box, Paper } from "@mui/material";
+import { Form, Formik } from "formik";
+import { forwardRef, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useRef, forwardRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { initialValues, handleSubmit } from "./functions/formik";
-import formikValidation from "./functions/formik";
-import { TextArea, TextInput } from "./Inputs/Inputs";
-import TitleInput from "./Inputs/TitleInput";
-import ReferenceInput from "./Inputs/ReferenceInput";
-import { NameInput } from "./Inputs/NameInput";
-import { RECAPTCHA_SITE_KEY } from "../../../config";
 import FilledButton from "../../../components/UI/Buttons/FilledButton";
 import OutlinedButton from "../../../components/UI/Buttons/OutlineButton";
+import { InputWithFormLabelMultiline } from "../../../components/UI/Inputs/TextArea";
+import { RECAPTCHA_SITE_KEY } from "../../../config";
+import { TextInput } from "./Inputs/Inputs";
+import { NameInput } from "./Inputs/NameInput";
+import ReferenceInput from "./Inputs/ReferenceInput";
+import TitleInput from "./Inputs/TitleInput";
+import formikValidation, {
+  handleSubmit,
+  initialValues,
+} from "./functions/formik";
+
+const boxStyles = {
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  paddingTop: "2rem",
+  paddingBottom: "2rem",
+};
+
 /**
  * Wrapper component to contain contact inputs.
  * @param {React.Component} children - Any child components.
@@ -65,60 +79,77 @@ function OpenProblemForm() {
         handleSubmit(values, actions, catpchaRef, dispatch)
       }
     >
-      <Form className="bg-white p-6 py-14 shadow-md">
-        <TitleInput
-          name="title"
-          id="title"
-          label="Title:"
-          placeHolder="Required."
-          paddingY={4}
-        />
-        <TextArea
-          name="description"
-          id="description"
-          label="Description:"
-          placeHolder="Required."
-        />
-        <ReferenceInput
-          name="references"
-          id="references"
-          label="References (comma separated DOI or PMID):"
-          placeHolder="Example: PMID:12345678, DOI:10.1016/j.cell.2022.11.001"
-          required={true}
-        />
-        <hr />
-        <ContactSection>
-          <NameInput paddingY={2} />
-          <TextInput
-            name="organisation"
-            type="text"
-            id="organisation"
-            label="Organisation:"
-            paddingY={2}
-          />
-          <TextInput
-            name="job_field"
-            type="text"
-            id="jobField"
-            label="Job Field:"
-            paddingY={2}
-          />
-          <TextInput
-            name="email"
-            type="email"
-            id="email"
-            label="Email:"
-            placeHolder="Provide an email if you want to be updated on the status of this submission."
-            paddingY={2}
-          />
-        </ContactSection>
-        <hr className="py-4" />
-        <ReCaptchaSection ref={catpchaRef} />
-        <div className="buttons flex flex-row justify-center gap-x-6 py-4">
-          <OutlinedButton label="Exit" onClick={exitOnclick} type="button" />
-          <FilledButton label="Submit" type="submit" />
-        </div>
-      </Form>
+      <Paper elevation={2}>
+        <Box sx={boxStyles}>
+          <Form style={{ columnGap: 12 }}>
+            <div className="gap-y-4">
+              <TitleInput
+                name="title"
+                id="title"
+                label="Title:"
+                required={true}
+                placeHolder="Required."
+                paddingY={4}
+              />
+              <InputWithFormLabelMultiline
+                name="description"
+                id="description"
+                label="Description:"
+                required={true}
+              />
+              {/* <TextArea
+                name="description"
+                id="description"
+                label="Description:"
+                placeHolder="Required."
+              /> */}
+              <ReferenceInput
+                name="references"
+                id="references"
+                label="References (comma separated DOI or PMID):"
+                placeHolder="Example: PMID:12345678, DOI:10.1016/j.cell.2022.11.001"
+                required={true}
+              />
+              <hr />
+              <ContactSection>
+                <NameInput paddingY={2} />
+                <TextInput
+                  name="organisation"
+                  type="text"
+                  id="organisation"
+                  label="Organisation:"
+                  paddingY={2}
+                />
+                <TextInput
+                  name="job_field"
+                  type="text"
+                  id="jobField"
+                  label="Job Field:"
+                  paddingY={2}
+                />
+                <TextInput
+                  name="email"
+                  type="email"
+                  id="email"
+                  label="Email:"
+                  placeHolder="Provide an email if you want to be updated on the status of this submission."
+                  paddingY={2}
+                />
+              </ContactSection>
+              <hr className="py-4" />
+              <ReCaptchaSection ref={catpchaRef} />
+              <div className="buttons flex flex-row justify-center gap-x-6 py-4">
+                <OutlinedButton
+                  label="Exit"
+                  onClick={exitOnclick}
+                  type="button"
+                />
+                <FilledButton label="Submit" type="submit" />
+              </div>
+            </div>
+          </Form>
+        </Box>
+      </Paper>
     </Formik>
   );
 }
