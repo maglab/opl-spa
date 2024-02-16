@@ -1,5 +1,38 @@
+import { Box, FilledInput, FormHelperText, FormLabel } from "@mui/material";
+import { useField } from "formik";
 import { useState } from "react";
 import withOnChangeHandler from "../../../utils/hoc/withOnChangeHandler";
+
+const boxStyles = {
+  alignItems: "center",
+};
+
+const labelStyles = {
+  fontSize: 18,
+};
+
+const inputStyles = {
+  width: "80%",
+};
+
+export function InputWithFormLabel({ label, error, name, required }) {
+  const [field, meta] = useField(name, "input");
+
+  return (
+    <Box sx={boxStyles}>
+      <FormLabel sx={labelStyles}>{label}</FormLabel>
+      <FilledInput
+        fullWidth
+        name={name}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        error={meta.error}
+        required={required}
+      />
+      <FormHelperText>{error}</FormHelperText>
+    </Box>
+  );
+}
 
 function textInput(props) {
   return (
