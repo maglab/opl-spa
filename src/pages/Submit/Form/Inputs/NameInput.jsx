@@ -22,7 +22,7 @@ function NameInput() {
   const [fieldLast, metaLast] = useField("lastName", "text");
   return (
     <Box>
-      <Box classNames="name-box" sx={nameBoxStyles}>
+      <Box className="name-box" sx={nameBoxStyles}>
         <InputWithFormLabel
           name="first_name"
           label="First name"
