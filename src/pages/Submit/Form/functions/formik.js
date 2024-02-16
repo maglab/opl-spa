@@ -70,10 +70,8 @@ export async function handleSubmit(values, actions, ref, dispatch) {
     const response = await apiProblems.verifyToken({ token: token });
     const parsedResponse = JSON.parse(response.data);
     if (parsedResponse.success) {
-      console.log(values);
       //Send the form data
       const response = await apiProblems.postProblem({ values });
-      console.log(response.data);
     } else {
     }
   } catch (error) {
