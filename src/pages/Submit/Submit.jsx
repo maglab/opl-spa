@@ -46,9 +46,7 @@ function SubmitPage() {
         <QuestionGuidance />
         <hr className="pb-6" />
       </div>
-      <div className="py-6">
-        <OpenProblemForm />
-      </div>
+      <OpenProblemForm />
       <SubmissionModal
         open={modalOpen}
         title="Test title"
