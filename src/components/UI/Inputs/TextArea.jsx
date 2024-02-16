@@ -9,6 +9,16 @@ const boxStyles = {
 const labelStyles = {
   fontSize: 18,
 };
+
+/**
+ * Re-useable MUI text area with form label.
+ * @param {String} id - ID for input
+ * @param {String} label - Label text
+ * @param {String} name - Required for formik
+ * @param {Boolean} required - Required boolean for input
+ * @param {String} placeHolder - Placeholder text
+ * @returns {React.Component}
+ */
 export function InputWithFormLabelMultiline({
   id,
   label,

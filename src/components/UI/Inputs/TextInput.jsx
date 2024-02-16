@@ -4,7 +4,8 @@ import { useState } from "react";
 import withOnChangeHandler from "../../../utils/hoc/withOnChangeHandler";
 
 const boxStyles = {
-  alignItems: "center",
+  // alignItems: "center",
+  width: "100%",
 };
 
 const labelStyles = {
@@ -15,7 +16,25 @@ const inputStyles = {
   width: "80%",
 };
 
-export function InputWithFormLabel({ id, label, error, name, required }) {
+/**
+ * Re-useable MUI text input with form label.
+ * @param {String} id - ID for input
+ * @param {String} label - Label text
+ * @param {String} name - Required for formik
+ * @param {Boolean} required - Required boolean for input
+ * @param {String} placeHolder - Placeholder text
+ * @param {String} type - Input type. Default is text.
+ * @returns {React.Component}
+ */
+export function InputWithFormLabel({
+  id,
+  label,
+  error,
+  name,
+  required,
+  placeHolder,
+  type = "text",
+}) {
   const [field, meta] = useField(name, "input");
 
   return (
@@ -23,14 +42,16 @@ export function InputWithFormLabel({ id, label, error, name, required }) {
       <FormLabel sx={labelStyles}>{label}</FormLabel>
       <FilledInput
         id={id}
-        fullWidth
+        fullWidth={true}
         name={name}
         onChange={field.onChange}
         onBlur={field.onBlur}
         error={meta.touched && Boolean(meta.error)}
         required={required}
+        placeHolder={placeHolder}
+        type={type}
       />
-      <FormHelperText>{error}</FormHelperText>
+      <FormHelperText>{meta.error}</FormHelperText>
     </Box>
   );
 }
