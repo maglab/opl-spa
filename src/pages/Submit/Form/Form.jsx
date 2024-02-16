@@ -1,16 +1,14 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import { forwardRef, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import FilledButton from "../../../components/UI/Buttons/FilledButton";
-import OutlinedButton from "../../../components/UI/Buttons/OutlineButton";
 import { InputWithFormLabelMultiline } from "../../../components/UI/Inputs/TextArea";
+import { InputWithFormLabel } from "../../../components/UI/Inputs/TextInput";
 import { RECAPTCHA_SITE_KEY } from "../../../config";
-import { TextInput } from "./Inputs/Inputs";
-import { NameInput } from "./Inputs/NameInput";
+import NameInput from "./Inputs/NameInput";
 import ReferenceInput from "./Inputs/ReferenceInput";
 import TitleInput from "./Inputs/TitleInput";
 import formikValidation, {
@@ -19,9 +17,16 @@ import formikValidation, {
 } from "./functions/formik";
 
 const contactBoxStyles = {
+  paddingBottom: "1.5rem",
+};
+const typographyStyles = {
   textAlign: "center",
-  paddingTop: "1rem",
-  paddingBottom: "1rem",
+  paddingBottom: "2rem",
+};
+const childrenBoxStyles = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.5rem",
 };
 /**
  * Wrapper component to contain contact inputs.
@@ -30,9 +35,11 @@ const contactBoxStyles = {
  */
 function ContactSection({ children }) {
   return (
-    <Box className="py-4" sx={contactBoxStyles}>
-      <Typography variant="h5">Contact Information (optional)</Typography>
-      <Box className="contact-form">{children}</Box>
+    <Box sx={contactBoxStyles}>
+      <Typography variant="h5" sx={typographyStyles}>
+        Contact Information (optional)
+      </Typography>
+      <Box sx={childrenBoxStyles}>{children}</Box>
     </Box>
   );
 }
@@ -116,38 +123,32 @@ function OpenProblemForm() {
             <hr />
             <ContactSection>
               <NameInput paddingY={2} />
-              <TextInput
-                name="organisation"
-                type="text"
+              <InputWithFormLabel
                 id="organisation"
-                label="Organisation:"
-                paddingY={2}
+                name="organisation"
+                label="Organisation"
               />
-              <TextInput
-                name="job_field"
-                type="text"
+              <InputWithFormLabel
                 id="jobField"
-                label="Job Field:"
-                paddingY={2}
+                name="job_field"
+                label="Job Field"
               />
-              <TextInput
-                name="email"
-                type="email"
+              <InputWithFormLabel
                 id="email"
-                label="Email:"
-                placeHolder="Provide an email if you want to be updated on the status of this submission."
-                paddingY={2}
+                name="email"
+                label="Email"
+                type="email"
               />
             </ContactSection>
             <hr className="py-4" />
             <ReCaptchaSection ref={catpchaRef} />
             <div className="buttons flex flex-row justify-center gap-x-6 py-4">
-              <OutlinedButton
-                label="Exit"
-                onClick={exitOnclick}
-                type="button"
-              />
-              <FilledButton label="Submit" type="submit" />
+              <Button variant="outlined" onClick={exitOnclick} size="medium">
+                Exit
+              </Button>
+              <Button variant="contained" type="submit" size="medium">
+                Submit
+              </Button>
             </div>
           </Form>
         </Box>
