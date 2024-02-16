@@ -5,7 +5,7 @@ import apiProblems from "../api/apiProblems";
 import SharedLayout from "../components/sharedLayout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
-import Hero from "../pages/Home/Hero/Hero";
+import Hero from "../components/hero";
 import Login from "../pages/Login/Login";
 import Details from "../pages/OpenProblemDetails/Details";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
