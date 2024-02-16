@@ -6,24 +6,32 @@ import {
   FormLabel,
   IconButton,
   LinearProgress,
+  List,
+  ListItem,
+  Typography,
 } from "@mui/material";
+import { styled } from "@mui/system";
 import { useField } from "formik";
 import { useEffect, useState } from "react";
 import { HashLink } from "react-router-hash-link";
 
 import apiProblems from "../../../../api/apiProblems";
-import useViewWidth from "../../../../utils/hooks/useViewWidth";
-const boxStyles = {
-  alignItems: "center",
-};
 
 const labelStyles = {
   fontSize: 18,
 };
-
+/**
+ * Input for title
+ * @param {String} label - Label text
+ * @param {String} name - name required for Formik useField hook
+ * @param {Boolean} required
+ * @param {Object} field - Formik field object
+ * @param {Object} meta - Formik meta object
+ * @returns
+ */
 function Input({ label, name, required, field, meta }) {
   return (
-    <Box sx={boxStyles}>
+    <Box alignItems="center">
       <FormLabel sx={labelStyles}>{label}</FormLabel>
       <FilledInput
         fullWidth={true}
@@ -49,34 +57,59 @@ function ExitIcon({ setState }) {
   );
 }
 
-function LoadingSection() {
-  return (
-    <div className="w-full">
-      <LinearProgress />
-    </div>
-  );
-}
+// Stylings for Problem List components
+const innerBoxStyling = {
+  position: "absolute",
+  top: "100%",
+  right: 0,
+  marginTop: 0,
+  maxHeight: 160,
+  width: "100%",
+  border: "1px solid",
+  borderColor: "secondary.main",
+  backgroundColor: "primary.main",
+  zIndex: 10,
+  overflowY: "scroll",
+  padding: 2,
+};
 
+// Styled hashlink following theme MUI theme
+const StyledHashLink = styled(HashLink)(({ theme }) => ({
+  color: "black",
+  textDecoration: "none",
+  "&:hover": {
+    textDecoration: "underline",
+    color: theme.palette.secondary.main,
+  },
+}));
+
+/**
+ * Component for rendering similar open problems compared to title input.
+ * @param {Array} similarProblems - Array of titles to display
+ * @param {Function} setToDisplay - setState function to remove display of list.
+ * @returns
+ */
 function ProblemsList({ similarProblems, setToDisplay }) {
   return (
-    <div className="relative">
-      {/* Wrap both TitleInput and ProblemsList in a relative container */}
-      <div className="absolute top-full right-0 mt-2 max-h-40 w-full overflow-y-auto border border-theme-blue bg-white z-10">
-        <div className="flex items-center">
-          <h1 className="flex-grow text-small font-semibold md:text-base text-center">
+    <Box position="relative">
+      <Box sx={innerBoxStyling}>
+        <Box display="flex" alignItems="center">
+          <Typography
+            display="flex"
+            variant="body1"
+            fontWeight="bold"
+            textAlign="center"
+          >
             Similar submitted problems:
-          </h1>
-          <div className="ml-auto">
+          </Typography>
+          <Box marginLeft="auto">
             <ExitIcon setState={setToDisplay} />
-          </div>
-        </div>
-        <ul className="">
+          </Box>
+        </Box>
+        <List className="">
           {similarProblems.map((problem) => (
-            <li
-              key={problem.problem_id}
-              className="px-2 py-1 text-sm md:text-base"
-            >
-              <HashLink
+            <ListItem key={problem.problem_id}>
+              <StyledHashLink
                 smooth
                 to={
                   "/open-problems/" +
@@ -84,27 +117,24 @@ function ProblemsList({ similarProblems, setToDisplay }) {
                   "#title" +
                   problem.problem_id
                 }
-                className="hover:text-theme-blue hover:underline"
               >
                 {problem.title}
-              </HashLink>
-            </li>
+              </StyledHashLink>
+            </ListItem>
           ))}
-        </ul>
-      </div>
-    </div>
+        </List>
+      </Box>
+    </Box>
   );
 }
 
-export function TitleInput({ id, label, name, type, placeHolder, paddingY }) {
-  const { isMobile } = useViewWidth();
+export function TitleInput({ name, type }) {
   const [field, meta] = useField(name, type);
-
   const { value: formTitle } = meta;
 
   const [similarProblems, setSimilarProblems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(false); //No error reporting for now
   const [toDisplay, setToDisplay] = useState(false);
 
   useEffect(() => {
@@ -129,10 +159,12 @@ export function TitleInput({ id, label, name, type, placeHolder, paddingY }) {
   }, [formTitle]);
 
   return (
-    <div className="w-full">
-      <div className="w-full">
+    <Box className="title-input-outer-box" width="100%">
+      <Box className="title-input-inner-box" width="100%">
         <Input label="Title" name="title" field={field} meta={meta} />
-        {formTitle.length > 0 && loading && <LoadingSection />}
+        {formTitle.length > 0 && loading && (
+          <LinearProgress color="secondary" />
+        )}
         {formTitle.length > 0 &&
           toDisplay &&
           similarProblems.length > 0 &&
@@ -142,9 +174,7 @@ export function TitleInput({ id, label, name, type, placeHolder, paddingY }) {
               setToDisplay={setToDisplay}
             />
           )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
-
-export default TitleInput;
