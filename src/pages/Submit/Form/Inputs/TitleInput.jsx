@@ -1,12 +1,44 @@
-import { useState, useEffect } from "react";
-import { HashLink } from "react-router-hash-link";
-import { LinearProgress } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  FilledInput,
+  FormHelperText,
+  FormLabel,
+  IconButton,
+  LinearProgress,
+} from "@mui/material";
 import { useField } from "formik";
+import { useEffect, useState } from "react";
+import { HashLink } from "react-router-hash-link";
 
 import apiProblems from "../../../../api/apiProblems";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import useViewWidth from "../../../../utils/hooks/useViewWidth";
+const boxStyles = {
+  alignItems: "center",
+  paddingTop: "1rem",
+  paddingBottom: "1rem",
+};
+
+const labelStyles = {
+  fontSize: 18,
+};
+
+function Input({ label, name, required, field, meta }) {
+  return (
+    <Box sx={boxStyles}>
+      <FormLabel sx={labelStyles}>{label}</FormLabel>
+      <FilledInput
+        fullWidth
+        name={name}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        error={meta.error}
+        required={required}
+      />
+      <FormHelperText>{meta.error}</FormHelperText>
+    </Box>
+  );
+}
 
 function ExitIcon({ setState }) {
   const onClickHandler = () => {
@@ -99,12 +131,12 @@ export function TitleInput({ id, label, name, type, placeHolder, paddingY }) {
   }, [formTitle]);
 
   return (
-    <div
-      className={`py-${paddingY} items-center text-center grid ${
-        isMobile ? "grid-cols-1" : "grid-cols-[20%_80%]"
-      }`}
-    >
-      <label htmlFor={id} className="font-semibold font-lg">
+    <div className="w-full">
+      {/* // className={`py-${paddingY} items-center text-center grid ${
+      //   isMobile ? "grid-cols-1" : "grid-cols-[20%_80%]"
+      // }`} */}
+
+      {/* <label htmlFor={id} className="font-semibold font-lg">
         {label}
       </label>
       <div className="w-full">
@@ -115,7 +147,9 @@ export function TitleInput({ id, label, name, type, placeHolder, paddingY }) {
           required={true}
           placeholder={placeHolder}
           className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
-        />
+        /> */}
+      <div className="w-full">
+        <Input label="Title" name="title" field={field} meta={meta} />
         {formTitle.length > 0 && loading && <LoadingSection />}
         {formTitle.length > 0 &&
           toDisplay &&
