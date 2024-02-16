@@ -1,8 +1,9 @@
 import { Container } from "@mui/material";
-import { useSelector } from "react-redux";
 import { SubmissionModal } from "../../components/UI/Modal/Modal";
 
+import { useState } from "react";
 import OpenProblemForm from "./Form/Form";
+import Guidance from "./Form/Guidance";
 function QuestionGuidance() {
   return (
     <div className="guidance bg-theme-blue-light border border-theme-blue p-10 pt-4">
@@ -36,17 +37,17 @@ function QuestionGuidance() {
 }
 
 function SubmitPage() {
-  const modalOpen = useSelector((state) => state.general.modal.isOpen);
+  const [modalOpen, setModalOpen] = useState();
   return (
     <Container>
       <div className="header items-center">
         <h1 className="form-title text-center text-xl font-bold md:text-2xl pb-4 pt-10">
           Submit an open problem
         </h1>
-        <QuestionGuidance />
+        <Guidance />
         <hr className="pb-6" />
       </div>
-      <OpenProblemForm />
+      <OpenProblemForm setModalOpen={setModalOpen} />
       <SubmissionModal
         open={modalOpen}
         title="Test title"
