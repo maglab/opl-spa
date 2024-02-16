@@ -186,7 +186,6 @@ function ReferenceInput({ id, name, placeHolder, type }) {
         const { data } = await apiReferences.verifyReferences({
           references: formattedReferences,
         });
-        console.log(data);
         setRetrievedReferences(data);
       } catch (error) {
         setError(error);
