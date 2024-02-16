@@ -1,52 +1,26 @@
-import { Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { SubmissionModal } from "../../components/UI/Modal/Modal";
 
 import { useState } from "react";
 import OpenProblemForm from "./Form/Form";
 import Guidance from "./Form/Guidance";
-function QuestionGuidance() {
-  return (
-    <div className="guidance bg-theme-blue-light border border-theme-blue p-10 pt-4">
-      <h1 className="py-2 font semibold font-general font-semibold text-lg md:text-xl">
-        {" "}
-        Writing a good open problem
-      </h1>
-      <div className="guidance-description font-general ">
-        <p className="underline">
-          All open problems are welcome but we recommend following these
-          guidelines:
-        </p>
-        <li className="">
-          Does the question address a specific aspect of ageing, avoiding being
-          overly broad?
-        </li>
-        <li>
-          Is the context or background of the question adequately defined?
-        </li>
-        <li>
-          Is the nature of the inquiry clear (quantitative, qualitative,
-          predictive, comparative, etc.)?
-        </li>
-        <li>
-          Is the question relevant to current trends and challenges in the
-          field?
-        </li>
-      </div>
-    </div>
-  );
-}
 
 function SubmitPage() {
   const [modalOpen, setModalOpen] = useState();
   return (
     <Container>
-      <div className="header items-center">
-        <h1 className="form-title text-center text-xl font-bold md:text-2xl pb-4 pt-10">
+      <Box className="header" flex alignItems="center">
+        <Typography
+          className="form-title text-xl font-bold md:text-2xl pb-4 pt-10"
+          textAlign="center"
+          fontWeight="bold"
+          variant="h4"
+        >
           Submit an open problem
-        </h1>
+        </Typography>
         <Guidance />
         <hr className="pb-6" />
-      </div>
+      </Box>
       <OpenProblemForm setModalOpen={setModalOpen} />
       <SubmissionModal
         open={modalOpen}
