@@ -26,7 +26,7 @@ const theme = createTheme({
   typography: {
     fontFamily: "Lato",
   },
-  spacing: 12,
+  spacing: 8,
 });
 
 function App() {
