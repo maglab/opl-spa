@@ -10,12 +10,12 @@ import {
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
-import { DefaultPageLayout } from "./defaultPageLayout";
+import { DefaultMargin } from "./defaultMargin";
 
 export default function Header() {
   return (
     <AppBar position="static">
-      <DefaultPageLayout yPadding={0.5}>
+      <DefaultMargin yPadding={0.5}>
         <Grid
           container
           direction="row"
@@ -74,7 +74,7 @@ export default function Header() {
             </Grid>
           </Grid>
         </Grid>
-      </DefaultPageLayout>
+      </DefaultMargin>
     </AppBar>
   );
 }

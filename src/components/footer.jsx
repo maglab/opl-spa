@@ -6,7 +6,7 @@ import addressLines from "../assets/contacts/addressLines.json";
 import people from "../assets/contacts/people.json";
 import bhamLogo from "../assets/images/bham-logo.png";
 import rejuvenomicsLogo from "../assets/images/rejuvenomics-logo.png";
-import { DefaultPageLayout } from "./defaultPageLayout";
+import { DefaultMargin } from "./defaultMargin";
 
 export default function Footer() {
   const addressText = addressLines.join("\n");
@@ -14,7 +14,7 @@ export default function Footer() {
   const primaryColor = "common.white";
 
   return (
-    <DefaultPageLayout bgcolor={blueGrey[900]}>
+    <DefaultMargin bgcolor={blueGrey[900]} yPadding={2}>
       <Grid container maxWidth="md" spacing={6}>
         <Grid item xs={12}>
           <Typography color={primaryColor} align="center" variant="h4">
@@ -25,7 +25,7 @@ export default function Footer() {
           <Typography
             color={primaryColor}
             whiteSpace="pre-wrap"
-            textAlign={{ xs: "center", md: "left" }}
+            textAlign={{ xs: "center", sm: "left" }}
           >
             {addressText}
           </Typography>
@@ -64,6 +64,6 @@ export default function Footer() {
           </Box>
         </Grid>
       </Grid>
-    </DefaultPageLayout>
+    </DefaultMargin>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 // import apiAnnotations from "../api/apiAnnotations";
 import apiProblems from "../api/apiProblems";
-import SharedLayout from "../components/sharedLayout";
+import Layout from "../components/layout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
 import Hero from "../components/hero";
@@ -15,7 +15,7 @@ import OpenProblems from "../pages/OpenProblems/OpenProblems";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SharedLayout />,
+    element: <Layout />,
     children: [
       {
         path: "/",

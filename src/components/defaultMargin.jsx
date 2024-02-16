@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-function layout({ children, yPadding = 2, xPadding = 2, bgcolor }) {
+function margin({ children, yPadding = 8, xPadding = 2, bgcolor }) {
   return (
     <Box
       display="flex"
@@ -17,5 +17,5 @@ function layout({ children, yPadding = 2, xPadding = 2, bgcolor }) {
   );
 }
 
-export const DefaultPageLayout = layout;
-export default DefaultPageLayout;
+export const DefaultMargin = margin;
+export default DefaultMargin;
