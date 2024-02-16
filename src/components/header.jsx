@@ -39,6 +39,7 @@ export default function Header() {
               to="/"
               color="secondary"
               variant="text"
+              size="small"
             >
               Home
             </Button>
@@ -47,6 +48,7 @@ export default function Header() {
               to="/login"
               color="secondary"
               variant="outlined"
+              size="small"
             >
               Login / Register
             </Button>
@@ -55,6 +57,7 @@ export default function Header() {
               to="/open-problems"
               color="secondary"
               variant="contained"
+              size="small"
             >
               Open Problems
             </Button>
