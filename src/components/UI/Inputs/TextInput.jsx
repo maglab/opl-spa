@@ -29,7 +29,6 @@ const inputStyles = {
 export function InputWithFormLabel({
   id,
   label,
-  error,
   name,
   required,
   placeHolder,
@@ -48,7 +47,7 @@ export function InputWithFormLabel({
         onBlur={field.onBlur}
         error={meta.touched && Boolean(meta.error)}
         required={required}
-        placeHolder={placeHolder}
+        placeholder={placeHolder}
         type={type}
       />
       <FormHelperText>{meta.error}</FormHelperText>
