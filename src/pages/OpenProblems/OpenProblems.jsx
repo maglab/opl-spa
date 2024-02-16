@@ -1,6 +1,5 @@
 import { Container } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { generalActions } from "../../state/generalStateSlice";
 import config from "../../utils/configs/SideNavConfig";
 import Filter from "./Filter/Filter";
 import ProblemsInterface from "./ProblemsInterface/ProblemsInterface";
@@ -9,9 +8,6 @@ import Statbar from "./Statbar/Statbar";
 
 function OpenProblems() {
   const dispatch = useDispatch();
-  const modalCloseHandler = () => {
-    dispatch(generalActions.toggleModal({ bool: false }));
-  };
 
   return (
     <Container>
