@@ -15,18 +15,19 @@ const inputStyles = {
   width: "80%",
 };
 
-export function InputWithFormLabel({ label, error, name, required }) {
+export function InputWithFormLabel({ id, label, error, name, required }) {
   const [field, meta] = useField(name, "input");
 
   return (
     <Box sx={boxStyles}>
       <FormLabel sx={labelStyles}>{label}</FormLabel>
       <FilledInput
+        id={id}
         fullWidth
         name={name}
         onChange={field.onChange}
         onBlur={field.onBlur}
-        error={meta.error}
+        error={meta.touched && Boolean(meta.error)}
         required={required}
       />
       <FormHelperText>{error}</FormHelperText>
