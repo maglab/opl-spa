@@ -37,7 +37,7 @@ export default function Footer() {
           <Box display="flex" flexDirection="row-reverse">
             <Stack spacing={theme.spacing(1)}>
               {people.map((i) => (
-                <Box>
+                <Box key={i.name}>
                   <Typography color="common.white">{i.name}</Typography>
                   <Stack direction="row" spacing={theme.spacing(1)}>
                     <Email sx={{ color: "white" }} />
