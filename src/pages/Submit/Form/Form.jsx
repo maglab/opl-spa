@@ -2,7 +2,6 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import { forwardRef, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { InputWithFormLabelMultiline } from "../../../components/UI/Inputs/TextArea";
@@ -78,12 +77,16 @@ const formStyles = {
   flexDirection: "column",
   gap: "1.5rem",
 };
-function OpenProblemForm() {
+/**
+ * Main component for open problems form.
+ * @param {Function} setModalOpen setState function to open modal after submission.
+ * @returns
+ */
+function OpenProblemForm({ setModalOpen }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   //Use formik requires initial values and validation functions
   // Will have to manually track for Recaptcha using ref
-  const catpchaRef = useRef("test");
+  const catpchaRef = useRef(null);
   const exitOnclick = (event) => {
     event.preventDefault(); //Prevent the submit
     navigate(-1);
@@ -94,7 +97,7 @@ function OpenProblemForm() {
       initialValues={initialValues}
       validate={formikValidation}
       onSubmit={(values, actions) =>
-        handleSubmit(values, actions, catpchaRef, dispatch)
+        handleSubmit(values, actions, catpchaRef, setModalOpen)
       }
     >
       <Paper elevation={2} sx={paperStyles}>
