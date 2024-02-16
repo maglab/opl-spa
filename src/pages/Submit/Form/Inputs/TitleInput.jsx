@@ -15,8 +15,6 @@ import apiProblems from "../../../../api/apiProblems";
 import useViewWidth from "../../../../utils/hooks/useViewWidth";
 const boxStyles = {
   alignItems: "center",
-  paddingTop: "1rem",
-  paddingBottom: "1rem",
 };
 
 const labelStyles = {
@@ -28,11 +26,11 @@ function Input({ label, name, required, field, meta }) {
     <Box sx={boxStyles}>
       <FormLabel sx={labelStyles}>{label}</FormLabel>
       <FilledInput
-        fullWidth
+        fullWidth={true}
         name={name}
         onChange={field.onChange}
         onBlur={field.onBlur}
-        error={meta.error}
+        error={meta.touched && Boolean(meta.error)}
         required={required}
       />
       <FormHelperText>{meta.error}</FormHelperText>
@@ -132,22 +130,6 @@ export function TitleInput({ id, label, name, type, placeHolder, paddingY }) {
 
   return (
     <div className="w-full">
-      {/* // className={`py-${paddingY} items-center text-center grid ${
-      //   isMobile ? "grid-cols-1" : "grid-cols-[20%_80%]"
-      // }`} */}
-
-      {/* <label htmlFor={id} className="font-semibold font-lg">
-        {label}
-      </label>
-      <div className="w-full">
-        <input
-          type={type}
-          name={name}
-          {...field}
-          required={true}
-          placeholder={placeHolder}
-          className="text-input h-fit-content h-auto w-full rounded-md border border-slate-500 bg-bg-grey p-2"
-        /> */}
       <div className="w-full">
         <Input label="Title" name="title" field={field} meta={meta} />
         {formTitle.length > 0 && loading && <LoadingSection />}
