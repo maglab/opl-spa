@@ -1,6 +1,7 @@
-import regexTest from "./referenceRegex";
 import apiProblems from "../../../../api/apiProblems";
-import { generalActions } from "../../../../state/generalStateSlice";
+import regexTest from "./referenceRegex";
+
+// Formik initial values for the form
 export const initialValues = {
   title: "",
   description: "",
@@ -12,6 +13,7 @@ export const initialValues = {
   email: "",
 };
 
+// Formik validation function
 function formikValidation(values) {
   const errors = {};
   //Title validation
@@ -61,22 +63,77 @@ function formikValidation(values) {
   return errors;
 }
 
-export async function handleSubmit(values, actions, ref, dispatch) {
-  dispatch(generalActions.toggleModal({ bool: true }));
-  //Let's grab the recaptcha token
+// Helper function - update modal content
+function updateModal(setModalOpen, setModalContent, title, response) {
+  setModalOpen(true);
+  setModalContent({ title, response });
+}
+
+// Helper function - token verification
+async function verifyRecaptchaToken(ref) {
   const token = ref.current.getValue();
-  ref.current.reset();
+  ref.current.reset(); // Reset the recaptcha after obtaining the token
+  const response = await apiProblems.verifyToken({ token });
+  return JSON.parse(response.data);
+}
+
+// Helpfer function - form submission
+async function submitForm(values, actions, setModalOpen, setModalContent) {
+  const response = await apiProblems.postProblem({ data: values });
+  if (response.status === 201) {
+    updateModal(
+      setModalOpen,
+      setModalContent,
+      "Successful",
+      "Your submission is under review."
+    );
+    actions.resetForm();
+  } else {
+    // Handle unsuccessful submission, could also check for other status codes
+    updateModal(
+      setModalOpen,
+      setModalContent,
+      "Unsuccessful",
+      "Unable to submit open problem"
+    );
+  }
+  actions.setSubmitting(false);
+}
+
+/**
+ * Submit function used by formik
+ * @param {Object} values - formik object containing all values from form
+ * @param {Object} actions - formik object containing action methods.
+ * @param {Object} ref - ref object referncing the recatpcha component
+ * @param {Function} setModalOpen - Set state function for opening modal
+ * @param {Function} setModalContent - Set state function for setting modal content
+ */
+export async function handleSubmit(
+  values,
+  actions,
+  ref,
+  setModalOpen,
+  setModalContent
+) {
   try {
-    const response = await apiProblems.verifyToken({ token: token });
-    const parsedResponse = JSON.parse(response.data);
-    if (parsedResponse.success) {
-      //Send the form data
-      const response = await apiProblems.postProblem({ values });
+    const recaptchaResponse = await verifyRecaptchaToken(ref);
+    if (recaptchaResponse.success) {
+      await submitForm(values, actions, setModalOpen, setModalContent);
     } else {
+      updateModal(
+        setModalOpen,
+        setModalContent,
+        "Unsuccessful",
+        "Please complete recaptcha."
+      );
     }
   } catch (error) {
-    // Something
-    console.log(error);
+    updateModal(
+      setModalOpen,
+      setModalContent,
+      "Unsuccessful",
+      `Submission error: ${error}`
+    );
   }
 }
 
