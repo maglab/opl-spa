@@ -23,9 +23,6 @@ function formatReferences(inputValues) {
   return formattedRefs;
 }
 
-const validationBoxStyles = {
-  textAlign: "center",
-};
 const listItemTypography = {
   color: "error",
 };
@@ -76,7 +73,7 @@ function ValidationComponent({ inputValue, validUseState, invalidUseState }) {
     setInvalidReferences(failedTests);
   }, [inputValue]);
   return (
-    <Box className="validation-box" sx={validationBoxStyles}>
+    <Box className="validation-box" textAlign="center">
       <Typography variant="subtitle1">
         DOI/PMID values must be prefixed with DOI: or PMID.
       </Typography>
@@ -85,7 +82,7 @@ function ValidationComponent({ inputValue, validUseState, invalidUseState }) {
           <Typography color="error">
             Incorrectly formatted references:
           </Typography>
-          <List className="list" sx={listStyles}>
+          <List className="list" {...listStyles}>
             {invalidReferences.map((reference) => (
               <ListItem
                 key={reference}
@@ -94,6 +91,7 @@ function ValidationComponent({ inputValue, validUseState, invalidUseState }) {
               >
                 <ListItemText
                   primaryTypographyProps={listItemTypography}
+                  color="error"
                   primary={reference}
                 />
               </ListItem>
@@ -155,10 +153,6 @@ function ReferenceList({ references, error }) {
   );
 }
 
-const boxStyles = {
-  width: "100%",
-};
-
 /**
  * Text area for references for submitting open problems. Validates inputted DOIs and PMIDs and then uses API to search existance of articles.
  * @returns {React.Component}
@@ -196,7 +190,7 @@ function ReferenceInput({ id, name, placeHolder, type }) {
   }, [value.split(",").length]);
 
   return (
-    <Box sx={boxStyles}>
+    <Box width="100%">
       <InputWithFormLabelMultiline
         id={id}
         label="References (comma separated DOI/PMID)"
