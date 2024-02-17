@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Divider, Paper, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import { forwardRef, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -9,24 +9,12 @@ import { InputWithFormLabel } from "../../../components/UI/Inputs/TextInput";
 import { RECAPTCHA_SITE_KEY } from "../../../config";
 import NameInput from "./Inputs/NameInput";
 import ReferenceInput from "./Inputs/ReferenceInput";
-import TitleInput from "./Inputs/TitleInput";
+import { TitleInput } from "./Inputs/TitleInput";
 import formikValidation, {
   handleSubmit,
   initialValues,
 } from "./functions/formik";
 
-const contactBoxStyles = {
-  paddingBottom: "1.5rem",
-};
-const typographyStyles = {
-  textAlign: "center",
-  paddingBottom: "2rem",
-};
-const childrenBoxStyles = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "1.5rem",
-};
 /**
  * Wrapper component to contain contact inputs.
  * @param {React.Component} children - Any child components.
@@ -34,20 +22,17 @@ const childrenBoxStyles = {
  */
 function ContactSection({ children }) {
   return (
-    <Box sx={contactBoxStyles}>
-      <Typography variant="h5" sx={typographyStyles}>
+    <Box paddingBottom="1.5rem">
+      <Typography variant="h5" textAlign="center" paddingBottom="2rem">
         Contact Information (optional)
       </Typography>
-      <Box sx={childrenBoxStyles}>{children}</Box>
+      <Box display="flex" flexDirection="column" gap="1.5rem">
+        {children}
+      </Box>
     </Box>
   );
 }
 
-const recaptchaBoxStyles = {
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-};
 /**
  * Separate component for RECAPTCHA section
  * @param {React.MutableRefObject} ref - useRef mutable object, to track recpatcha value.
@@ -55,15 +40,11 @@ const recaptchaBoxStyles = {
  */
 const ReCaptchaSection = forwardRef((props, ref) => {
   return (
-    <Box sx={recaptchaBoxStyles}>
+    <Box width="100%" display="flex" justifyContent="center">
       <ReCAPTCHA sitekey={RECAPTCHA_SITE_KEY} ref={ref} />
     </Box>
   );
 });
-const boxStyles = {
-  width: "80%",
-  paddingTop: "4rem",
-};
 
 const paperStyles = {
   display: "flex",
@@ -76,6 +57,13 @@ const formStyles = {
   display: "flex",
   flexDirection: "column",
   gap: "1.5rem",
+};
+const buttonBoxStyles = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  gap: "24px",
+  paddingBottom: "16px",
 };
 /**
  * Main component for open problems form.
@@ -101,7 +89,7 @@ function OpenProblemForm({ setModalOpen }) {
       }
     >
       <Paper elevation={2} sx={paperStyles}>
-        <Box sx={boxStyles}>
+        <Box width="80%" paddingTop="4rem">
           {/* Not a MUI component */}
           <Form style={formStyles}>
             <TitleInput
@@ -123,7 +111,7 @@ function OpenProblemForm({ setModalOpen }) {
               placeHolder="Example: PMID:12345678, DOI:10.1016/j.cell.2022.11.001"
               required={true}
             />
-            <hr />
+            <Divider aria-hidden={true} />
             <ContactSection>
               <NameInput paddingY={2} />
               <InputWithFormLabel
@@ -143,16 +131,26 @@ function OpenProblemForm({ setModalOpen }) {
                 type="email"
               />
             </ContactSection>
-            <hr className="py-4" />
+            <Divider aria-hidden={true} />
             <ReCaptchaSection ref={catpchaRef} />
-            <div className="buttons flex flex-row justify-center gap-x-6 py-4">
-              <Button variant="outlined" onClick={exitOnclick} size="medium">
+            <Box className="button-box" {...buttonBoxStyles}>
+              <Button
+                variant="outlined"
+                onClick={exitOnclick}
+                size="medium"
+                color="secondary"
+              >
                 Exit
               </Button>
-              <Button variant="contained" type="submit" size="medium">
+              <Button
+                variant="contained"
+                type="submit"
+                size="medium"
+                color="secondary"
+              >
                 Submit
               </Button>
-            </div>
+            </Box>
           </Form>
         </Box>
       </Paper>
