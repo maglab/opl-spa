@@ -10,14 +10,16 @@ import {
 
 import guidance from "../../../assets/guidance/submissionGuidance.json";
 
-const paperStyles = {
-  borderColor: "info",
+//boxStyles for sx because using system props sends warning to console.
+const boxStyles = {
+  borderColor: "info.light",
 };
+
 function Guidance() {
   const theme = useTheme();
   return (
-    <Paper variant="outlined" borderColor="info" border="100px">
-      <Box padding="2rem" border={1} borderColor={theme.palette.info.light}>
+    <Paper variant="outlined" border="100px">
+      <Box padding="2rem" border={1} sx={boxStyles}>
         <Typography variant="h5"> Writing a good open problem</Typography>
         <Box className="guidance-description" padding="0.5rem">
           <Typography variant="subtitle1">
