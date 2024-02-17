@@ -1,32 +1,49 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import { SubmissionModal } from "../../components/UI/Modal/Modal";
 
 import { useState } from "react";
 import OpenProblemForm from "./Form/Form";
 import Guidance from "./Form/Guidance";
 
+const INITIAL_STATE = {
+  title: "",
+  response: "",
+};
+
+const typographyStyles = {
+  textAlign: "center",
+  fontWeight: "bold",
+  variant: "h4",
+  paddingTop: "40px",
+  paddingBottom: "16px",
+};
+
+const openProblemsBoxStyles = {
+  paddingTop: "2rem",
+  paddingBottom: "4rem",
+};
+
 function SubmitPage() {
-  const [modalOpen, setModalOpen] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(INITIAL_STATE);
   return (
     <Container>
       <Box className="header" flex alignItems="center">
-        <Typography
-          className="form-title text-xl font-bold md:text-2xl pb-4 pt-10"
-          textAlign="center"
-          fontWeight="bold"
-          variant="h4"
-        >
-          Submit an open problem
-        </Typography>
+        <Typography {...typographyStyles}>Submit an open problem</Typography>
         <Guidance />
-        <hr className="pb-6" />
+        <Divider aria-hidden={true} />
       </Box>
-      <OpenProblemForm setModalOpen={setModalOpen} />
+      <Box className="open-problems-box" {...openProblemsBoxStyles}>
+        <OpenProblemForm
+          setModalOpen={setModalOpen}
+          setModalContent={setModalContent}
+        />
+      </Box>
+
       <SubmissionModal
         open={modalOpen}
-        title="Test title"
-        response="Vero optio autem quibusdam asperiores atque iusto Ducimus, tempora? Veniam reiciendis velit officiis sint impedit hic.
-        "
+        title={modalContent.title}
+        response={modalContent.response}
       />
     </Container>
   );
