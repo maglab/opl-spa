@@ -70,7 +70,7 @@ const buttonBoxStyles = {
  * @param {Function} setModalOpen setState function to open modal after submission.
  * @returns
  */
-function OpenProblemForm({ setModalOpen }) {
+function OpenProblemForm({ setModalOpen, setModalContent }) {
   const navigate = useNavigate();
   //Use formik requires initial values and validation functions
   // Will have to manually track for Recaptcha using ref
@@ -85,7 +85,7 @@ function OpenProblemForm({ setModalOpen }) {
       initialValues={initialValues}
       validate={formikValidation}
       onSubmit={(values, actions) =>
-        handleSubmit(values, actions, catpchaRef, setModalOpen)
+        handleSubmit(values, actions, catpchaRef, setModalOpen, setModalContent)
       }
     >
       <Paper elevation={2} sx={paperStyles}>
