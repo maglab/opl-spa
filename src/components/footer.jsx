@@ -1,6 +1,5 @@
 import { Email } from "@mui/icons-material";
 import { Box, Grid, Link, Stack, Typography } from "@mui/material";
-import { blueGrey } from "@mui/material/colors";
 import React from "react";
 import addressLines from "../assets/contacts/addressLines.json";
 import people from "../assets/contacts/people.json";
@@ -11,19 +10,19 @@ import { DefaultMargin } from "./defaultMargin";
 export default function Footer() {
   const addressText = addressLines.join("\n");
   const logoStyle = { width: "300px", height: "120px", objectFit: "contain" };
-  const primaryColor = "common.white";
+  const textColor = "common.white";
 
   return (
-    <DefaultMargin bgcolor={blueGrey[900]} yPadding={2}>
+    <DefaultMargin bgcolor="secondary.main" yPadding={2}>
       <Grid container maxWidth="md" rowSpacing={6}>
         <Grid item xs={12}>
-          <Typography color={primaryColor} align="center" variant="h4">
+          <Typography color={textColor} align="center" variant="h4">
             Contact Us
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography
-            color={primaryColor}
+            color={textColor}
             whiteSpace="pre-wrap"
             textAlign={{ xs: "center", sm: "left" }}
           >
@@ -41,13 +40,10 @@ export default function Footer() {
             <Grid item>
               <Stack spacing={1}>
                 {people.map((i) => (
-                  <Stack>
-                    <Typography color={primaryColor}>{i.name}</Typography>
-                    <Stack direction="row" spacing={1}>
-                      <Email color="primary" />
-                      <Link href={`mailto:${i.email}`}>{i.email}</Link>
-                    </Stack>
-                  </Stack>
+                  <Typography color={textColor} whiteSpace="pre-wrap">
+                    {`${i.name}\n`}
+                    <Email /> <Link href={`mailto:${i.email}`}>{i.email}</Link>
+                  </Typography>
                 ))}
               </Stack>
             </Grid>

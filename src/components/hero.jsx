@@ -18,19 +18,15 @@ export default function Hero() {
       <Grid item xs={12} md={6}>
         <Stack direction="column" alignItems="center" spacing={2}>
           <Typography variant="h3" textAlign="center">
-            <Typography component="span" variant="inherit" color="secondary">
+            <Typography component="span" variant="inherit" color="primary">
               Open Problems
             </Typography>
             {" in longevity science"}
           </Typography>
           <Typography>{introduction.mainText}</Typography>
           <Stack direction="row" spacing={2}>
-            <Button color="secondary" variant="outlined">
-              Open Problems
-            </Button>
-            <Button color="secondary" variant="outlined">
-              About us
-            </Button>
+            <Button variant="contained">Open Problems</Button>
+            <Button variant="outlined">About us</Button>
           </Stack>
         </Stack>
       </Grid>

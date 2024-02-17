@@ -14,7 +14,7 @@ import { DefaultMargin } from "./defaultMargin";
 
 export default function Header() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ bgcolor: "common.white" }}>
       <DefaultMargin yPadding={0.5}>
         <Grid
           container
@@ -45,26 +45,15 @@ export default function Header() {
               <Grid item xs />
               <Grid item>
                 <Stack direction="row" spacing={2}>
-                  <Button
-                    component={RouterLink}
-                    to="/"
-                    color="secondary"
-                    variant="text"
-                  >
+                  <Button component={RouterLink} to="/" variant="text">
                     Home
                   </Button>
-                  <Button
-                    component={RouterLink}
-                    to="/login"
-                    color="secondary"
-                    variant="outlined"
-                  >
+                  <Button component={RouterLink} to="/login" variant="outlined">
                     Login / Register
                   </Button>
                   <Button
                     component={RouterLink}
                     to="/open-problems"
-                    color="secondary"
                     variant="contained"
                   >
                     Open Problems
