@@ -1,78 +1,43 @@
-import ReactDOM from "react-dom";
-import { Modal, Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { generalActions } from "../../../state/generalStateSlice";
-function ModalT({
-  open,
-  close,
-  height,
-  width,
-  children,
-  positionClasses,
-  overlayClasses,
-}) {
-  const closeHandler = close;
-  if (!open) return;
+import { Box, Button, Modal, Typography } from "@mui/material";
 
-  const defaultPositionClasses =
-    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ";
-  const defaultOverlay = " bg-black opacity-70";
-  return ReactDOM.createPortal(
-    <>
-      <div
-        className={`overlay z-1000 fixed inset-0 ${
-          overlayClasses || defaultOverlay
-        }`}
-        onClick={closeHandler}
-      />
-      <div
-        className={`z-2000 fixed ${
-          positionClasses || defaultPositionClasses
-        } -translate-y-1/2 animate-fadein bg-white p-10 ${
-          height ? `h-${height}` : "h-max"
-        } ${width ? `w-${width}` : "w-max"}`}
-      >
-        {children}
-      </div>
-    </>,
-    document.getElementById("root"),
-  );
-}
-
-export function SubmissionModal({ title, response }) {
-  const modalOpen = useSelector((state) => state.general.modal.isOpen);
-  const dispatch = useDispatch();
-  const closeHandler = () => {
-    dispatch(generalActions.toggleModal({ bool: false }));
-  };
+//Split for now
+const modalBoxStyling = {
+  position: "absolute",
+  top: "50%",
+  left: "-50%",
+  transform: "translateY(-50%)",
+  transform: "translateX(-50%)",
+  bgColor: "primary.main",
+  maxHeight: "250px",
+  width: "100%",
+  height: "100%",
+  padding: "16px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: "1.5rem",
+  alignItems: "center",
+};
+export function SubmissionModal({ title, response, open, setOpen }) {
   return (
     <Modal
-      open={modalOpen}
-      onClose={closeHandler}
+      open={open}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
     >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white max-h-[250px] max-w-[350px] w-full h-full p-4 flex flex-col justify-center gap-y-6 items-center ">
-        <div className="modal-text w-full">
-          <h1
-            id="modal-title"
-            className="text-center font-general text-lg md:text-2xl py-2"
-          >
+      <Box className="modal-box" sx={modalBoxStyling}>
+        <Box className="modal-text w-full">
+          <Typography id="modal-title" variant="h5">
             {title}
-          </h1>
-          <p
-            id="modal-description"
-            className="text-center font-general text-sm md:text-base"
-          >
+          </Typography>
+          <Typography variant="body1" id="modal-description">
             {response}
-          </p>
-        </div>
-        <div className="modal-buttons">
-          <Button onClick={closeHandler}>Exit</Button>
-        </div>
-      </div>
+          </Typography>
+        </Box>
+        <Box className="modal-buttons">
+          <Button>Exit</Button>
+        </Box>
+      </Box>
     </Modal>
   );
 }
-
-export default ModalT;
