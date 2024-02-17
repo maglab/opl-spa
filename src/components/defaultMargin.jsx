@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-function margin({ children, yPadding = 8, xPadding = 2, bgcolor }) {
+function margin({ children, yPadding = 4, xPadding = 2, bgcolor }) {
   return (
     <Box
       display="flex"
