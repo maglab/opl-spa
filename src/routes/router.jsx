@@ -1,7 +1,6 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 // import apiAnnotations from "../api/apiAnnotations";
-import apiProblems from "../api/apiProblems";
 import Layout from "../components/layout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
@@ -9,6 +8,7 @@ import Hero from "../components/hero";
 import Login from "../pages/Login/Login";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
 import SubmitPage from "../pages/Submit/Submit";
+
 const router = createBrowserRouter([
   {
     path: "/",
