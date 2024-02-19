@@ -17,8 +17,10 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Lato",
+    button: {
+      textTransform: "none",
+    },
   },
-  spacing: 8,
 });
 
 function App() {
