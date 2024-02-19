@@ -1,4 +1,5 @@
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { blue, blueGrey } from "@mui/material/colors";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -8,19 +9,10 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#ffffff",
+      main: blue[800],
     },
     secondary: {
-      main: "#4675ce",
-    },
-    error: {
-      main: "#af0808",
-    },
-    info: {
-      main: "#0288d1",
-    },
-    background: {
-      default: "#f5f5f5",
+      main: blueGrey[900],
     },
   },
   typography: {
@@ -31,10 +23,12 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </>
   );
 }
 

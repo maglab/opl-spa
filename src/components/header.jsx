@@ -2,68 +2,68 @@ import {
   AppBar,
   Box,
   Button,
-  Container,
+  Grid,
   Link,
   Stack,
-  Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
+import { DefaultMargin } from "./defaultMargin";
 
 export default function Header() {
-  const theme = useTheme();
-
   return (
-    <AppBar position="static">
-      <Container maxWidth="lg">
-        <Toolbar sx={{ display: "flex" }}>
-          <Stack
-            direction="row"
-            alignItems="flex-end"
-            spacing={theme.spacing(1)}
-          >
-            <Link href="https://longevityknowledge.com">
-              <Box component="img" src={logoSvg} sx={{ height: "48px" }} />
-            </Link>
-            <Typography variant="caption">
-              build: {import.meta.env.VITE_BUILD_VERSION}
-            </Typography>
-          </Stack>
-          <Box sx={{ flexGrow: 1 }} />
-          <Stack direction="row" spacing={theme.spacing(2)}>
-            <Button
-              component={RouterLink}
-              to="/"
-              color="secondary"
-              variant="text"
-              size="small"
+    <AppBar position="static" sx={{ bgcolor: "common.white" }}>
+      <DefaultMargin yPadding={0.5}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          rowSpacing={2}
+        >
+          <Grid item xs={12} sm>
+            <Stack
+              direction="row"
+              justifyContent={{ xs: "center", sm: "left" }}
+              alignItems="flex-end"
+              spacing={1}
             >
-              Home
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/login"
-              color="secondary"
-              variant="outlined"
-              size="small"
-            >
-              Login / Register
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/open-problems"
-              color="secondary"
-              variant="contained"
-              size="small"
-            >
-              Open Problems
-            </Button>
-          </Stack>
-        </Toolbar>
-      </Container>
+              <Stack height="100%" justifyContent="center">
+                <Link href="https://longevityknowledge.com">
+                  <Box component="img" src={logoSvg} height={48} />
+                </Link>
+              </Stack>
+              <Typography variant="caption">
+                build: {import.meta.env.VITE_BUILD_VERSION}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item>
+            <Grid container alignItems="center">
+              <Grid item xs />
+              <Grid item>
+                <Stack direction="row" spacing={2}>
+                  <Button component={RouterLink} to="/" variant="text">
+                    Home
+                  </Button>
+                  <Button component={RouterLink} to="/login" variant="outlined">
+                    Login / Register
+                  </Button>
+                  <Button
+                    component={RouterLink}
+                    to="/open-problems"
+                    variant="contained"
+                  >
+                    Open Problems
+                  </Button>
+                </Stack>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </DefaultMargin>
     </AppBar>
   );
 }
