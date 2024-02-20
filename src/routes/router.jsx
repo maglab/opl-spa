@@ -9,6 +9,7 @@ import Hero from "../components/hero";
 import Login from "../pages/Login/Login";
 import Details from "../pages/OpenProblemDetails/Details";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
+import OpenProblemProvider from "../context/context";
 // import RootLayout from "../pages/Root/RootLayout";
 // import SubmitPage from "../pages/Submit/Submit";
 
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/open-problems",
-        element: <OpenProblems />,
+        element: (
+          <OpenProblemProvider>
+            <OpenProblems />
+          </OpenProblemProvider>
+        ),
       },
       {
         path: "open-problems/:id",
