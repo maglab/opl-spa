@@ -110,6 +110,7 @@ const paperStyles = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  padding: 2,
 };
 
 /**
