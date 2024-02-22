@@ -73,6 +73,8 @@ const apiProblems = {
       return error;
     }
   },
+
+  reportProblem: async (params) => {},
 };
 
 export default apiProblems;
