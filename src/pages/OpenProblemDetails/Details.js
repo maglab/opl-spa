@@ -28,14 +28,14 @@ function Details() {
 
   return (
     <div>
-      <hr className="border-1 border-theme-blue" />
+      <hr className="border-1 border-theme-blue py-2"/>
       <Button variant="outlined" onClick={()=> navigate(-1)}>
         Return
       </Button>
 
       <div ref={ref} className="title flex flex-row pt-8 ">
         <h1 className="text-lg md:text-2xl" id={`title${id}`}>
-          <u>{title}</u>{" "}
+          <u>{title}</u>
         </h1>
       </div>
       {description && (
