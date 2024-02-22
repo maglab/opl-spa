@@ -1,4 +1,4 @@
-import { List } from "@mui/material";
+import { List, Grid, Typography } from "@mui/material";
 import MuiListComponent from "../List/MuiListComponent";
 import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
 function ListAccordionContent(props) {
@@ -8,15 +8,23 @@ function ListAccordionContent(props) {
   const isRoot = parent ? true : false;
 
   return (
-    <>
-      <div className="description py-4">
-        <p className="text-sm ">{problem.description && problem.description}</p>
-      </div>
-      <div className="buttons flex justify-center">
+    <Grid container direction="column" spacing={2} p={2}>
+      <Grid item xs={12}>
+        <Typography variant="body1">
+          {problem.description && problem.description}
+        </Typography>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+      >
         <ButtonGroupComponent problem={problem} isRoot={isRoot} />
-      </div>
-      <div className="problems">
-        <h1 className="text-lg underline">Connected Open Problems</h1>
+      </Grid>
+      <Grid item className="problems">
+        <Typography variant="h5">Connected Open Problems</Typography>
         {children.length > 0 ? (
           <List sx={{ width: "100%" }} variant="outlined">
             {children.map((item, index) => (
@@ -24,10 +32,10 @@ function ListAccordionContent(props) {
             ))}
           </List>
         ) : (
-          <p>None</p>
+          <Typography variant="subtitle1">None</Typography>
         )}
-      </div>
-    </>
+      </Grid>
+    </Grid>
   );
 }
 
