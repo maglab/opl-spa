@@ -1,9 +1,9 @@
-import { useLoaderData } from "react-router-dom";
-import { useRef } from "react";
+import React,{ useRef,useEffect  } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import InformationSection from "./InformationInterface/InformationSection";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Button } from "@mui/material";
+
 import { detailsActions } from "../../state/Details/detailsSlice";
 function Details() {
   const { data } = useLoaderData();
@@ -16,6 +16,7 @@ function Details() {
   const isRoot = parent ? false : true;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Dispatch loader data into redux store to be used by other components
   useEffect(() => {
@@ -28,16 +29,10 @@ function Details() {
   return (
     <div>
       <hr className="border-1 border-theme-blue" />
-      <div className="return-bttn">
-        <Link
-          to="/open-problems"
-          className="pt-2 text-base text-theme-blue underline hover:font-semibold md:text-lg"
-          onClick={() => dispatch(detailsActions.resetState())}
-        >
-          {" "}
-          Return{" "}
-        </Link>
-      </div>
+      <Button variant="outlined" onClick={()=> navigate(-1)}>
+        Return
+      </Button>
+
       <div ref={ref} className="title flex flex-row pt-8 ">
         <h1 className="text-lg md:text-2xl" id={`title${id}`}>
           <u>{title}</u>{" "}
