@@ -4,7 +4,8 @@ module.exports = {
     es2021: true
   },
   extends: [
-    'standard',
+    'airbnb',
+    'prettier',
     'plugin:react/recommended'
   ],
   overrides: [
