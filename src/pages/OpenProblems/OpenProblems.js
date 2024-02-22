@@ -7,7 +7,7 @@ import ProblemsInterface from "./ProblemsInterface/ProblemsInterface";
 import ModalT from "../../components/UI/Modal/Modal";
 import { useEffect } from "react";
 import { getProblems } from "../../utils/functions/getOpenProblems";
-import { detailsActions } from "../../state/Details/detailsSlice";
+
 function OpenProblems() {
   const modalState = useSelector((state) => state.question.modalOpen);
   const questionDetails = useSelector((state) => state.question.modalDetails);
@@ -17,7 +17,7 @@ function OpenProblems() {
   };
   useEffect(() => {
     getProblems(dispatch);
-  }, []);
+  });
   // Set openProblems
 
   return (
