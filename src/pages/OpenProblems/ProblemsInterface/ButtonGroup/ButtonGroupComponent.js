@@ -69,7 +69,7 @@ function ButtonGroupComponent(props) {
           </Button>
         </Tooltip>
       </ButtonGroup>
-      <FeedbackForm open={openDialog} onClose={closeHandler} />
+      <FeedbackForm open={openDialog} onClose={closeHandler} id={problemId} />
     </>
   );
 }
