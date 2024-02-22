@@ -10,7 +10,6 @@ function MuiList() {
   );
   const allProblems = useLoaderData();
   const [selectedProblems, setSelectedProblems] = useState(allProblems.top);
-  // const children = props.children;
 
   useEffect(() => {
     switch (selectedSorting) {
@@ -35,7 +34,7 @@ function MuiList() {
   // const data = children || problems; // Use children if it exists, otherwise use problems;
 
   return (
-    <List sx={{ width: "100%" }} variant="outlined">
+    <List sx={{ width: "100%"}} variant="outlined">
       {selectedProblems &&
         selectedProblems.map((item, index) => (
           <MuiListComponent key={index} title={item.title} problem={item} />
