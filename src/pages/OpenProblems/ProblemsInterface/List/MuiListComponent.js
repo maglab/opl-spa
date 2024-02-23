@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Collapse,
   ListItemButton,
@@ -7,24 +7,11 @@ import {
   Grid,
   Stack,
   Paper,
-  Box,
 } from "@mui/material";
 import { ExpandLess } from "@mui/icons-material";
 import { ExpandMore } from "@mui/icons-material";
 import ListAccordionContent from "../Accordion/ListAccordionContent";
 import { HashLink } from "react-router-hash-link";
-
-/**
- * 1. Fix Link
- * 2. Replace with paper and grid
- * 3. Add report button to the top
- */
-
-// function LinkToPage({id}){
-//   return(
-//     <HashLink to={`./${id}#nav`}/>
-//   )
-// }
 
 const LinkToPage = React.forwardRef((props, ref) => {
   return <HashLink ref={ref} {...props} />;
@@ -36,20 +23,19 @@ function MuiListComponent(props) {
   const description = problem.description;
   const children = problem.children;
   const [isExpanded, setExpanded] = useState(false);
-  const onClickHandler = () => {
+  const onClickHandler = useCallback(() => {
     if (children || description) {
-      setExpanded(!isExpanded);
+      setExpanded((prevExpanded) => !prevExpanded); // Update state based on previous value
     }
-  };
+  }, [children, description]);
 
   return (
-    <Stack py={0.5}>
-      <Paper>
+    <Stack py={0.5} width={"100%"}>
+      <Paper xs={{ wdith: "100%" }}>
         <ListItemButton
           key={id}
           onClick={onClickHandler}
           sx={{
-            padding: 2,
             width: "100%",
             display: "flex",
             // justifyContent: "space-between",
@@ -84,11 +70,9 @@ function MuiListComponent(props) {
           </Grid>
         </ListItemButton>
       </Paper>
-      <Box className=" border-l border-dashed border-theme-blue ">
-        <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-          <ListAccordionContent problem={problem} />
-        </Collapse>
-      </Box>
+      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+        <ListAccordionContent problem={problem} />
+      </Collapse>
     </Stack>
   );
 }
