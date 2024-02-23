@@ -6,11 +6,9 @@ import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
 import apiSubmissions from "../../../../api/apiSubmissions";
 import { formActions } from "../../../../state/Question/questionFormSlice";
 
-function ListAccordionContent(props) {
+function ListAccordionContent({ problem, parent }) {
   const dispatch = useDispatch();
-  const problem = props.problem;
   const children = problem.children;
-  const parent = problem.parent_problem;
   const isRoot = parent ? true : false;
 
   //Button handlers
@@ -30,15 +28,19 @@ function ListAccordionContent(props) {
   useEffect(() => {
     const problemId = problem.problem_id;
     async function getSubmissionCount() {
-      const response = await apiSubmissions.getSubmissionCount({ problemId });
-      const counts = response.data.post_counts;
-      setCounts(counts);
+      try {
+        const response = await apiSubmissions.getSubmissionCount({ problemId });
+        const counts = response.data.post_counts;
+        setCounts(counts);
+      } catch (error) {
+        console.log(error);
+      }
     }
     getSubmissionCount();
-  });
+  }, [problem.problem_id]);
 
   return (
-    <Grid container direction="column" spacing={2} p={2}>
+    <Grid container direction="column" spacing={2} p={2} width="100%">
       <Grid item xs={12}>
         <Typography variant="body1">
           {problem.description && problem.description}
