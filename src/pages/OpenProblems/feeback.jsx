@@ -54,8 +54,10 @@ const validation = (values, props) => {
  * @param {Object} values
  * @param {Object} props
  */
-function submit(values, props) {
-  console.log(values);
+async function submit(values, props) {
+  try {
+    const response = apiProblems.reportProblem({ ...values });
+  } catch (error) {}
 }
 
 function SelectDuplicate({ formik }) {
