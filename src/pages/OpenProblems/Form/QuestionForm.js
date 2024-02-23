@@ -9,6 +9,7 @@ import validateForm from "./functions/validateForm";
 import ReCAPTCHA from "react-google-recaptcha";
 import apiProblems from "../../../api/apiProblems";
 import sendRequest from "./functions/sendRequest";
+import { Stack } from "@mui/system";
 
 function QuestionForm() {
   // States for recaptcha
@@ -107,10 +108,14 @@ function QuestionForm() {
           sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
           ref={captchaRef}
         />
-        <div>
-          <Button type="submit"> Submit </Button>
-          <Button onClick={exitButtonHandler}>Exit</Button>
-        </div>
+        <Stack display="flex" direction="row" spacing={2} padding={2}>
+          <Button onClick={exitButtonHandler} variant="outlined">
+            Exit
+          </Button>
+          <Button type="submit" variant="contained">
+            Submit
+          </Button>
+        </Stack>
 
         {formModalState && (
           <ModalT
