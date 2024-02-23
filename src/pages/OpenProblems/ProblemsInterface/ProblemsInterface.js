@@ -1,9 +1,37 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Stack } from "@mui/system";
+import { List, ToggleButton, ToggleButtonGroup } from "@mui/material";
+
+import { questionActions } from "../../../state/Question/questionSlice";
 import QuestionForm from "../Form/QuestionForm";
-import SortingInputs from "./Sorting/SortingInputs";
-import MuiListComponent from "./List/MuiListComponent";
-import { List } from "@mui/material";
+import MuiListComponent from "./MuiListComponent";
+
+function SortingInputs() {
+  const dispatch = useDispatch();
+  const sorting = useSelector((state) => state.question.filters.sorting);
+  const onChange = (e, newValue) => {
+    if (newValue !== null) {
+      dispatch(questionActions.toggleListState());
+      dispatch(questionActions.setSorting({ value: newValue }));
+    }
+  };
+
+  return (
+    <>
+      <ToggleButtonGroup
+        color="primary"
+        onChange={onChange}
+        size="small"
+        exclusive={true}
+        value={sorting}
+      >
+        <ToggleButton value="latest">Latest</ToggleButton>
+        <ToggleButton value="top"> Top </ToggleButton>
+        <ToggleButton value="answered">Answered</ToggleButton>
+      </ToggleButtonGroup>
+    </>
+  );
+}
 
 function ProblemList() {
   const allProblems = useSelector((state) => state.question.allProblems);
