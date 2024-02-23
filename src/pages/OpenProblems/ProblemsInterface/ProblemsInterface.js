@@ -14,7 +14,7 @@ function ProblemList() {
   const problemsToRender = filteredQuestions || allProblems || [];
 
   return (
-    <List>
+    <List sx={{ width: "100%" }}>
       {problemsToRender.map((problem) => (
         <MuiListComponent key={problem.problem_id} problem={problem} />
       ))}
