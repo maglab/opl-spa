@@ -6,9 +6,9 @@ import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
 import apiSubmissions from "../../../../api/apiSubmissions";
 import { formActions } from "../../../../state/Question/questionFormSlice";
 
-function ListAccordionContent({ problem, parent }) {
+function ListAccordionContent({ problem }) {
   const dispatch = useDispatch();
-  const children = problem.children;
+  const { parent_problem: parent, children } = problem;
   const isRoot = parent ? true : false;
 
   //Button handlers
