@@ -75,16 +75,14 @@ const apiProblems = {
   },
 
   reportProblem: async ({ id, reason, information, duplicate }) => {
-    "ecxecuted";
-    return () =>
-      apiRequest(
-        apiClient.post("open-problems/report", {
-          id,
-          reason,
-          information,
-          duplicate,
-        })
-      );
+    const data = {
+      open_problem: id,
+      reason,
+      information,
+      duplicate,
+    };
+    console.log(data);
+    return apiRequest(() => apiClient.post("open-problems/report", data));
   },
 };
 
