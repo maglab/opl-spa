@@ -56,11 +56,13 @@ const validation = (values, props) => {
  */
 async function submit(values, props) {
   try {
-    const response = apiProblems.reportProblem({ ...values });
-  } catch (error) {}
+    const response = await apiProblems.reportProblem({ ...values });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function SelectDuplicate({ formik }) {
+function SelectDuplicate() {
   const [field, meta, helpers] = useField("duplicate");
   const handleChange = (_, value) => {
     helpers.setValue(value);
@@ -126,7 +128,9 @@ function FeedbackForm({ id, open, onClose }) {
                     labelId="reason"
                     name="reason"
                     {...formik.getFieldProps("reason")}
-                    error={formik.touched.reason && formik.errors.reason}
+                    error={
+                      formik.touched.reason && Boolean(formik.errors.reason)
+                    }
                     value={formik.values.reason}
                   >
                     <MenuItem value="duplicate"> Duplicate </MenuItem>
