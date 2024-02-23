@@ -75,7 +75,7 @@ const apiProblems = {
   },
 
   reportProblem: async ({ id, reason, information, duplicate }) => {
-    console.log("executed");
+    "ecxecuted";
     return () =>
       apiRequest(
         apiClient.post("open-problems/report", {

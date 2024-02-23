@@ -57,6 +57,7 @@ const validation = (values, props) => {
 async function submit(values, props) {
   try {
     const response = await apiProblems.reportProblem({ ...values });
+    console.log(response);
   } catch (error) {
     console.log(error);
   }
