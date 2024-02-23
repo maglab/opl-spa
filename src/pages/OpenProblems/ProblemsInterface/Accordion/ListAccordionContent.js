@@ -1,11 +1,41 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { List, Grid, Typography } from "@mui/material";
 import MuiListComponent from "../List/MuiListComponent";
 import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
+import apiSubmissions from "../../../../api/apiSubmissions";
+import { formActions } from "../../../../state/Question/questionFormSlice";
+
 function ListAccordionContent(props) {
+  const dispatch = useDispatch();
   const problem = props.problem;
   const children = problem.children;
   const parent = problem.parent_problem;
   const isRoot = parent ? true : false;
+
+  //Button handlers
+  const [counts, setCounts] = useState(0);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+
+  const formHandler = () => {
+    dispatch(formActions.toggleFormOpen());
+    dispatch(
+      formActions.chooseParent({
+        chosenParentTitle: problem.title,
+        parentId: problem.problem_id,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const problemId = problem.problem_id;
+    async function getSubmissionCount() {
+      const response = await apiSubmissions.getSubmissionCount({ problemId });
+      const counts = response.data.post_counts;
+      setCounts(counts);
+    }
+    getSubmissionCount();
+  });
 
   return (
     <Grid container direction="column" spacing={2} p={2}>
@@ -21,7 +51,14 @@ function ListAccordionContent(props) {
         alignItems="center"
         display="flex"
       >
-        <ButtonGroupComponent problem={problem} isRoot={isRoot} />
+        <ButtonGroupComponent
+          openProblem={problem}
+          isRoot={isRoot}
+          counts={counts}
+          formHandler={formHandler}
+          feedbackOpen={feedbackOpen}
+          setFeedbackOpen={setFeedbackOpen}
+        />
       </Grid>
       <Grid item className="problems">
         <Typography variant="h5">Connected Open Problems</Typography>
