@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-
+import { apiRequest } from "./apiClient";
 const apiProblems = {
   postProblem: async (params) => {
     const data = params.data;
@@ -74,7 +74,17 @@ const apiProblems = {
     }
   },
 
-  reportProblem: async (params) => {},
+  reportProblem: async ({ id, reason, information, duplicate }) => {
+    return () =>
+      apiRequest(
+        apiClient.post("open-problems/report", {
+          id,
+          reason,
+          information,
+          duplicate,
+        })
+      );
+  },
 };
 
 export default apiProblems;
