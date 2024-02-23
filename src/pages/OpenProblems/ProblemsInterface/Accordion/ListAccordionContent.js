@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { List, Grid, Typography } from "@mui/material";
-import MuiListComponent from "../List/MuiListComponent";
-import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
+import MuiListComponent from "../MuiListComponent";
+import ButtonGroupComponent from "../ButtonGroupComponent";
 import apiSubmissions from "../../../../api/apiSubmissions";
 import { formActions } from "../../../../state/Question/questionFormSlice";
 
