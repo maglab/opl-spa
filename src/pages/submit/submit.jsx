@@ -15,7 +15,7 @@ function SubmitPage() {
   const [modalContent, setModalContent] = useState(INITIAL_STATE);
   return (
     <>
-      <Stack container direction="column" spacing={3}>
+      <Stack direction="column" spacing={3}>
         <Typography textAlign="center" fontWeight="bold" variant="h4" py={4}>
           Submit an open problem
         </Typography>
