@@ -67,6 +67,7 @@ export function TextInput({
 /**
  * List of similar probelems
  * @param {Array} similarProblems
+ * @param {}
  * @returns {React.Component}
  */
 function SimilarProblems({ similarProblems, error }) {
