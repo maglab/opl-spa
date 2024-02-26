@@ -1,6 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Stack } from "@mui/system";
-import { List, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  List,
+  ToggleButton,
+  ToggleButtonGroup,
+  CircularProgress,
+  Box,
+} from "@mui/material";
 
 import { questionActions } from "../../../state/Question/questionSlice";
 import QuestionForm from "../Form/QuestionForm";
@@ -50,7 +56,7 @@ function ProblemList() {
   );
 }
 
-function ProblemsInterface({ error }) {
+function ProblemsInterface({ error, loading }) {
   const formState = useSelector((state) => state.form);
   return (
     <>
@@ -68,7 +74,19 @@ function ProblemsInterface({ error }) {
           justifyContent="center"
         >
           <SortingInputs />
-          <ProblemList />
+          {loading ? (
+            <Box
+              width="100%"
+              height="50vh"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CircularProgress />{" "}
+            </Box>
+          ) : (
+            <ProblemList />
+          )}
         </Stack>
       )}
     </>

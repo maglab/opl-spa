@@ -12,6 +12,7 @@ import apiProblems from "../../api/apiProblems";
 
 function OpenProblems() {
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const modalState = useSelector((state) => state.question.modalOpen);
   const questionDetails = useSelector((state) => state.question.modalDetails);
   const sorting = useSelector((state) => state.question.filters.sorting);
@@ -21,6 +22,7 @@ function OpenProblems() {
   };
 
   useEffect(() => {
+    setLoading(true);
     const SORTING_OBJ = {
       latest: apiProblems.getAllProblems,
       top: apiProblems.sortedDescendantsDescending,
@@ -36,6 +38,7 @@ function OpenProblems() {
         setError(error);
       }
       setError(false);
+      setLoading(false);
     }
     getOpenProblems();
   }, [sorting, dispatch]);
@@ -66,7 +69,7 @@ function OpenProblems() {
           <Statbar className="statbar" />
         </Grid>
         <Grid item xs={12}>
-          <ProblemsInterface error={error} />
+          <ProblemsInterface error={error} loading={loading} />
         </Grid>
       </Grid>
       <ModalT open={modalState} close={modalCloseHandler}>
