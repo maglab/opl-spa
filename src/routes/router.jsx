@@ -7,7 +7,7 @@ import "../index.css";
 import Hero from "../components/hero";
 import Login from "../pages/Login/Login";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
-import SubmitPage from "../pages/submit/Submit";
+import SubmitPage from "../pages/submit/submit";
 
 const router = createBrowserRouter([
   {
