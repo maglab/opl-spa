@@ -3,7 +3,7 @@ import apiProblems from "../../../api/apiProblems";
 export const initialValues = {
   title: "",
   description: "",
-  references: [],
+  references: [], // DOI and PMID values
   first_name: "",
   last_name: "",
   organisation: "",
