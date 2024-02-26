@@ -1,16 +1,15 @@
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
-import CloseIcon from "@mui/icons-material/Close";
 import {
   FormControl,
   Grid,
   IconButton,
+  InputAdornment,
   InputLabel,
   LinearProgress,
+  Link,
   List,
   ListItem,
-  ListItemButton,
-  ListItemIcon,
   ListItemText,
   MenuItem,
   Select,
@@ -18,14 +17,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { styled } from "@mui/system";
 import { useField } from "formik";
 import React, { useEffect, useState } from "react";
-import { HashLink } from "react-router-hash-link";
+import { Link as RouterLink } from "react-router-dom";
 
 import apiProblems from "../../api/apiProblems";
+import apiReferences from "../../api/apiReferences";
 import regexTest from "./functions/referenceRegex";
-
 /**
  * Reusable text field using the Formik useField hook.
  * @param {String} id - id text
@@ -59,82 +57,45 @@ export function TextInput({
       type={type}
       onChange={field.onChange}
       onBlur={field.onBlur}
-      error={meta.touched && meta.error}
+      error={meta.touched && Boolean(meta.error)}
       required={required}
       helperText={meta.touched && meta.error}
     />
   );
 }
 
-// Stylings for Problem List component
-const innerStyling = {
-  position: "absolute",
-  top: "100%",
-  right: 0,
-  marginTop: 0,
-  maxHeight: 160,
-  width: "100%",
-  border: "1px solid",
-  borderColor: "secondary.main",
-  backgroundColor: "white",
-  zIndex: 10,
-  overflowY: "scroll",
-  padding: 2,
-};
-
-// Styled hashlink following theme MUI theme
-const StyledHashLink = styled(HashLink)(({ theme }) => ({
-  color: "black",
-  textDecoration: "none",
-  "&:hover": {
-    textDecoration: "underline",
-    color: theme.palette.primary.main,
-  },
-}));
-
 /**
- * Component for rendering similar open problems compared to title input.
- * @param {Array} similarProblems - Array of titles to display
- * @param {Function} setToDisplay - setState function to remove display of list.
- * @param {String} error - Error message
+ * List of similar probelems
+ * @param {Array} similarProblems
+ * @returns {React.Component}
  */
-function ProblemsList({ similarProblems, setToDisplay, error }) {
-  const onClickHandler = () => {
-    setToDisplay(false);
-  };
-  return (
-    <Stack position="relative">
-      <Stack sx={innerStyling}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Typography variant="body1" fontWeight="bold" textAlign="center">
-            Similar submitted problems:
-          </Typography>
-          <IconButton onClick={onClickHandler} color="error">
-            <CloseIcon />
-          </IconButton>
-        </Stack>
-        <List>
-          {error && (
-            <Typography variant="subtitle1" color="error">
-              Error from api call: {error}{" "}
-            </Typography>
-          )}
-          {similarProblems.map((problem) => (
-            <ListItem key={problem.problem_id}>
-              <StyledHashLink
-                smooth
-                to={`/open-problems/${problem.problem_id}#title${problem.problem_id}`}
-              >
-                {problem.title}
-              </StyledHashLink>
-            </ListItem>
-          ))}
-        </List>
+function SimilarProblems({ similarProblems, error }) {
+  if (error) {
+    return (
+      <Stack textAlign="center">
+        <Typography variant="subtitle1">
+          Error sending request to API: {error}
+        </Typography>{" "}
       </Stack>
+    );
+  }
+  return (
+    <Stack spacing={2} padding={2}>
+      <Typography variant="h7" sx={{ textDecoration: "underline" }}>
+        Are you submitting the same problem?
+      </Typography>
+      <List disablePadding>
+        {similarProblems.map((openProblem) => (
+          <ListItem key={openProblem.problem_id}>
+            <Link
+              component={RouterLink}
+              to={`open-problems/${openProblem.problem_id}`}
+            >
+              {openProblem.title}
+            </Link>
+          </ListItem>
+        ))}
+      </List>
     </Stack>
   );
 }
@@ -175,29 +136,78 @@ export function TitleInput({ name, type }) {
   }, [formTitle]);
 
   return (
-    <Stack className="title-input-inner-box" width="100%">
-      <TextField
-        id="title"
-        label="Title"
-        name="title"
-        variant="filled"
-        onChange={field.onChange}
-        onBlur={field.onBlur}
-        error={meta.touched && Boolean(meta.error)}
-        helperText={meta.touched && meta.error}
-      />
-      {formTitle.length > 0 && loading && <LinearProgress color="secondary" />}
+    <Stack className="title-input-inner-box" width="100%" spacing={2}>
+      <Stack>
+        <TextField
+          id="title"
+          label="Title"
+          name="title"
+          variant="filled"
+          onChange={field.onChange}
+          onBlur={field.onBlur}
+          error={meta.touched && Boolean(meta.error)}
+          helperText={meta.touched && meta.error}
+        />
+        {formTitle.length > 0 && loading && (
+          <LinearProgress color="secondary" />
+        )}
+      </Stack>
+
       {formTitle.length > 0 &&
         toDisplay &&
         similarProblems.length > 0 &&
         !loading && (
-          <ProblemsList
-            similarProblems={similarProblems}
-            setToDisplay={setToDisplay}
-            error={error}
-          />
+          <SimilarProblems similarProblems={similarProblems} error={error} />
         )}
     </Stack>
+  );
+}
+
+function ReferenceListItem({ reference, index, removeHandler, form }) {
+  const { type, value } = reference;
+  const [referenceInformation, setReferenceInformation] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    async function getReferenceInformation() {
+      try {
+        const response = await apiReferences.verifyReference({ type, value });
+        setReferenceInformation(response.data);
+        form.setFieldValue(
+          `references[${index}].reference_information`,
+          response.data
+        );
+      } catch (error) {
+        setApiError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getReferenceInformation();
+  }, []);
+  if (loading) {
+    return (
+      <Stack padding={2}>
+        <LinearProgress color="primary" />
+      </Stack>
+    );
+  }
+  return (
+    <ListItem
+      key={`${index + 1}${type}:${value}`}
+      secondaryAction={
+        <IconButton edge="end" color="error" onClick={removeHandler}>
+          <ClearIcon />
+        </IconButton>
+      }
+    >
+      <ListItemText
+        primary={apiError || referenceInformation.title}
+        secondary={`${type}:${value}`}
+      />
+    </ListItem>
   );
 }
 
@@ -206,29 +216,24 @@ export function TitleInput({ name, type }) {
  * @param {Function} remove - Formik remove from array function
  * @param {Array} referenceValues - Array of selected references
  */
-export function ReferenceList({ remove, referenceValues }) {
+export function ReferenceList({ remove, referenceValues, form }) {
   const removeHandler = (index) => {
     remove(index);
   };
+
   return (
-    <List sx={{ width: "100%" }}>
-      {referenceValues.map((reference, index) => (
-        <ListItem key={`${index + 1}${reference.key}:${reference.value}`}>
-          <Grid container direction="row" justifyContent="center">
-            <Grid item xs={8}>
-              <ListItemText primary={`${reference.type}:${reference.value}`} />
-            </Grid>
-            <Grid item xs={2} alignItems="center">
-              <ListItemButton>
-                <ListItemIcon onClick={() => removeHandler(index)}>
-                  <ClearIcon color="error" />
-                </ListItemIcon>
-              </ListItemButton>
-            </Grid>
-          </Grid>
-        </ListItem>
-      ))}
-    </List>
+    <Stack>
+      <List sx={{ width: "100%" }} disablePadding>
+        {referenceValues.map((reference, index) => (
+          <ReferenceListItem
+            index={index}
+            reference={reference}
+            removeHandler={removeHandler}
+            form={form}
+          />
+        ))}
+      </List>
+    </Stack>
   );
 }
 
@@ -255,15 +260,18 @@ export function SelectReference({ push, remove, form }) {
     if (!regexTest(`${identifier}:${value}`)) {
       setFormatError("Incorrect PMID/DOI format");
       setValid(false);
-    } else {
-      setFormatError("");
-      setValid(true);
+      return;
     }
+    if (`${identifier}:${value}` in form.values.references) {
+      setFormatError("Cannot input the same PMID/DOI");
+      return;
+    }
+    setFormatError("");
+    setValid(true);
   }, [value, identifier]);
   return (
     <Stack gap={3}>
       <Typography variant="h5" textAlign="center">
-        {" "}
         Add references
       </Typography>
       <Grid
@@ -274,44 +282,55 @@ export function SelectReference({ push, remove, form }) {
         justifyItems="center"
         minHeight={12}
       >
-        <Grid item xs={2}>
-          <FormControl fullWidth variant="filled">
-            <InputLabel id="identifier">Identifier</InputLabel>
-            <Select
+        <Grid
+          item
+          container
+          xs={12}
+          justifyContent="space-between"
+          alignItems="flex-start"
+          spacing={2}
+        >
+          <Grid item xs={12} md={2} justifyContent="center" alignItems="center">
+            <Stack direction="row">
+              <FormControl variant="filled" fullWidth>
+                <InputLabel id="identifier">Identifier</InputLabel>
+                <Select
+                  labelId="identifier"
+                  id="identifier"
+                  label="ID type"
+                  name={`references.${form.values.references.length - 1}.type`}
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
+                  error={Boolean(formatError)}
+                >
+                  <MenuItem value="PMID">PMID</MenuItem>
+                  <MenuItem value="DOI">DOI</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={10}>
+            <TextField
               fullWidth
-              labelId="identifier"
-              id="identifier"
-              label="ID type"
-              name={`references.${form.values.references.length - 1}.type`}
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-              error={formatError}
-            >
-              <MenuItem value="PMID">PMID</MenuItem>
-              <MenuItem value="DOI">DOI</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={8} alignItems="center">
-          <TextField
-            fullWidth
-            variant="filled"
-            label="Identifier value"
-            name={`references.${form.values.references.length - 1}.value`}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={() => setValueTouched(true)}
-            error={Boolean(formatError)}
-            helperText={formatError}
-            FormHelperTextProps={{
-              sx: { position: "absolute", bottom: "-20px" },
-            }} // Adjust CSS as needed
-          />
-        </Grid>
-        <Grid item alignItems="center" xs={2}>
-          <IconButton color="primary" size="large" onClick={onClickHandler}>
-            <AddIcon />
-          </IconButton>
+              variant="filled"
+              label="Identifier value"
+              name={`references.${form.values.references.length - 1}.value`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              onBlur={() => setValueTouched(true)}
+              error={Boolean(formatError)}
+              helperText={formatError}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton color="primary" onClick={onClickHandler}>
+                      <AddIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
         </Grid>
       </Grid>
       <Grid container direction="column">
