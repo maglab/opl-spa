@@ -8,7 +8,6 @@ import {
 // import About from './pages/About/About'
 import RootOpenProblems from "./pages/Root/OpenProblems";
 import OpenProblems from "./pages/OpenProblems/OpenProblems";
-import { getProblems } from "./utils/functions/getOpenProblems";
 import apiProblems from "./api/apiProblems";
 import Details from "./pages/OpenProblemDetails/Details";
 import AnnotationDetails from "./pages/AnnotationDetails/AnnotationDetails";
@@ -20,7 +19,7 @@ const router = createBrowserRouter([
     path: "open-problems",
     element: <RootOpenProblems />,
     children: [
-      { index: true, element: <OpenProblems />, loader: getProblems },
+      { index: true, element: <OpenProblems /> },
       {
         path: ":id",
         element: <Details />,

@@ -1,12 +1,11 @@
 import { TextField } from "@mui/material";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { questionActions } from "../../../state/Question/questionSlice";
 import { formActions } from "../../../state/Question/questionFormSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Fuse from "fuse.js";
 function SearchBar() {
-  const allProblems = useLoaderData();
-  const openProblems = allProblems.latest;
+  const openProblems = useSelector((state) => state.question.allProblems);
   const queryState = useSelector((state) => state.question.searchQuery);
 
   const dispatch = useDispatch();

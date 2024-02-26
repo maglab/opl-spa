@@ -3,12 +3,10 @@ import TextInput from "./Inputs/TextInput";
 import Select from "./Inputs/Select";
 import ReferencesInput from "./Inputs/ReferencesInput";
 import ContactForm from "./ContactInformationForm";
-import { useLoaderData } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../../../state/Question/questionFormSlice";
 function FormContent() {
-  const allProblems = useLoaderData();
-  const openProblems = allProblems.latest;
+  const openProblems = useSelector((state) => state.question.allProblems);
   const dispatch = useDispatch();
   const clearFormHandler = () => {
     dispatch(formActions.resetForm({ exit: false }));
@@ -21,6 +19,7 @@ function FormContent() {
         label="required"
         labelText="Title:"
         required="required"
+        openProblems={openProblems}
       />
       <TextArea
         id="description"

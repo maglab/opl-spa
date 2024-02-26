@@ -20,7 +20,7 @@ const DEFAULT_STATE = {
   viewWidth: null,
   isMobile: false,
   openProblem: {},
-  allProblems: null,
+  allProblems: [],
 
   // rootProblems: null,
 };

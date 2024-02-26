@@ -36,13 +36,9 @@ function RootOpenProblems() {
           </h1>
         </Container>
       </section>
-      <main
-        className={`w-full ${
-          viewWidth > 450 ? "px-40" : "px-2"
-        } overflow-auto py-6 pb-4`}
-      >
+      <Container maxWidth="xl">
         <Outlet />
-      </main>
+      </Container>
       <footer className="h-3/12">
         <Footer />
       </footer>

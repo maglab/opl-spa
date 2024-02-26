@@ -1,41 +1,26 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { Box, Paper } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../../../state/Question/questionFormSlice";
 import StatbarButtonGroupView from "./StatbarButtonGroupView";
 import scrollToView from "../../../utils/functions/scrollToView";
-import { useLoaderData } from "react-router-dom";
 // This functon is for the statbar that allows the user to select whether to view the questions as a table or as a tree view instead
 
 function Statbar() {
-  const allProblems = useLoaderData();
-  const openProblems = allProblems.latest;
-  const [problemsLength, setProblemsLength] = useState(0);
+  const openProblems = useSelector((state) => state.question.allProblems);
+  // const [problemsLength, setProblemsLength] = useState(0);
   const isMobileState = useSelector((state) => state.question.isMobile);
-  const selectedSorting = useSelector(
-    (state) => state.question.filters.sorting
-  );
 
   const dispatch = useDispatch();
   const submitQuestionHandler = () => {
     dispatch(formActions.toggleFormOpen());
     scrollToView(".form-title");
   };
-  useEffect(() => {
-    function getLength() {
-      if (selectedSorting === "root") {
-        const length = allProblems.latest.length;
-        setProblemsLength(length);
-        return;
-      }
-      if (allProblems[selectedSorting]) {
-        const length = allProblems[selectedSorting].length;
-        setProblemsLength(length);
-      }
-    }
-    getLength();
-  }, [openProblems, selectedSorting]);
+
+  const problemsLength = useMemo(() => {
+    return openProblems.length;
+  }, [openProblems]);
   return (
     <Box className="h-full">
       <Paper className="flex h-12 w-full items-center justify-between">

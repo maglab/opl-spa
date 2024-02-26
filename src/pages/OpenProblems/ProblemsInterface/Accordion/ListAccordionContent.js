@@ -1,22 +1,69 @@
-import { List } from "@mui/material";
-import MuiListComponent from "../List/MuiListComponent";
-import ButtonGroupComponent from "../ButtonGroup/ButtonGroupComponent";
-function ListAccordionContent(props) {
-  const problem = props.problem;
-  const children = problem.children;
-  const parent = problem.parent_problem;
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { List, Grid, Typography } from "@mui/material";
+import MuiListComponent from "../MuiListComponent";
+import ButtonGroupComponent from "../ButtonGroupComponent";
+import apiSubmissions from "../../../../api/apiSubmissions";
+import { formActions } from "../../../../state/Question/questionFormSlice";
+
+function ListAccordionContent({ problem }) {
+  const dispatch = useDispatch();
+  const { parent_problem: parent, children } = problem;
   const isRoot = parent ? true : false;
 
+  //Button handlers
+  const [counts, setCounts] = useState(0);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+
+  const formHandler = () => {
+    dispatch(formActions.toggleFormOpen());
+    dispatch(
+      formActions.chooseParent({
+        chosenParentTitle: problem.title,
+        parentId: problem.problem_id,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const problemId = problem.problem_id;
+    async function getSubmissionCount() {
+      try {
+        const response = await apiSubmissions.getSubmissionCount({ problemId });
+        const counts = response.data.post_counts;
+        setCounts(counts);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getSubmissionCount();
+  }, [problem.problem_id]);
+
   return (
-    <>
-      <div className="description py-4">
-        <p className="text-sm ">{problem.description && problem.description}</p>
-      </div>
-      <div className="buttons flex justify-center">
-        <ButtonGroupComponent problem={problem} isRoot={isRoot} />
-      </div>
-      <div className="problems">
-        <h1 className="text-lg underline">Connected Open Problems</h1>
+    <Grid container direction="column" spacing={2} p={2} width="100%">
+      <Grid item xs={12}>
+        <Typography variant="body1">
+          {problem.description && problem.description}
+        </Typography>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+      >
+        <ButtonGroupComponent
+          openProblem={problem}
+          isRoot={isRoot}
+          counts={counts}
+          formHandler={formHandler}
+          feedbackOpen={feedbackOpen}
+          setFeedbackOpen={setFeedbackOpen}
+        />
+      </Grid>
+      <Grid item className="problems">
+        <Typography variant="h5">Connected Open Problems</Typography>
         {children.length > 0 ? (
           <List sx={{ width: "100%" }} variant="outlined">
             {children.map((item, index) => (
@@ -24,10 +71,10 @@ function ListAccordionContent(props) {
             ))}
           </List>
         ) : (
-          <p>None</p>
+          <Typography variant="subtitle1">None</Typography>
         )}
-      </div>
-    </>
+      </Grid>
+    </Grid>
   );
 }
 
