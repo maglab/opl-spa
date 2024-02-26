@@ -32,7 +32,7 @@ function TextInput({ openProblems, id, label, labelText, required }) {
         }
       }
     }
-  }, [formDetailsState.title]);
+  }, [formDetailsState.title, id, openProblems]);
   const onChangeHandler = (e, key) => {
     dispatch(formActions.inputChange({ id: key, value: e.target.value }));
     switch (key) {

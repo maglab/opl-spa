@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Dialog,
   Paper,
@@ -12,6 +12,7 @@ import {
   Button,
   FormHelperText,
   Autocomplete,
+  Alert,
 } from "@mui/material";
 import { Formik, Form, useField } from "formik";
 import useGetApi from "../../utils/hooks/useApi";
@@ -51,18 +52,24 @@ const validation = (values, props) => {
 
 /**
  * Formik submit function
- * @param {Object} values
- * @param {Object} props
+ * @param {Object} values - Values of all form fields
+ * @param {Object} props - Object containing formik meta data and helper functions
  */
-async function submit(values, props) {
+async function submit(values, props, setAlertMessage) {
   try {
     const response = await apiProblems.reportProblem({ ...values });
-    console.log(response);
+    if (response.status === 201) {
+      setAlertMessage("Report sent.");
+      props.resetForm();
+    }
   } catch (error) {
-    console.log(error);
+    setAlertMessage(`Sending report unsuccesful: ${error}`);
   }
 }
 
+/**
+ * Conditionally rendered component to select another open problem that is a duplicate.
+ */
 function SelectDuplicate() {
   const [field, meta, helpers] = useField("duplicate");
   const handleChange = (_, value) => {
@@ -106,17 +113,33 @@ function SelectDuplicate() {
   );
 }
 
-function FeedbackForm({ id, open, onClose }) {
+/**
+ * Main feedback form component displayed as a dialog
+ * @param {String} id
+ * @param {Boolean} open
+ * @param {Function} setOpen
+ * @returns {React.Component}
+ */
+function FeedbackForm({ id, open, setOpen }) {
+  const [alertMessage, setAlertMessage] = useState("");
+  const onCloseHandler = () => {
+    setAlertMessage("");
+    setOpen(false);
+  };
+  const handleFormChange = () => {
+    setAlertMessage("");
+  };
   return (
-    <Dialog onClose={onClose} open={open} maxWidth="sm">
+    <Dialog onClose={onCloseHandler} open={open} maxWidth="sm">
       <Paper>
         <Formik
           initialValues={{ ...initialValues, id: id }}
           validate={validation}
-          onSubmit={submit}
+          onSubmit={(values, props) => submit(values, props, setAlertMessage)}
         >
           {(formik) => (
-            <Form>
+            <Form onChange={handleFormChange}>
+              {alertMessage && <Alert>{alertMessage}</Alert>}
               <Stack spacing={2.5} padding={2}>
                 <Typography variant="h5"> Report </Typography>
                 <Typography variant="body1">
@@ -167,7 +190,11 @@ function FeedbackForm({ id, open, onClose }) {
                   justifyContent="center"
                   spacing={2}
                 >
-                  <Button variant="outlined" color="primary" onClick={onClose}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={onCloseHandler}
+                  >
                     Exit
                   </Button>
                   <Button variant="contained" type="submit">

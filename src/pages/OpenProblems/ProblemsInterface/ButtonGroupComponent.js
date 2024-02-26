@@ -46,6 +46,7 @@ function ButtonGroupComponent({
       </ButtonGroup>
       <FeedbackForm
         open={feedbackOpen}
+        setOpen={setFeedbackOpen}
         onClose={() => setFeedbackOpen(false)}
         id={problemId}
       />
