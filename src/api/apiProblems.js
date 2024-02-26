@@ -13,12 +13,12 @@ const apiProblems = {
     );
   },
   postProblem: async (params) => {
-    const data = params.data;
+    const { data } = params;
     return apiRequest(() => apiClient.post("open-problems/submit", data));
   },
   verifyToken: async (params) => {
     const SECRET_KEY = RECAPTCHA_SECRET_KEY;
-    const token = params.token;
+    const { token } = params;
     return apiRequest(() =>
       apiClient.post("open-problems/verify-token", {
         secret: SECRET_KEY,
