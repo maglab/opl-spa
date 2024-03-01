@@ -1,36 +1,30 @@
-import React, { useContext } from "react";
 import {
+  List,
   ListItem,
   ListItemText,
-  Paper,
-  List,
   Pagination,
+  Paper,
   Stack,
-  Skeleton,
 } from "@mui/material";
+import React, { useContext, useMemo } from "react";
 
-import OpenProblemCard from "./card";
 import { OpenProblemsContext } from "../../context/context";
+import OpenProblemCard from "./card";
 
 function ListItemComponent({ title }) {
   return (
     <Paper>
       <ListItem>
-        <ListItemText primary={title} />
+        <ListItemText primary={title} disablePadding />
       </ListItem>
     </Paper>
   );
 }
-
-function LoadingSkeletonCard() {
-  return (
-    <Skeleton width="100%">
-      <OpenProblemCard />
-    </Skeleton>
-  );
+function calculatePagination(count, view) {
+  const dividedBy = view === "card" ? 10 : 20;
+  return Math.ceil(count / dividedBy);
 }
-
-function OpenProblemList({ openProblems, loading }) {
+function OpenProblemList({ openProblems }) {
   const { state, dispatch } = useContext(OpenProblemsContext);
   const { view } = state;
 
@@ -39,23 +33,33 @@ function OpenProblemList({ openProblems, loading }) {
     dispatch({ type: "setPage", payload: { page: newPage } });
   };
 
+  const paginationCount = useMemo(
+    () => calculatePagination(state.count, state.view),
+    [state.count, state.view]
+  );
+
   if (view === "card") {
     return (
-      <>
-        {loading && <LoadingSkeletonCard />}
-        <Stack spacing={2} py={4} alignItems="center">
-          {openProblems &&
-            openProblems.map((openProblem) => (
-              <OpenProblemCard key={openProblem.id} openProblem={openProblem} />
-            ))}
-          <Pagination count={10} onChange={handlePageChange} size="large" />
-        </Stack>
-      </>
+      <Stack spacing={2} py={4} alignItems="center">
+        {openProblems &&
+          openProblems.map((openProblem) => (
+            <OpenProblemCard
+              key={openProblem.id}
+              openProblem={openProblem}
+              contact={openProblem.contact}
+            />
+          ))}
+        <Pagination
+          count={paginationCount}
+          onChange={handlePageChange}
+          size="large"
+        />
+      </Stack>
     );
   }
   return (
     <Stack alignItems="center" spacing={2} py={4}>
-      <List>
+      <List disablePadding sx={{ width: "100%" }}>
         <Stack spacing={2}>
           {openProblems &&
             openProblems.map((openProblem) => (
@@ -66,6 +70,7 @@ function OpenProblemList({ openProblems, loading }) {
             ))}
         </Stack>
       </List>
+      <Pagination count={10} onChange={handlePageChange} size="large" />
     </Stack>
   );
 }
