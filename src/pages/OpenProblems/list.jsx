@@ -170,6 +170,7 @@ function OpenProblemList({ openProblems }) {
           ))}
         <ReportForm open={reportOpen} setOpen={setReportOpen} />
         <Pagination
+          page={state.page}
           count={paginationCount}
           onChange={handlePageChange}
           size="large"
