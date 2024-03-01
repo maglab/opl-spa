@@ -27,7 +27,6 @@ export default function ReportForm({ setOpen, open }) {
         <Formik initialValues={initialValues}>
           <Form>
             <DialogTitle> Report a problem </DialogTitle>
-
             <DialogContent>
               <Stack spacing={2} direction="column">
                 <DialogContentText>
