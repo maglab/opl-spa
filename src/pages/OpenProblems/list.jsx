@@ -81,7 +81,7 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
               {description}
             </Typography>
           </Grid>
-          <Grid item sx={12} py={2}>
+          <Grid item xs={12} py={2}>
             <Stack direction="row" spacing={2}>
               {annotations &&
                 annotations.map((annotation) => (
@@ -162,7 +162,7 @@ function OpenProblemList({ openProblems }) {
         {openProblems &&
           openProblems.map((openProblem) => (
             <OpenProblemCard
-              key={openProblem.id}
+              key={openProblem.problem_id}
               openProblem={openProblem}
               contact={openProblem.contact}
               setReportOpen={setReportOpen}
