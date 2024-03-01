@@ -8,7 +8,7 @@ import "../index.css";
 import Hero from "../components/hero";
 import Login from "../pages/Login/Login";
 import Details from "../pages/OpenProblemDetails/Details";
-import OpenProblems from "../pages/OpenProblems/OpenProblems";
+import OpenProblems from "../pages/OpenProblems/openProblems";
 import OpenProblemProvider from "../context/context";
 // import RootLayout from "../pages/Root/RootLayout";
 // import SubmitPage from "../pages/Submit/Submit";
