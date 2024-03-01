@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid, Stack } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 
 import apiProblems from "../../api/apiProblems";
@@ -42,7 +42,18 @@ function OpenProblems() {
         <Header />
       </Grid>
       <Grid item xs={12}>
-        <OpenProblemList openProblems={openProblems} />
+        {loading ? (
+          <Stack
+            direction="row"
+            justifyContent="center"
+            height="70vh"
+            alignItems="center"
+          >
+            <CircularProgress />
+          </Stack>
+        ) : (
+          <OpenProblemList openProblems={openProblems} loading={loading} />
+        )}
       </Grid>
     </Grid>
   );
