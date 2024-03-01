@@ -1,6 +1,5 @@
 import FlagIcon from "@mui/icons-material/Flag";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Button,
   ButtonGroup,
@@ -105,7 +104,6 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
               >
                 0 Posts
               </Button>
-              <Button startIcon={<VisibilityIcon />}>Follow</Button>
               <Button
                 startIcon={<FlagIcon />}
                 color="error"
