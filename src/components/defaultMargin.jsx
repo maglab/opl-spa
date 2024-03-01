@@ -10,7 +10,7 @@ function margin({ children, yPadding = 4, xPadding = 2, bgcolor }) {
       px={xPadding}
       py={yPadding}
     >
-      <Box width="100%" maxWidth="md">
+      <Box width="100%" maxWidth="lg">
         {children}
       </Box>
     </Box>
