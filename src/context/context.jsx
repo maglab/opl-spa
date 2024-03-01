@@ -7,7 +7,7 @@ const initialState = {
   count: 0,
   openProblems: [],
   view: "card",
-  sorting: "latest",
+  sorting: "top",
   query: "",
 };
 
