@@ -25,8 +25,8 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-200 h-screen">
-      <div className="w-1/4 bg-white border rounded shadow-md p-6 align-middle">
+    <div className="flex items-center justify-center h-screen w-full">
+      <div className=" bg-white border rounded shadow-md p-6 align-middle w-1/2">
         <h1 className="text-xl font-semibold mb-4 w-full text-center">
           Log in
         </h1>
