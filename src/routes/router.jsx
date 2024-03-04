@@ -6,10 +6,10 @@ import Layout from "../components/layout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
 import Hero from "../components/hero";
-import Login from "../pages/Login/Login";
-import Details from "../pages/OpenProblemDetails/Details";
-import OpenProblems from "../pages/OpenProblems/openProblems";
 import OpenProblemProvider from "../context/context";
+import Login from "../pages/Login/Login";
+import Details from "../pages/OpenProblemDetails/details";
+import OpenProblems from "../pages/OpenProblems/openProblems";
 // import RootLayout from "../pages/Root/RootLayout";
 // import SubmitPage from "../pages/Submit/Submit";
 
