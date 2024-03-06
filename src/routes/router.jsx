@@ -5,9 +5,9 @@ import Layout from "../components/layout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
 import Hero from "../components/hero";
+import Submit from "../components/submit/submit";
 import Login from "../pages/Login/Login";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
-import SubmitPage from "../pages/submit/submit";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         path: "open-problems",
         element: <OpenProblems />,
       },
-      { path: "open-problems/submit", element: <SubmitPage /> },
+      { path: "open-problems/submit", element: <Submit /> },
     ],
   },
 ]);

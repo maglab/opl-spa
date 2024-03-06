@@ -40,7 +40,11 @@ export default function Footer() {
             <Grid item>
               <Stack spacing={1}>
                 {people.map((i) => (
-                  <Typography color={textColor} whiteSpace="pre-wrap">
+                  <Typography
+                    key={i.email}
+                    color={textColor}
+                    whiteSpace="pre-wrap"
+                  >
                     {`${i.name}\n`}
                     <Email /> <Link href={`mailto:${i.email}`}>{i.email}</Link>
                   </Typography>
