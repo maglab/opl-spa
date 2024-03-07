@@ -1,35 +1,12 @@
-import apiClient, { apiRequest } from "./apiClient";
+import apiClient from "./apiClient";
 
-const apiSubmissions = {
-  getSubmissions: async (params) => {
-    const { problemId } = params;
-    try {
-      const response = await apiClient.get(`posts/${problemId}`);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  },
-  getAllSubmissions: async () => apiRequest(() => apiClient.get("posts/all")),
-  getSubmissionCount: async (params) => {
-    const { problemId } = params;
-    try {
-      const response = await apiClient.get(`posts/${problemId}/counts`);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  },
-  postSubmission: async (params) => {
-    const { data } = params;
-    const { problemId } = params;
-    try {
-      const response = await apiClient.post(`posts/${problemId}/submit`, data);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  },
+const apiPosts = {
+  forOpenProblem: ({ id }) => apiClient.get(`posts/${id}`),
+  all: () => apiClient.get("posts/all"),
+  count: ({ problemId }) =>
+    apiClient.get(`posts/${problemId}/counts`).catch((error) => error),
+  submit: ({ data, problemId }) =>
+    apiClient.post(`posts/${problemId}/submit`, data).catch((error) => error),
 };
 
-export default apiSubmissions;
+export default apiPosts;
