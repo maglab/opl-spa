@@ -1,16 +1,47 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Grid, Paper, Tab, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Stack, Tab, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import apiPosts from "../../api/apiSubmissions";
+import useGetApi from "../../utils/hooks/useApi";
 
-function DiscussionSection() {
+function Post({ postData }) {
+  console.log(postData);
   return (
-    <TabPanel>
-      <Typography>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam harum
-        doloribus ex autem veniam? Recusandae minus quos quia perspiciatis
-        consequuntur deleniti possimus voluptas tempore quod odit fuga sapiente,
-        ullam numquam!
-      </Typography>
+    <Grid container direction="column">
+      <Divider />
+      <Grid
+        container
+        item
+        direction="row"
+        xs={12}
+        justifyContent="space-between"
+      >
+        <Grid item>
+          <Typography variant="body2"> User goes here</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="body2"> Date: XXXXXX</Typography>
+        </Grid>
+      </Grid>
+      <Divider />
+    </Grid>
+  );
+}
+
+function DiscussionSection({ value }) {
+  const { id } = useParams();
+  const { apiData: posts, error } = useGetApi(
+    apiPosts.forOpenProblem,
+    { id },
+    {}
+  );
+
+  return (
+    <TabPanel value={value}>
+      <Stack>
+        <Post postData={posts[0]} />
+      </Stack>
     </TabPanel>
   );
 }
@@ -18,7 +49,6 @@ function DiscussionSection() {
 export default function DiscussionSolution() {
   const [tabState, setTabState] = useState(1);
   const handleChange = (event, newValue) => {
-    console.log("test");
     setTabState(newValue);
   };
   return (
@@ -30,6 +60,7 @@ export default function DiscussionSolution() {
               <Tab label="DISCUSSION" value={1} />
               <Tab label="SOLUTIONS" value={2} />
             </TabList>
+            <DiscussionSection value={1} />
           </TabContext>
         </Grid>
       </Grid>
