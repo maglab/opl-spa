@@ -1,5 +1,3 @@
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import {
   AppBar,
   Button,
@@ -9,17 +7,16 @@ import {
   Menu,
   Paper,
   Stack,
-  Tab,
-  Tabs,
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 import { useLoaderData, useParams } from "react-router-dom";
 import apiAnnotations from "../../api/apiAnnotations";
 import useGetApi from "../../utils/hooks/useApi";
 import ClassificationTable from "./classificationTable";
+import DiscussionSolution from "./discussionSolution";
 
 function TopBar() {
   return (
@@ -56,46 +53,6 @@ function Header({ data }) {
           ))}
       </Stack>
     </Stack>
-  );
-}
-
-function DiscussionSection() {
-  return (
-    <TabPanel>
-      <Typography>
-        {" "}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam harum
-        doloribus ex autem veniam? Recusandae minus quos quia perspiciatis
-        consequuntur deleniti possimus voluptas tempore quod odit fuga sapiente,
-        ullam numquam!
-      </Typography>
-    </TabPanel>
-  );
-}
-
-function DiscussionSolution() {
-  const [tabState, setTabState] = useState(1);
-  const handleChange = (event, newValue) => {
-    setTabState(newValue);
-  };
-  return (
-    <Paper>
-      <Grid container>
-        <Grid item xs={12} typography="h1">
-          <Tabs
-            textColor="primary"
-            value={tabState}
-            onChange={handleChange}
-            centered
-          >
-            <TabList>
-              <Tab label="DISCUSSION" value={1} />
-              <Tab label="SOLUTIONS" value={2} />
-            </TabList>
-          </Tabs>
-        </Grid>
-      </Grid>
-    </Paper>
   );
 }
 
