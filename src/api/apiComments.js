@@ -1,4 +1,4 @@
-import apiClient, { apiRequest } from "./apiClient";
+import apiClient from "./apiClient";
 
 const apiComments = {
   postComment: async (params) => {
@@ -7,18 +7,17 @@ const apiComments = {
     try {
       const response = await apiClient.post(
         `posts/post/${submissionId}/comment/submit`,
-        postData,
+        postData
       );
       return response;
     } catch (error) {
       return error;
     }
   },
-  getComments: async (params) => {
-    const { submissionId } = params;
+  getComments: async ({ submissionId }) => {
     try {
       const response = await apiClient.get(
-        `posts/get/${submissionId}/comments`,
+        `posts/get/${submissionId}/comments`
       );
       return response;
     } catch (error) {
@@ -29,7 +28,7 @@ const apiComments = {
     const { submissionId } = params;
     try {
       const response = await apiClient.get(
-        `posts/get/${submissionId}/comments`,
+        `posts/get/${submissionId}/comments`
       );
       return response;
     } catch (error) {
