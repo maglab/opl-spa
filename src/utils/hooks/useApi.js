@@ -19,8 +19,8 @@ function useGetApi(apiFunction, params, defaultApi = null) {
         // Call the provided API function with params
         const response = await apiFunction(params);
         setApiData(response.data);
-      } catch (error) {
-        setError(error);
+      } catch (e) {
+        setError(e);
       } finally {
         setLoading(false);
       }
