@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/layout";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
 import Hero from "../components/hero";
+import ScrollToTop from "../components/scrollToTop";
 import Submit from "../components/submit/submit";
 import SubmitGuidelines from "../components/submitGuidelines";
 import Login from "../pages/Login/Login";
@@ -12,7 +13,12 @@ import OpenProblems from "../pages/OpenProblems/OpenProblems";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <>
+        <Layout />
+        <ScrollToTop />
+      </>
+    ),
     children: [
       {
         path: "/",

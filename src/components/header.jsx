@@ -38,18 +38,22 @@ export default function Header() {
               <Grid item xs />
               <Grid item>
                 <Stack direction="row" spacing={2}>
-                  <Button component={RouterLink} to="/" variant="text">
-                    Home
-                  </Button>
-                  <Button component={RouterLink} to="/login" variant="outlined">
-                    Login / Register
+                  <Button
+                    component={RouterLink}
+                    to="/open-problems"
+                    variant="contained"
+                  >
+                    Submit
                   </Button>
                   <Button
                     component={RouterLink}
                     to="/open-problems"
                     variant="contained"
                   >
-                    Open Problems
+                    Problems
+                  </Button>
+                  <Button component={RouterLink} to="/login" variant="outlined">
+                    Login / Register
                   </Button>
                 </Stack>
               </Grid>
