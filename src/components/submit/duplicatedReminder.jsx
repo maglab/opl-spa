@@ -24,8 +24,8 @@ export default function DuplicatedReminder() {
     () => {
       searchProblems(field.value);
     },
-    [field],
-    500
+    500,
+    [field]
   );
 
   return (

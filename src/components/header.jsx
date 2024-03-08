@@ -1,12 +1,5 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { AppBar, Button, Grid, Link, Stack, Typography } from "@mui/material";
+import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
@@ -31,8 +24,8 @@ export default function Header() {
               spacing={1}
             >
               <Stack height="100%" justifyContent="center">
-                <Link href="https://longevityknowledge.com">
-                  <Box component="img" src={logoSvg} height={48} />
+                <Link component={RouterLink} to="/">
+                  <Image src={logoSvg} height={48} />
                 </Link>
               </Stack>
               <Typography variant="caption">

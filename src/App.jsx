@@ -2,7 +2,6 @@ import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { blue, blueGrey } from "@mui/material/colors";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
-import "./index.css";
 import router from "./routes/router";
 
 const theme = createTheme({

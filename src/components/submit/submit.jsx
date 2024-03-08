@@ -16,7 +16,6 @@ import apiProblems from "../../api/apiProblems";
 import ContactSection from "./contactSection";
 import DetailsSection from "./detailsSection";
 import FormManager from "./formManager";
-import Guidance from "./guidance";
 import ReferenceSection from "./referenceSection";
 
 export default function Submit() {
@@ -35,9 +34,6 @@ export default function Submit() {
       <FormManager onSubmitHandler={submit}>
         <Form>
           <Stack spacing={4}>
-            <Paper elevation={2}>
-              <Guidance />
-            </Paper>
             <Paper elevation={2}>
               <Stack
                 p={2}

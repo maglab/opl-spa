@@ -2,10 +2,10 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 // import apiAnnotations from "../api/apiAnnotations";
 import Layout from "../components/layout";
-import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
 import Hero from "../components/hero";
 import Submit from "../components/submit/submit";
+import SubmitGuidelines from "../components/submitGuidelines";
 import Login from "../pages/Login/Login";
 import OpenProblems from "../pages/OpenProblems/OpenProblems";
 
@@ -27,7 +27,14 @@ const router = createBrowserRouter([
         path: "open-problems",
         element: <OpenProblems />,
       },
-      { path: "open-problems/submit", element: <Submit /> },
+      {
+        path: "submit",
+        element: <Submit />,
+      },
+      {
+        path: "submit-guidelines",
+        element: <SubmitGuidelines />,
+      },
     ],
   },
 ]);
