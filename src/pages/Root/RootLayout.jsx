@@ -11,7 +11,7 @@ function RootLayout() {
         <Nav2 />
       </div>
       <main
-        className={`max-w-7xl w-full min-h-[80vh] max-h-max${
+        className={`max-w-6xl w-full min-h-[80vh] max-h-max${
           isMobile ? "px-8" : null
         }  pb-4`}
       >

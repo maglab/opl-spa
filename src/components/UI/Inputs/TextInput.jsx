@@ -1,5 +1,59 @@
+import { Box, FilledInput, FormHelperText, FormLabel } from "@mui/material";
+import { useField } from "formik";
 import { useState } from "react";
 import withOnChangeHandler from "../../../utils/hoc/withOnChangeHandler";
+
+const boxStyles = {
+  // alignItems: "center",
+  width: "100%",
+};
+
+const labelStyles = {
+  fontSize: 18,
+};
+
+const inputStyles = {
+  width: "80%",
+};
+
+/**
+ * Re-useable MUI text input with form label.
+ * @param {String} id - ID for input
+ * @param {String} label - Label text
+ * @param {String} name - Required for formik
+ * @param {Boolean} required - Required boolean for input
+ * @param {String} placeHolder - Placeholder text
+ * @param {String} type - Input type. Default is text.
+ * @returns {React.Component}
+ */
+export function InputWithFormLabel({
+  id,
+  label,
+  name,
+  required,
+  placeHolder,
+  type = "text",
+}) {
+  const [field, meta] = useField(name, "input");
+
+  return (
+    <Box sx={boxStyles}>
+      <FormLabel sx={labelStyles}>{label}</FormLabel>
+      <FilledInput
+        id={id}
+        fullWidth={true}
+        name={name}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        error={meta.touched && Boolean(meta.error)}
+        required={required}
+        placeholder={placeHolder}
+        type={type}
+      />
+      <FormHelperText>{meta.error}</FormHelperText>
+    </Box>
+  );
+}
 
 function textInput(props) {
   return (

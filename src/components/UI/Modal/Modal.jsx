@@ -1,40 +1,59 @@
-import ReactDOM from "react-dom";
+import { Box, Button, Modal, Typography } from "@mui/material";
 
-function Modal({
-  open,
-  close,
-  height,
-  width,
-  children,
-  positionClasses,
-  overlayClasses,
-}) {
-  const closeHandler = close;
-  if (!open) return;
-
-  const defaultPositionClasses =
-    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ";
-  const defaultOverlay = " bg-black opacity-70";
-  return ReactDOM.createPortal(
-    <>
-      <div
-        className={`overlay z-1000 fixed inset-0 ${
-          overlayClasses || defaultOverlay
-        }`}
-        onClick={closeHandler}
-      />
-      <div
-        className={`z-2000 fixed ${
-          positionClasses || defaultPositionClasses
-        } -translate-y-1/2 animate-fadein bg-white p-10 ${
-          height ? `h-${height}` : "h-max"
-        } ${width ? `w-${width}` : "w-max"}`}
-      >
-        {children}
-      </div>
-    </>,
-    document.getElementById("root"),
+//Split for now
+const modalBoxStyling = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "primary.main",
+  padding: "16px",
+  minHeight: "250px",
+  minWidth: "300px",
+  maxHeight: "25%",
+  maxWidth: "30%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "2rem",
+};
+const modalStyling = {
+  height: "100%",
+  width: "100%",
+};
+export function SubmissionModal({ title, response, open, setOpen }) {
+  const exitHandler = () => {
+    setOpen(false);
+  };
+  return (
+    <Modal
+      open={open}
+      onClose={exitHandler}
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+      sx={modalStyling}
+    >
+      <Box className="modal-box" sx={modalBoxStyling}>
+        <Box className="modal-text" textAlign="center">
+          <Typography
+            id="modal-title"
+            variant="h5"
+            paddingTop="0.5rem"
+            paddingBottom="0.5rem"
+          >
+            {title}
+          </Typography>
+          <Typography variant="body1" id="modal-description">
+            {response}
+          </Typography>
+        </Box>
+        <Box className="modal-buttons">
+          <Button color="secondary" variant="outlined" onClick={exitHandler}>
+            Exit
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
   );
 }
-
-export default Modal;

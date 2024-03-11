@@ -7,6 +7,7 @@ import router from "./routes/router";
 
 const theme = createTheme({
   palette: {
+    mode: "light",
     primary: {
       main: blue[800],
     },
@@ -15,6 +16,7 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: "Lato",
     button: {
       textTransform: "none",
     },

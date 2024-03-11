@@ -1,10 +1,10 @@
 import { HashLink } from "react-router-hash-link";
 import React from "react";
-// import faqIcon from "../../../assets/svg/question-circle-svgrepo-com .svg?react";
 import faqIcon from "../../../assets/svg/question-circle-svgrepo-com.svg?react";
 import uploadIcon from "../../../assets/svg/upload-svgrepo-com.svg?react";
 import linkIcon from "../../../assets/svg/link-svgrepo-com.svg?react";
 import withSVG from "../../../utils/hoc/withSVG";
+import useViewWidth from "../../../utils/hooks/useViewWidth";
 
 const defaultProps = { width: "80px", height: "80px" };
 const QuestionMark = withSVG(faqIcon, defaultProps);
@@ -22,7 +22,9 @@ const submitLinks = [
   { title: "Feature request", link: "/feature-request" },
 ];
 
-const usefulLinks = [{ title: "Rejuvenomics Lab", link: "..." }];
+const usefulLinks = [
+  { title: "Rejuvenomics Lab", link: "https://rejuvenomicslab.com/" },
+];
 
 /**
  * Helper component used by Resources component. Renders SVG and links beneath.
@@ -40,14 +42,16 @@ function Column({ children, links, external }) {
           ? links.map((link) => (
               <li>
                 {" "}
-                <a href={link.link} className="hover:underline">
+                <a href={link.link} target="_blank" className="hover:underline">
                   {link.title}
                 </a>
               </li>
             ))
           : links.map((link) => (
               <li>
-                <HashLink className="hover:underline">{link.title}</HashLink>
+                <HashLink to={link.link} className="hover:underline">
+                  {link.title}
+                </HashLink>
               </li>
             ))}{" "}
       </ul>
@@ -56,8 +60,13 @@ function Column({ children, links, external }) {
 }
 
 function Resources() {
+  const { isMobile } = useViewWidth();
   return (
-    <div className="w-full flex flex-row justify-center py-10 mt-6 text-white font-general gap-x-20">
+    <div
+      className={`w-full flex ${
+        isMobile ? "flex-col gap-y-30" : "flex-row gap-x-20"
+      } justify-center py-10 mt-6 text-white font-general`}
+    >
       <Column links={aboutLinks}>
         <QuestionMark />
         <h1 className="font-general font-semibold"> Learn </h1>
@@ -66,7 +75,7 @@ function Resources() {
         <Submit />
         <h1 className="font-general font-semibold"> Submit </h1>
       </Column>
-      <Column links={usefulLinks}>
+      <Column links={usefulLinks} external={true}>
         <Link />
         <h1 className="font-general font-semibold"> Useful Links</h1>
       </Column>
