@@ -34,7 +34,7 @@ export default function Submit() {
       <FormManager onSubmitHandler={submit}>
         <Form>
           <Stack spacing={4}>
-            <Paper elevation={2}>
+            <Paper elevation={1}>
               <Stack
                 p={2}
                 spacing={2}

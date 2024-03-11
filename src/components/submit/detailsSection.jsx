@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
+import FormManagedTextField from "../formManagedTextField";
 import DuplicatedReminder from "./duplicatedReminder";
-import ManagedTextField from "./managedTextField";
 
 export default function DetailsSection() {
   return (
@@ -11,14 +11,20 @@ export default function DetailsSection() {
         Details
       </Typography>
       <Stack spacing={2}>
-        <ManagedTextField name="title" label="Title" required />
+        <FormManagedTextField
+          name="title"
+          label="Title"
+          size="small"
+          multiline
+          required
+        />
         <DuplicatedReminder />
-        <ManagedTextField
+        <FormManagedTextField
           name="description"
           label="Description"
           required
           multiline
-          rows={3}
+          rows={6}
         />
       </Stack>
     </Stack>

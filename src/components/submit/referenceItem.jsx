@@ -12,7 +12,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useAsync, useDebounce } from "react-use";
 import apiReferences from "../../api/apiReferences";
-import ManagedTextField from "./managedTextField";
+import FormManagedTextField from "../formManagedTextField";
 
 export default function ReferenceItem({ index, remove }) {
   const [field, fieldMeta] = useField(`references[${index}]`);
@@ -58,7 +58,7 @@ export default function ReferenceItem({ index, remove }) {
           </Grid>
 
           <Grid item xs={2}>
-            <ManagedTextField
+            <FormManagedTextField
               name={`references[${index}].type`}
               label="Type"
               select
@@ -69,10 +69,10 @@ export default function ReferenceItem({ index, remove }) {
                   {option}
                 </MenuItem>
               ))}
-            </ManagedTextField>
+            </FormManagedTextField>
           </Grid>
           <Grid item xs>
-            <ManagedTextField
+            <FormManagedTextField
               name={`references[${index}].value`}
               label="Identifier"
               size="small"

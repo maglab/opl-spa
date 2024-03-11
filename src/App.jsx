@@ -20,6 +20,16 @@ const theme = createTheme({
       textTransform: "none",
     },
   },
+  components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+          color: "inherit",
+        },
+      },
+    },
+  },
 });
 
 function App() {

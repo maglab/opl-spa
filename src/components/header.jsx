@@ -40,7 +40,7 @@ export default function Header() {
                 <Stack direction="row" spacing={2}>
                   <Button
                     component={RouterLink}
-                    to="/open-problems"
+                    to="/submit-guidelines"
                     variant="contained"
                   >
                     Submit

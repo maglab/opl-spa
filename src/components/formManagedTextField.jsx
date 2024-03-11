@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { useField } from "formik";
 import React from "react";
 
-export default function ManagedTextField({
+export default function FormManagedTextField({
   name,
   label,
   placeholder,

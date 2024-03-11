@@ -1,69 +1,54 @@
-import { Email } from "@mui/icons-material";
-import { Box, Grid, Link, Stack, Typography } from "@mui/material";
+import { Grid, Link, Stack, Typography } from "@mui/material";
 import React from "react";
-import addressLines from "../assets/contacts/addressLines.json";
-import people from "../assets/contacts/people.json";
-import bhamLogo from "../assets/images/bham-logo.png";
-import rejuvenomicsLogo from "../assets/images/rejuvenomics-logo.png";
+import { Link as RouterLink } from "react-router-dom";
+import { getWebApiUrl } from "../config";
 import { DefaultMargin } from "./defaultMargin";
 
 export default function Footer() {
-  const addressText = addressLines.join("\n");
-  const logoStyle = { width: "300px", height: "120px", objectFit: "contain" };
-  const textColor = "common.white";
-
   return (
-    <DefaultMargin bgcolor="secondary.main" yPadding={2}>
-      <Grid container maxWidth="md" rowSpacing={6}>
-        <Grid item xs={12}>
-          <Typography color={textColor} align="center" variant="h4">
-            Contact Us
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography
-            color={textColor}
-            whiteSpace="pre-wrap"
-            textAlign={{ xs: "center", sm: "left" }}
-          >
-            {addressText}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Grid
-            container
-            justifyContent={{
-              xs: "center",
-              sm: "flex-end",
-            }}
-          >
-            <Grid item>
-              <Stack spacing={1}>
-                {people.map((i) => (
-                  <Typography
-                    key={i.email}
-                    color={textColor}
-                    whiteSpace="pre-wrap"
-                  >
-                    {`${i.name}\n`}
-                    <Email /> <Link href={`mailto:${i.email}`}>{i.email}</Link>
-                  </Typography>
-                ))}
-              </Stack>
-            </Grid>
+    <DefaultMargin bgcolor="primary.dark" yPadding={2}>
+      <Typography
+        component="div"
+        color="primary.contrastText"
+        textAlign="center"
+      >
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <Stack spacing={1} alignItems="flex-start">
+              <Link component={RouterLink} to="open-problems">
+                Problem list
+              </Link>
+              <Link component={RouterLink} to="submit-guidelines">
+                Submit problem
+              </Link>
+            </Stack>
+          </Grid>
+          <Grid item>
+            <Stack spacing={1} alignItems="flex-start">
+              <Link component={RouterLink} to="about">
+                About
+              </Link>
+              <Link component={RouterLink} to="team">
+                Team
+              </Link>
+              <Link component={RouterLink} to="contact">
+                Contact
+              </Link>
+            </Stack>
+          </Grid>
+          <Grid item>
+            <Stack spacing={1} alignItems="flex-start">
+              <Link href={`${getWebApiUrl()}/swagger`}>API</Link>
+              <Link href="https://github.com/maglab/opl-web-api">
+                Source code &#40;API&#41;
+              </Link>
+              <Link href="https://github.com/maglab/opl-spa">
+                Source code &#40;SPA&#41;
+              </Link>
+            </Stack>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box display="flex" justifyContent="center">
-            <Box component="img" style={logoStyle} src={bhamLogo} />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box display="flex" justifyContent="center">
-            <Box component="img" style={logoStyle} src={rejuvenomicsLogo} />
-          </Box>
-        </Grid>
-      </Grid>
+      </Typography>
     </DefaultMargin>
   );
 }

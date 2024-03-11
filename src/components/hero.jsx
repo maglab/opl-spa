@@ -75,18 +75,29 @@ export default function Hero() {
                     component={RouterLink}
                     to="/about"
                     variant="outlined"
-                    sx={{ minWidth: 180 }}
+                    sx={{ minWidth: 100 }}
                   >
-                    About this project
+                    About
                   </Button>
-                  <Typography>{mainPageTexts.aboutProjectButton}</Typography>
+                  <Typography>{mainPageTexts.aboutButton}</Typography>
+                </Stack>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Button
+                    component={RouterLink}
+                    to="/team"
+                    variant="outlined"
+                    sx={{ minWidth: 100 }}
+                  >
+                    Team
+                  </Button>
+                  <Typography>{mainPageTexts.teamButton}</Typography>
                 </Stack>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Button
                     component={RouterLink}
                     to="/contact"
                     variant="outlined"
-                    sx={{ minWidth: 180 }}
+                    sx={{ minWidth: 100 }}
                   >
                     Contact us
                   </Button>
