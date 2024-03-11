@@ -34,10 +34,8 @@ const referenceSchema = Yup.object().shape({
 });
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required("Title must not be empty"),
-  description: Yup.string().required("Description must not be empty"),
+  text: Yup.string().required("Post must not be empty"),
   references: Yup.array().of(referenceSchema),
-  email: Yup.string().email("Must be a valid email address"),
 });
 
 export default function FormManager({ onSubmitHandler, children }) {
