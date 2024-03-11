@@ -6,10 +6,8 @@ import {
   Paper,
   Stack,
   Tab,
-  TextField,
   Typography,
 } from "@mui/material";
-import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -19,16 +17,8 @@ import {
   setDate,
 } from "../../utils/functions/dataManipulation";
 import useGetApi from "../../utils/hooks/useApi";
-
-// function Comment() {
-//   return(
-//     <Grid item>
-//       <Form>
-
-//       </Form>
-//     </Grid>
-//   )
-// }
+import FormManager from "./formManager";
+import ManagedTextField from "./managedTextField";
 
 function Post({ postData }) {
   const {
@@ -71,27 +61,29 @@ function Post({ postData }) {
 }
 
 function PostForm({ type }) {
+  const submitHandler = console.log("send");
+
   return (
-    <Formik>
-      <Form>
-        <Stack padding={2} spacing={2} direction="column">
-          <Typography variant="h6"> Your thoughts</Typography>
-          <TextField
-            variant="filled"
-            multiline
-            minRows={3}
-            fullWidth
-            required
-          />
-          <Stack direction="row" spacing={2}>
-            <Button variant="outlined"> Clear </Button>
-            <Button variant="contained" type="submit">
-              Submit
-            </Button>
-          </Stack>
+    <FormManager onSubmitHandler={submitHandler}>
+      <Stack padding={2} spacing={2} direction="column">
+        <Typography variant="h6"> Your thoughts</Typography>
+        <ManagedTextField
+          variant="outlined"
+          multiline
+          minRows={3}
+          fullWidth
+          required
+          label="Your thoughts"
+        />
+        <ManagedTextField label="Comment as:" />
+        <Stack direction="row" spacing={2}>
+          <Button variant="outlined"> Clear </Button>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
         </Stack>
-      </Form>
-    </Formik>
+      </Stack>
+    </FormManager>
   );
 }
 
