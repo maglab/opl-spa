@@ -1,4 +1,5 @@
-export const get_web_api_url = (loc) => {
+export const getWebApiUrl = () => {
+  const loc = document.location;
   switch (loc.hostname) {
     case "localhost" || "127.0.0.1":
       return "http://localhost:8000/api";
