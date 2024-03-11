@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-
 import apiPosts from "../../api/apiPosts";
 import {
   formatFullName,
@@ -19,6 +18,7 @@ import {
 import useGetApi from "../../utils/hooks/useApi";
 import FormManager from "./formManager";
 import ManagedTextField from "./managedTextField";
+import ReferenceItem from "./referenceItem";
 
 function Post({ postData }) {
   const {
@@ -61,21 +61,25 @@ function Post({ postData }) {
 }
 
 function PostForm({ type }) {
-  const submitHandler = console.log("send");
+  const submitHandler = () => {
+    console.log("test");
+  };
 
   return (
     <FormManager onSubmitHandler={submitHandler}>
       <Stack padding={2} spacing={2} direction="column">
         <Typography variant="h6"> Your thoughts</Typography>
         <ManagedTextField
+          name="post"
           variant="outlined"
           multiline
-          minRows={3}
+          rows={3}
           fullWidth
           required
           label="Your thoughts"
         />
-        <ManagedTextField label="Comment as:" />
+        <ReferenceItem />
+        <ManagedTextField label="Comment as:" name="name" />
         <Stack direction="row" spacing={2}>
           <Button variant="outlined"> Clear </Button>
           <Button variant="contained" type="submit">
