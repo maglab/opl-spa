@@ -1,4 +1,5 @@
-import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import heroImage from "../assets/images/question2.png";
@@ -12,11 +13,16 @@ export default function Hero() {
         direction="row-reverse"
         alignItems="center"
         rowSpacing={2}
-        columnSpacing={12}
+        columnSpacing={2}
       >
         <Grid item xs={12} md={4}>
           <Stack direction="row" justifyContent="center">
-            <Avatar src={heroImage} sx={{ width: 320, height: 320 }} />
+            <Box sx={{ maxWidth: 350, width: "100%", aspectRatio: "1/1" }}>
+              <Image
+                src={heroImage}
+                sx={{ width: "100%", height: "100%", borderRadius: "100%" }}
+              />
+            </Box>
           </Stack>
         </Grid>
         <Grid item xs={12} md={8}>
