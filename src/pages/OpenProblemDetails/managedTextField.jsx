@@ -33,7 +33,7 @@ export default function ManagedTextField({
       onBlur={field.onBlur}
       value={field.value}
     >
-      {children}
+      {/* {children && children} */}
     </TextField>
   );
 }
