@@ -56,6 +56,9 @@ function Post({ postData }) {
         <Typography variant="body1"> {text}</Typography>
       </Grid>
       <Grid item>
+        <Typography> Comments go here</Typography>
+      </Grid>
+      <Grid item>
         <Stack width="fit-content" padding={0}>
           <Button variant="outlined" size="small">
             Comment
