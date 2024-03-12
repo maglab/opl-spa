@@ -66,13 +66,13 @@ export default function Footer() {
           </Grid>
           <Divider />
           <Grid container>
-            <Grid item xs={5}>
+            <Grid item xs={12} sm={5}>
               <Typography variant="caption">
                 The project is defined and funded by Impetus Funds in the
                 University of Birmingham, Institute of Inflammation and Ageing
               </Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={12} sm={7}>
               <Box>
                 <Grid container direction="row" columnSpacing={1}>
                   {footerLogos.map((l) => (
