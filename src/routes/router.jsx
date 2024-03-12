@@ -4,10 +4,12 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/layout";
 import "../index.css";
 // import AnnotationDetails from "../pages/AnnotationDetails/AnnotationDetails";
+import apiProblems from "../api/apiProblems";
 import Hero from "../components/hero";
 import Submit from "../components/submit/submit";
 import OpenProblemProvider from "../context/context";
 import Login from "../pages/Login/Login";
+import Details from "../pages/OpenProblemDetails/details";
 import OpenProblems from "../pages/OpenProblems/openProblems";
 
 const router = createBrowserRouter([
@@ -33,9 +35,13 @@ const router = createBrowserRouter([
         ),
       },
       { path: "open-problems/submit", element: <Submit /> },
+      {
+        path: "open-problems/:id",
+        element: <Details />,
+        loader: async ({ params }) => apiProblems.getDetails(params),
+      },
     ],
   },
 ]);
-
 
 export default router;
