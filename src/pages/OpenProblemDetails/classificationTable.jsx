@@ -53,17 +53,6 @@ export default function ClassificationTable({ id }) {
               <TableCell> {id} </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell variant="head">
-                <Typography> Subject </Typography>
-              </TableCell>
-              <TableCell>
-                <RenderAnnotationEntries
-                  annotationArray={apiData.subject}
-                  error={error}
-                />
-              </TableCell>
-            </TableRow>
-            <TableRow>
               <TableCell variant="head">Gene</TableCell>
               <TableCell>
                 <RenderAnnotationEntries
