@@ -3,14 +3,10 @@ import React from "react";
 import * as Yup from "yup";
 
 const initialValues = {
-  title: "",
-  description: "",
+  full_text: "",
   references: [], // DOI and PMID values
   first_name: "",
   last_name: "",
-  organisation: "",
-  job_field: "",
-  email: "",
 };
 
 const referenceSchema = Yup.object().shape({
