@@ -1,4 +1,4 @@
-export function newRandomId(length = 8) {
+function newRandomId(length = 8) {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const charactersLength = characters.length;
