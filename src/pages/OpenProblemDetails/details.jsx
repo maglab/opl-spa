@@ -1,10 +1,8 @@
 import {
   AppBar,
-  Button,
   Chip,
   Divider,
   Grid,
-  Menu,
   Paper,
   Stack,
   Toolbar,
@@ -16,15 +14,15 @@ import { useLoaderData, useParams } from "react-router-dom";
 import apiAnnotations from "../../api/apiAnnotations";
 import useGetApi from "../../utils/hooks/useApi";
 import ClassificationTable from "./classificationTable";
-import DiscussionSolution from "./discussionSolution";
+import { DiscussionSection, SolutionSection } from "./discussionSolution";
 
 function TopBar() {
   return (
     <AppBar color="primary" position="static">
       <Toolbar>
-        <Menu>
+        {/* <Menu>
           <Button>Test</Button>
-        </Menu>
+        </Menu> */}
       </Toolbar>
     </AppBar>
   );
@@ -60,7 +58,7 @@ export default function Details() {
   const { data } = useLoaderData();
   const { id } = useParams();
   return (
-    <Grid container xs={12} direction="column" spacing={2}>
+    <Grid container direction="column" spacing={2}>
       <Grid item xs={12}>
         <TopBar />
       </Grid>
@@ -68,14 +66,17 @@ export default function Details() {
         <Grid item md={3}>
           <ClassificationTable id={id} />
         </Grid>
-        <Grid container item md={9} direction="column" spacing={2}>
+        <Grid container item md={9} direction="column" spacing={4}>
           <Grid item>
             <Paper>
               <Header data={data} />
             </Paper>
           </Grid>
           <Grid item>
-            <DiscussionSolution />
+            <DiscussionSection />
+          </Grid>
+          <Grid item>
+            <SolutionSection />
           </Grid>
         </Grid>
       </Grid>
