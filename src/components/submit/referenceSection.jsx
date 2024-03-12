@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { FieldArray, useField } from "formik";
 import React from "react";
-import { newRandomId } from "../../utilities/randomId";
+import newRandomId from "../../utilities/randomId";
 import ReferenceItem from "./referenceItem";
 
 export default function ReferenceSection() {
