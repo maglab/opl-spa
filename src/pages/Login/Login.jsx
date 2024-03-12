@@ -1,8 +1,9 @@
 import { useMsal } from "@azure/msal-react";
-import withSVG from "../../utils/hoc/withSVG";
+import { TextField } from "@mui/material";
+import React from "react";
 import MSLogo from "../../assets/svg/ms-symbollockup_mssymbol_19.svg?react";
-import { TextInputStyled } from "../../components/UI/Inputs/TextInput";
 import { loginRequest } from "../../authConfig.js";
+import withSVG from "../../utils/hoc/withSVG";
 
 // SVG to information
 const defaultProps = {
@@ -45,8 +46,8 @@ function Login() {
           <form className=" flex justify-center flex-col">
             <p className="text-center py-2 mb-2"> Alternatively:</p>
             <div className="inputs px-2 mb-2">
-              <TextInputStyled label="Username" />
-              <TextInputStyled label="Password" type="password" />
+              <TextField label="Username" />
+              <TextField label="Password" type="password" />
             </div>
             <div className="buttons justify-center items-center flex">
               <button className="bg-theme-blue text-white p-2 mt-2 rounded-sm">
