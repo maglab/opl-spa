@@ -5,8 +5,7 @@ import * as Yup from "yup";
 const initialValues = {
   full_text: "",
   references: [], // DOI and PMID values
-  first_name: "",
-  last_name: "",
+  alias: "",
 };
 
 const referenceSchema = Yup.object().shape({
