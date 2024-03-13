@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
 import solutionDescription from "../../assets/descriptions/solution.json";
-import ManagedTextField from "../../components/submit/managedTextField";
+import FormManagedTextField from "../../components/formManagedTextField";
 import ReferenceItem from "../../components/submit/referenceItem";
 import newRandomId from "../../utilities/randomId";
 import {
@@ -178,7 +178,7 @@ function PostForm({ type }) {
   return (
     <FormManager onSubmitHandler={submitHandler}>
       <Stack padding={2} spacing={2} direction="column" width="100%">
-        <ManagedTextField
+        <FormManagedTextField
           name="post"
           variant="outlined"
           multiline
@@ -187,7 +187,7 @@ function PostForm({ type }) {
           required
           label={titleString}
         />
-        <ManagedTextField label="Comment as:" name="name" />
+        <FormManagedTextField label="Comment as:" name="name" />
         <Stack direction="column">
           <PostReferenceSection />
         </Stack>
