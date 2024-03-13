@@ -14,7 +14,7 @@ import { useLoaderData, useParams } from "react-router-dom";
 import apiAnnotations from "../../api/apiAnnotations";
 import useGetApi from "../../utils/hooks/useApi";
 import ClassificationTable from "./classificationTable";
-import { DiscussionSection, SolutionSection } from "./discussionSolution";
+import { DiscussionSolution } from "./discussionSolution";
 
 function TopBar() {
   return (
@@ -66,17 +66,21 @@ export default function Details() {
         <Grid item md={3}>
           <ClassificationTable id={id} />
         </Grid>
-        <Grid container item md={9} direction="column" spacing={4}>
+        <Grid
+          container
+          item
+          md={9}
+          direction="column"
+          spacing={4}
+          alignItems="center"
+        >
           <Grid item>
             <Paper>
               <Header data={data} />
             </Paper>
           </Grid>
           <Grid item>
-            <DiscussionSection />
-          </Grid>
-          <Grid item>
-            <SolutionSection />
+            <DiscussionSolution />
           </Grid>
         </Grid>
       </Grid>
