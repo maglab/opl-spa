@@ -20,10 +20,77 @@ import {
   formatFullName,
   setDate,
 } from "../../utils/functions/dataManipulation";
-import useGetApi from "../../utils/hooks/useApi";
 import FormManager from "./formManager";
 
-function Comment({ commentData }) {}
+function calculatePagination(count, pageSize) {
+  return Math.ceil(count / pageSize);
+}
+
+function Comment({ commentData }) {
+  const { id, full_text: fullText, alias, created_at: date } = commentData;
+  const dateString = setDate(date);
+  const displayName = alias || "Anonymous"; // Alias will also be the username of signed in users.
+
+  return (
+    <Grid container direction="column" spacing={2} px={6}>
+      <Grid
+        item
+        container
+        direction="row"
+        xs={12}
+        justifyContent="space-between"
+      >
+        <Grid item>
+          <Typography variant="subtitle2" color="primary.light">
+            {displayName}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="subtitle2" color="primary.light">
+            {dateString}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="body2">{fullText}</Typography>
+      </Grid>
+      <Grid item>
+        <Divider />
+      </Grid>
+    </Grid>
+  );
+}
+
+function CommentSection({ id }) {
+  const [pagination, setPagination] = useState(1);
+  const [count, setCount] = useState(0);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const response = await apiComments.getAll({
+        id,
+        params: { p: pagination, page_size: 6 },
+      });
+      if (response.data) {
+        const { data } = response;
+        setCount(data.count);
+        setComments(data.results);
+      }
+    }
+    getData();
+  }, [pagination]);
+  if (comments.length > 0) {
+    return (
+      <Stack>
+        {comments &&
+          comments.map((comment) => (
+            <Comment commentData={comment} key={comment.id} />
+          ))}
+      </Stack>
+    );
+  }
+}
 
 function Post({ postData }) {
   const {
@@ -35,18 +102,13 @@ function Post({ postData }) {
   } = postData;
   const fullName = formatFullName(firstName, lastName);
   const dateString = setDate(date);
-  const { apiData: commentData } = useGetApi(apiComments.getAll, { id });
   return (
     <Grid item container direction="column" spacing={2}>
-      <Grid
-        container
-        item
-        direction="row"
-        justifyContent="space-between"
-        padding={2}
-      >
+      <Grid container item direction="row" justifyContent="space-between">
         <Grid item>
-          <Typography variant="body2">Posted by: {fullName}</Typography>
+          <Typography variant="body2" fontWeight="bold">
+            {fullName}
+          </Typography>
         </Grid>
         <Grid item>
           <Typography variant="body2">{dateString}</Typography>
@@ -55,8 +117,16 @@ function Post({ postData }) {
       <Grid item className="post">
         <Typography variant="body1"> {text}</Typography>
       </Grid>
+      <Grid item className="references">
+        <Typography variant="body1" sx={{ textDecoration: "underline" }}>
+          References
+        </Typography>
+        <Typography> None </Typography>
+      </Grid>
       <Grid item>
-        <Typography> Comments go here</Typography>
+        {/* <Typography> Comments go here</Typography> */}
+        <Divider />
+        <CommentSection id={id} />
       </Grid>
       <Grid item>
         <Stack width="fit-content" padding={0}>
@@ -131,9 +201,6 @@ function PostForm({ type }) {
   );
 }
 
-function calculatePagination(count, pageSize) {
-  return Math.ceil(count / pageSize);
-}
 export function PostSection({ sectionType, sectionDescription }) {
   const { id } = useParams();
   const [pagination, setPagination] = useState(1);
