@@ -1,12 +1,25 @@
+import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
+import CommentIcon from "@mui/icons-material/Comment";
+import { TabPanel } from "@mui/lab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
 import {
   Button,
   Divider,
   Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Pagination,
   Paper,
   Stack,
   Typography,
 } from "@mui/material";
+import Tab from "@mui/material/Tab";
+import { blue } from "@mui/material/colors";
 import { FieldArray, useField } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -27,37 +40,20 @@ function calculatePagination(count, pageSize) {
 }
 
 function Comment({ commentData }) {
-  const { id, full_text: fullText, alias, created_at: date } = commentData;
+  const { full_text: fullText, alias, created_at: date } = commentData;
   const dateString = setDate(date);
-  const displayName = alias || "Anonymous"; // Alias will also be the username of signed in users.
-
+  const displayName = alias || "Anonymous";
   return (
-    <Grid container direction="column" spacing={2} px={6}>
-      <Grid
-        item
-        container
-        direction="row"
-        xs={12}
-        justifyContent="space-between"
-      >
-        <Grid item>
-          <Typography variant="subtitle2" color="primary.light">
-            {displayName}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="subtitle2" color="primary.light">
-            {dateString}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="body2">{fullText}</Typography>
-      </Grid>
-      <Grid item>
-        <Divider />
-      </Grid>
-    </Grid>
+    <ListItem>
+      <ListItemIcon>
+        <CommentIcon />
+      </ListItemIcon>
+      <ListItemText
+        primary={fullText}
+        secondaryTypographyProps={{ color: "primary" }}
+        secondary={`${displayName} ${dateString}`}
+      />
+    </ListItem>
   );
 }
 
@@ -80,63 +76,113 @@ function CommentSection({ id }) {
     }
     getData();
   }, [pagination]);
+
   if (comments.length > 0) {
     return (
-      <Stack>
-        {comments &&
-          comments.map((comment) => (
-            <Comment commentData={comment} key={comment.id} />
-          ))}
+      <Stack alignItems="flex-start" width="100%">
+        <Stack pl={4} width="100%" alignItems="center">
+          <List sx={{ width: "100%" }}>
+            {comments &&
+              comments.map((comment) => (
+                <Comment commentData={comment} key={comment.id} />
+              ))}
+          </List>
+        </Stack>
+        <Button> View more</Button>
       </Stack>
     );
   }
 }
 
-function Post({ postData }) {
+function PostMetaData({ postData }) {
   const {
     created_at: date,
     first_name: firstName,
     last_name: lastName,
-    full_text: text,
-    id,
   } = postData;
-  const fullName = formatFullName(firstName, lastName);
   const dateString = setDate(date);
+  const fullName = formatFullName(firstName, lastName);
   return (
-    <Grid item container direction="column" spacing={2}>
-      <Grid container item direction="row" justifyContent="space-between">
-        <Grid item>
-          <Typography variant="body2" fontWeight="bold">
-            {fullName}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="body2">{dateString}</Typography>
-        </Grid>
+    <Stack alignItems="flex-end">
+      <Stack width="fit-content" bgcolor={blue[50]} padding={0.5} spacing={0.5}>
+        <Typography variant="body2"> Posted {dateString}</Typography>
+        <Typography variant="body2" color="primary.light">
+          {fullName}
+        </Typography>
+      </Stack>
+    </Stack>
+  );
+}
+
+function PostContent({ postData }) {
+  const { full_text: fullText, id } = postData;
+  return (
+    <>
+      <Grid item xs={12}>
+        <Divider />
       </Grid>
-      <Grid item className="post">
-        <Typography variant="body1"> {text}</Typography>
+      <Grid item className="post" xs={12}>
+        <Typography variant="body1"> {fullText}</Typography>
       </Grid>
-      <Grid item className="references">
+      <Grid item className="references" xs={12}>
         <Typography variant="body1" sx={{ textDecoration: "underline" }}>
           References
         </Typography>
         <Typography> None </Typography>
       </Grid>
-      <Grid item>
-        {/* <Typography> Comments go here</Typography> */}
+      <Grid
+        item
+        container
+        className="meta"
+        justifyContent="space-between"
+        alignItems="flex-end"
+        xs={12}
+        direction="row"
+      >
+        <Grid item xs="auto">
+          <Stack padding={0} alignItems="flex-end">
+            <Button variant="outlined" size="small">
+              Comment
+            </Button>
+          </Stack>
+        </Grid>
+        <Grid item xs="auto">
+          <PostMetaData postData={postData} />
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
         <Divider />
+      </Grid>
+      <Grid item xs={12}>
         <CommentSection id={id} />
       </Grid>
-      <Grid item>
-        <Stack width="fit-content" padding={0}>
-          <Button variant="outlined" size="small">
-            Comment
-          </Button>
+    </>
+  );
+}
+
+function Post({ postData, type }) {
+  if (type === "discussion") {
+    return (
+      <Grid container spacing={2}>
+        <PostContent postData={postData} />
+      </Grid>
+    );
+  }
+  return (
+    <Grid item container direction="row" alignItems="flex-start" spacing={2}>
+      <Grid item xs={1}>
+        <Stack justifyContent="center" alignItems="center">
+          <IconButton size="large" color="primary">
+            <ArrowCircleUpIcon />
+          </IconButton>
+          <Typography>0</Typography>
+          <IconButton size="large" color="primary">
+            <ArrowCircleDownIcon />
+          </IconButton>
         </Stack>
       </Grid>
-      <Grid item>
-        <Divider />
+      <Grid item container direction="column" spacing={2} xs={11}>
+        <PostContent postData={postData} />
       </Grid>
     </Grid>
   );
@@ -227,40 +273,40 @@ export function PostSection({ sectionType, sectionDescription }) {
   }, [pagination]);
 
   return (
-    <Paper>
-      <Grid container spacing={2} padding={2} direction="column">
-        <Grid item xs={12}>
-          <Typography variant="h5" textAlign="center">
-            {sectionType === "discussion" ? "Discussion" : "Solutions"}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          <Typography variant="body1" fontWeight="bold">
-            {sectionDescription}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
+    <Grid container spacing={2} padding={2} direction="column" width="100%">
+      <Grid item xs={12}>
+        <Typography variant="h5" textAlign="center">
+          {sectionType === "discussion" ? "Discussion" : "Solutions"}
+        </Typography>
+      </Grid>
+      <Grid item xs={12} textAlign="center">
+        <Typography variant="body1" fontWeight="bold">
+          {sectionDescription}
+        </Typography>
+      </Grid>
+      <Grid item container xs={12}>
         {posts && posts.length > 0 ? (
-          posts.map((post) => <Post postData={post} key={post.id} />)
+          posts.map((post) => (
+            <Post postData={post} key={post.id} type={sectionType} />
+          ))
         ) : (
           <Grid item xs={12}>
-            <Typography variant="subtitle1" textAlign="center">
+            <Typography variant="subtitle1" textAlign="center" width="100%">
               No submitted {sectionType}s.
             </Typography>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <Stack alignItems="center">
-            <Pagination size="small" count={pageNumbers} />
-          </Stack>
-        </Grid>
-        <Grid item xs={12}>
-          <PostForm type={sectionType} />
-        </Grid>
       </Grid>
-    </Paper>
+
+      <Grid item xs={12}>
+        <Stack alignItems="center">
+          <Pagination size="small" count={pageNumbers} />
+        </Stack>
+      </Grid>
+      <Grid item xs={12}>
+        <PostForm type={sectionType} />
+      </Grid>
+    </Grid>
   );
 }
 
@@ -275,4 +321,27 @@ export function DiscussionSection() {
 
 export function SolutionSection() {
   return <PostSection sectionType="solution" sectionDescription="" />;
+}
+
+export function DiscussionSolution() {
+  const [tabValue, setTabValue] = useState("solution");
+  return (
+    <Paper>
+      <TabContext value={tabValue}>
+        <Stack width="100%" justifyContent="center" alignItems="center">
+          <TabList onChange={(event, value) => setTabValue(value)}>
+            <Tab value="solution" label="SOLUTION" />
+            <Tab value="discussion" label="DISCUSSION" />
+          </TabList>
+        </Stack>
+
+        <TabPanel value="solution">
+          <SolutionSection tabValue="solution" />
+        </TabPanel>
+        <TabPanel value="discussion">
+          <DiscussionSection />
+        </TabPanel>
+      </TabContext>
+    </Paper>
+  );
 }
