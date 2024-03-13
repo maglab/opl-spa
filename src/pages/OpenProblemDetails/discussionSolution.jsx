@@ -58,25 +58,47 @@ function Comment({ commentData }) {
 }
 
 function CommentSection({ id }) {
-  const [pagination, setPagination] = useState(1);
-  const [count, setCount] = useState(0);
+  const [pageSize, setPageSize] = useState(3);
+  const [nextUrl, setNextUrl] = useState(null);
   const [comments, setComments] = useState([]);
+  const [count, setCount] = useState(0);
+  const [error, setError] = useState(false);
 
+  // Allow the user to get all comments - set the number of comments retrieved by total number of comments in api (count)
   useEffect(() => {
     async function getData() {
       const response = await apiComments.getAll({
         id,
-        params: { p: pagination, page_size: 6 },
+        queryParams: { page_size: pageSize },
       });
       if (response.data) {
         const { data } = response;
-        setCount(data.count);
         setComments(data.results);
+        setNextUrl(data.next);
+        setCount(data.count);
+      } else {
+        setError(true);
       }
     }
     getData();
-  }, [pagination]);
+  }, [pageSize]);
 
+  const getAllHandler = () => {
+    if (!nextUrl) return;
+    setPageSize(count);
+  };
+  const clearHandler = () => {
+    setPageSize(3);
+  };
+  if (error) {
+    return (
+      <Stack width="100%" justifyContent="center">
+        <Typography variant="body1" textAlign="center">
+          Error in retrieving comments.
+        </Typography>
+      </Stack>
+    );
+  }
   if (comments.length > 0) {
     return (
       <Stack alignItems="flex-start" width="100%">
@@ -88,7 +110,15 @@ function CommentSection({ id }) {
               ))}
           </List>
         </Stack>
-        <Button> View more</Button>
+        <Stack
+          px={8}
+          justifyContent="space-between"
+          direction="row"
+          width="100%"
+        >
+          {nextUrl && <Button onClick={getAllHandler}> View all</Button>}
+          {pageSize > 3 && <Button onClick={clearHandler}> View less </Button>}
+        </Stack>
       </Stack>
     );
   }
@@ -300,7 +330,11 @@ export function PostSection({ sectionType, sectionDescription }) {
 
       <Grid item xs={12}>
         <Stack alignItems="center">
-          <Pagination size="small" count={pageNumbers} />
+          <Pagination
+            size="small"
+            count={pageNumbers}
+            onChange={(event, value) => setPagination(value)}
+          />
         </Stack>
       </Grid>
       <Grid item xs={12}>
@@ -310,7 +344,7 @@ export function PostSection({ sectionType, sectionDescription }) {
   );
 }
 
-export function DiscussionSection() {
+function DiscussionSection() {
   return (
     <PostSection
       sectionType="discussion"
@@ -319,7 +353,7 @@ export function DiscussionSection() {
   );
 }
 
-export function SolutionSection() {
+function SolutionSection() {
   return <PostSection sectionType="solution" sectionDescription="" />;
 }
 
