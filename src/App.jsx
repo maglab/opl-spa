@@ -15,7 +15,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Lato",
+    fontFamily: "Lato, sans-serif",
     button: {
       textTransform: "none",
     },

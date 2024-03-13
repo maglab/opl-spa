@@ -3,11 +3,11 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 
-export default function SearchCriteriaChip(
+export default function SearchCriteriaChip({
   subject,
   subjectColor,
-  onDeleteClicked
-) {
+  onDeleteClicked,
+}) {
   return (
     <Stack
       p={1}

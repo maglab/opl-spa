@@ -22,6 +22,7 @@ function extractAnnotationInformation(annotation, category) {
       title = annotation.compound_name;
       id = annotation.id;
       parent = null;
+      break;
 
     default:
       // Handle other cases or provide a default value

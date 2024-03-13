@@ -8,7 +8,7 @@ import { DefaultMargin } from "./defaultMargin";
 export default function Header() {
   return (
     <AppBar position="static" sx={{ bgcolor: "common.white" }}>
-      <DefaultMargin yPadding={0.5}>
+      <DefaultMargin yPadding={2}>
         <Grid
           container
           direction="row"
@@ -42,6 +42,13 @@ export default function Header() {
                     component={RouterLink}
                     to="/submit-guidelines"
                     variant="contained"
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    component={RouterLink}
+                    to="/open-problems/submit"
+                    variant="outlined"
                   >
                     Submit
                   </Button>

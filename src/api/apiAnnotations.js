@@ -18,25 +18,17 @@ const apiAnnotations = {
   /**
    * Retrieves annotations for a given problem.
    * @param {Object} params - Parameters for the API request.
-   * @param {string} params.annotation - The type of annotation.
-   * @param {string|null} params.problemId - The ID of the problem (defaults to null).
-   * @param {boolean} params.all - Flag to retrieve all annotations (defaults to false).
+   * @param {string} annotation - The type of annotation.
+   * @param {string|null} id - The ID of the problem (defaults to null).
+   * @param {boolean} all - Flag to retrieve all annotations (defaults to false).
    * @returns {Promise} A promise that resolves with the annotations.
    */
-  getAnnotationsForProblem: async (params) => {
-    const {
-      annotation,
-      problemId = null,
-      all = false,
-      fields = false,
-    } = params;
-    const queryParams = fields.length > 0 ? { fields: fields.join(",") } : {};
-
-    const path = all
-      ? `annotations/all/${problemId}`
-      : `annotations/${annotation}/filter/by-problem:${problemId}`;
-
-    return apiRequest(() => apiClient.get(path, { params: queryParams }));
+  getAnnotationsForProblem: async ({annotation=null, id=null, all, fields=null}) => {
+    const path = all === true
+      ? `annotations/all/${id}`
+      : `annotations/${annotation}/filter/by-problem:${id}`;
+    const queryParams = fields ? { fields: fields.join(",") } : {};
+    return apiClient.get(path, {params:queryParams})
   },
 
   /**
