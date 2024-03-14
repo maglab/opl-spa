@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
   references: Yup.array().of(referenceSchema),
 });
 
-export default function FormManager({ onSubmitHandler, children }) {
+export default function PostFormManager({ onSubmitHandler, children }) {
   return (
     <Formik
       initialValues={initialValues}

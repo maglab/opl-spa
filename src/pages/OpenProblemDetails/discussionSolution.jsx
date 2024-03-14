@@ -33,16 +33,38 @@ import {
   formatFullName,
   setDate,
 } from "../../utils/functions/dataManipulation";
-import FormManager from "./formManager";
+import CommentFormManager from "./commentFormManager";
+import PostFormManager from "./postFormManager";
 
 function calculatePagination(count, pageSize) {
   return Math.ceil(count / pageSize);
 }
 
+function CommentForm() {
+  const onSubmitHandler = () => {
+    console.log("test");
+  };
+  return (
+    <CommentFormManager onSubmitHandler={onSubmitHandler}>
+      <Stack spacing={2} width="100%">
+        <FormManagedTextField
+          name="full_text"
+          multiline
+          rows={3}
+          required
+          size="small"
+          label="Your comment"
+        />
+        <FormManagedTextField name="alias" size="small" label="Comment as" />
+      </Stack>
+    </CommentFormManager>
+  );
+}
 function Comment({ commentData }) {
   const { full_text: fullText, alias, created_at: date } = commentData;
   const dateString = setDate(date);
   const displayName = alias || "Anonymous";
+
   return (
     <ListItem>
       <ListItemIcon>
@@ -69,7 +91,7 @@ function CommentSection({ id }) {
     async function getData() {
       const response = await apiComments.getAll({
         id,
-        queryParams: { page_size: pageSize },
+        params: { page_size: pageSize },
       });
       if (response.data) {
         const { data } = response;
@@ -146,6 +168,10 @@ function PostMetaData({ postData }) {
 
 function PostContent({ postData }) {
   const { full_text: fullText, id } = postData;
+  const [commentOpen, setCommentOpen] = useState(false);
+  const inputCommentHanlder = () => {
+    setCommentOpen(!commentOpen);
+  };
   return (
     <>
       <Grid item xs={12}>
@@ -169,20 +195,32 @@ function PostContent({ postData }) {
         xs={12}
         direction="row"
       >
-        <Grid item xs="auto">
-          <Stack padding={0} alignItems="flex-end">
-            <Button variant="outlined" size="small">
+        <Grid item xs={12}>
+          <Stack
+            justifyContent="space-between"
+            direction="row"
+            alignItems="flex-end"
+          >
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={inputCommentHanlder}
+              sx={{ justifyContent: "flex-end", height: "fit-content" }}
+            >
               Comment
             </Button>
+            <PostMetaData postData={postData} />
           </Stack>
-        </Grid>
-        <Grid item xs="auto">
-          <PostMetaData postData={postData} />
         </Grid>
       </Grid>
       <Grid item xs={12}>
         <Divider />
       </Grid>
+      {commentOpen && (
+        <Grid item xs={12}>
+          <CommentForm />
+        </Grid>
+      )}
       <Grid item xs={12}>
         <CommentSection id={id} />
       </Grid>
@@ -252,7 +290,7 @@ function PostForm({ type }) {
   const titleString = type === "discussion" ? "Your thoughts" : "Your solution";
 
   return (
-    <FormManager onSubmitHandler={submitHandler}>
+    <PostFormManager onSubmitHandler={submitHandler}>
       <Stack padding={2} spacing={2} direction="column" width="100%">
         <FormManagedTextField
           name="post"
@@ -273,7 +311,7 @@ function PostForm({ type }) {
           </Button>
         </Stack>
       </Stack>
-    </FormManager>
+    </PostFormManager>
   );
 }
 
@@ -344,19 +382,6 @@ export function PostSection({ sectionType, sectionDescription }) {
   );
 }
 
-function DiscussionSection() {
-  return (
-    <PostSection
-      sectionType="discussion"
-      sectionDescription={solutionDescription.mainText}
-    />
-  );
-}
-
-function SolutionSection() {
-  return <PostSection sectionType="solution" sectionDescription="" />;
-}
-
 export function DiscussionSolution() {
   const [tabValue, setTabValue] = useState("solution");
   return (
@@ -370,10 +395,13 @@ export function DiscussionSolution() {
         </Stack>
 
         <TabPanel value="solution">
-          <SolutionSection tabValue="solution" />
+          <PostSection sectionType="solution" sectionDescription="" />
         </TabPanel>
         <TabPanel value="discussion">
-          <DiscussionSection />
+          <PostSection
+            sectionType="discussion"
+            sectionDescription={solutionDescription.mainText}
+          />
         </TabPanel>
       </TabContext>
     </Paper>
