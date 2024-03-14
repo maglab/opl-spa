@@ -66,14 +66,7 @@ export default function Details() {
         <Grid item md={3}>
           <ClassificationTable id={id} />
         </Grid>
-        <Grid
-          container
-          item
-          md={9}
-          direction="column"
-          spacing={4}
-          alignItems="center"
-        >
+        <Grid container item md={9} direction="column" spacing={4}>
           <Grid item>
             <Paper>
               <Header data={data} />
