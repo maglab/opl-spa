@@ -1,10 +1,10 @@
 import { Link, List, ListItem, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
 import { useField } from "formik";
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDebounce } from "react-use";
 import apiProblems from "../../api/apiProblems";
+import StandardStack from "../common/standardStack";
 
 export default function DuplicatedReminder() {
   const [similarProblems, setSimilarProblems] = useState([]);
@@ -29,9 +29,8 @@ export default function DuplicatedReminder() {
   );
 
   return (
-    <Stack
+    <StandardStack
       sx={{ display: { xs: similarProblems.length ? "block" : "none" } }}
-      spacing={2}
     >
       <Typography variant="h7" color="warning.main">
         Your problem might have been submitted previously, the following are
@@ -49,6 +48,6 @@ export default function DuplicatedReminder() {
           </ListItem>
         ))}
       </List>
-    </Stack>
+    </StandardStack>
   );
 }

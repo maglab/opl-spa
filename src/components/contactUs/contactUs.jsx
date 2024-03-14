@@ -1,84 +1,74 @@
-import {
-  Box,
-  Button,
-  Grid,
-  MenuItem,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, MenuItem, Paper, Typography } from "@mui/material";
 import { Form } from "formik";
 import React from "react";
 import contactUsText from "../../assets/contactUs.json";
+import useExtendedTheme from "../../hooks/useExtendedThem";
+import Center from "../common/center";
+import HeaderContent from "../common/headerContent";
+import StandardGrid from "../common/standardGrid";
+import StandardStack from "../common/standardStack";
 import FormManagedTextField from "../formManagedTextField";
 import FormManager from "./formManager";
 
 export default function ContactUs() {
+  const theme = useExtendedTheme();
+
   return (
     <FormManager>
       <Form>
-        <Stack spacing={4}>
-          <Stack spacing={2}>
-            <Typography variant="h5" textAlign="center">
-              Contact Us
-            </Typography>
-            <Typography whiteSpace="pre-wrap">
-              {contactUsText.paragraph}
-            </Typography>
-          </Stack>
+        <HeaderContent header="Contact Us">
+          <Typography whiteSpace="pre-wrap">
+            {contactUsText.paragraph}
+          </Typography>
           <Paper elevation={1}>
-            <Stack spacing={4} p={2}>
-              <Stack spacing={4} textAlign="center">
-                <Typography variant="h5">Contact</Typography>
-                <Box>
-                  <Grid container direction="row" spacing={2}>
-                    <Grid item xs={3}>
-                      <FormManagedTextField
-                        id="first-name"
-                        name="first_name"
-                        label="First name"
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <FormManagedTextField
-                        id="last-name"
-                        name="last_name"
-                        label="Last name"
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormManagedTextField
-                        id="organisation"
-                        name="organisation"
-                        label="Organisation"
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormManagedTextField
-                        id="job-field"
-                        name="job_field"
-                        label="Position"
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormManagedTextField
-                        id="email"
-                        name="email"
-                        label="Email"
-                        type="email"
-                        size="small"
-                      />
-                    </Grid>
+            <StandardStack main p={theme.layout.padding}>
+              <HeaderContent header="Contact">
+                <StandardGrid minor direction="row">
+                  <Grid item xs={3}>
+                    <FormManagedTextField
+                      id="first-name"
+                      name="first_name"
+                      label="First name"
+                      size="small"
+                    />
                   </Grid>
-                </Box>
-              </Stack>
-              <Stack spacing={4}>
-                <Typography variant="h5">Message</Typography>
-                <Stack spacing={2}>
+                  <Grid item xs={3}>
+                    <FormManagedTextField
+                      id="last-name"
+                      name="last_name"
+                      label="Last name"
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormManagedTextField
+                      id="organisation"
+                      name="organisation"
+                      label="Organisation"
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormManagedTextField
+                      id="job-field"
+                      name="job_field"
+                      label="Position"
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormManagedTextField
+                      id="email"
+                      name="email"
+                      label="Email"
+                      type="email"
+                      size="small"
+                    />
+                  </Grid>
+                </StandardGrid>
+              </HeaderContent>
+              <HeaderContent header="Message">
+                <StandardStack minor>
                   <FormManagedTextField
                     name="subject"
                     label="Subject"
@@ -99,18 +89,18 @@ export default function ContactUs() {
                     label="Message"
                     required
                     multiline
-                    rows={6}
+                    minRows={6}
                   />
-                </Stack>
-              </Stack>
-            </Stack>
+                </StandardStack>
+              </HeaderContent>
+            </StandardStack>
           </Paper>
-          <Stack alignItems="center">
+          <Center>
             <Button type="submit" variant="contained" size="large">
               Send Message
             </Button>
-          </Stack>
-        </Stack>
+          </Center>
+        </HeaderContent>
       </Form>
     </FormManager>
   );

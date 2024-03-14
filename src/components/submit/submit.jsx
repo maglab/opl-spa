@@ -7,18 +7,21 @@ import {
   DialogTitle,
   Divider,
   Paper,
-  Stack,
 } from "@mui/material";
 import { Form } from "formik";
 import React, { useState } from "react";
 import { useAsyncFn } from "react-use";
 import apiProblems from "../../api/apiProblems";
+import useExtendedTheme from "../../hooks/useExtendedThem";
+import Center from "../common/center";
+import StandardStack from "../common/standardStack";
 import ContactSection from "./contactSection";
 import DetailsSection from "./detailsSection";
 import FormManager from "./formManager";
 import ReferenceSection from "./referenceSection";
 
 export default function Submit() {
+  const theme = useExtendedTheme();
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [submitState, submit] = useAsyncFn(async (values) => {
     const response = await apiProblems.postProblem({ data: values });
@@ -33,19 +36,19 @@ export default function Submit() {
     <>
       <FormManager onSubmitHandler={submit}>
         <Form>
-          <Stack spacing={4}>
+          <StandardStack main>
             <Paper elevation={1}>
-              <Stack
-                p={2}
-                spacing={2}
+              <StandardStack
+                main
+                p={theme.layout.padding}
                 divider={<Divider orientation="horizontal" />}
               >
                 <DetailsSection />
                 <ReferenceSection />
                 <ContactSection />
-              </Stack>
+              </StandardStack>
             </Paper>
-            <Stack alignItems="center">
+            <Center>
               {submitState.loading ? (
                 <CircularProgress />
               ) : (
@@ -53,8 +56,8 @@ export default function Submit() {
                   Submit Problem
                 </Button>
               )}
-            </Stack>
-          </Stack>
+            </Center>
+          </StandardStack>
         </Form>
       </FormManager>
       <Dialog open={openErrorDialog} onClose={() => setOpenErrorDialog(false)}>

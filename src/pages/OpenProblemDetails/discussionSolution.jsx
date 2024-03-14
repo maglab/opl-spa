@@ -182,7 +182,7 @@ function PostForm({ type }) {
           name="post"
           variant="outlined"
           multiline
-          rows={3}
+          minRows={3}
           fullWidth
           required
           label={titleString}
