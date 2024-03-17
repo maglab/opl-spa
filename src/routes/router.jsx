@@ -11,7 +11,6 @@ import ScrollToTop from "../components/scrollToTop";
 import Submit from "../components/submit/submit";
 import SubmitGuidelines from "../components/submitGuidelines";
 import Team from "../components/team";
-import OpenProblemProvider from "../context/context";
 import Login from "../pages/Login/Login";
 import Details from "../pages/OpenProblemDetails/details";
 import OpenProblems from "../pages/OpenProblems/openProblems";
@@ -37,11 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/open-problems",
-        element: (
-          <OpenProblemProvider>
-            <OpenProblems />
-          </OpenProblemProvider>
-        ),
+        element: <OpenProblems />,
       },
       {
         path: "submit",

@@ -11,6 +11,7 @@ interface StandardGridProps extends GridProps {
 export default function StandardGrid({
   main,
   minor,
+  children, // children must be deconstructed here otherwise React will thinks you are iterating them and give you key error
   ...props
 }: StandardGridProps) {
   const theme = useTheme() as ExtendedTheme;
@@ -27,7 +28,9 @@ export default function StandardGrid({
   return (
     <Box>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Grid container {...mergedProps} />
+      <Grid container {...mergedProps}>
+        {children}
+      </Grid>
     </Box>
   );
 }

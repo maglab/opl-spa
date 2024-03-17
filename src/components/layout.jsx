@@ -9,7 +9,7 @@ import Header from "./header";
 export default function Layout() {
   return (
     <Grid container direction="column" sx={{ minHeight: "100vh" }}>
-      <Grid item xs="auto">
+      <Grid item xs="auto" zIndex={1100}>
         <Header />
       </Grid>
       <Grid item xs>

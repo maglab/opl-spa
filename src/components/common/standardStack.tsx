@@ -1,7 +1,7 @@
 import { Stack, StackProps } from "@mui/material";
 import { merge } from "lodash";
 import React from "react";
-import useExtendedTheme from "../../hooks/useExtendedThem";
+import useExtendedTheme from "../../theme/useExtendedTheme";
 
 interface StandardStackProps extends StackProps {
   main?: boolean;
@@ -11,6 +11,7 @@ interface StandardStackProps extends StackProps {
 export default function StandardStack({
   main,
   minor,
+  children, // children must be deconstructed here otherwise React will thinks you are iterating them and give you key error
   divider,
   ...props
 }: StandardStackProps) {
@@ -23,8 +24,12 @@ export default function StandardStack({
   spacing = divider ? spacing / 2 : spacing;
   const mergedProps = merge({ spacing }, props);
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Stack divider={divider} {...mergedProps} />;
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Stack divider={divider} {...mergedProps}>
+      {children}
+    </Stack>
+  );
 }
 
 StandardStack.defaultProps = {

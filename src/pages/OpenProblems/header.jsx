@@ -9,17 +9,16 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import React, { useContext } from "react";
-
-import { OpenProblemsContext } from "../../context/context";
+import QueryParamsContext from "../../contexts/queryParamsContext";
 
 function Header() {
-  const { state, dispatch } = useContext(OpenProblemsContext);
-  const { view, sorting } = state;
-  const viewChangeHandler = (event, target) => {
-    dispatch({ type: "setView", payload: { view: target } });
+  const { queryParams, updateQueryParams } = useContext(QueryParamsContext);
+  const { sorting, view } = queryParams;
+  const viewChangeHandler = (_, target) => {
+    updateQueryParams({ view: target });
   };
-  const sortingChangehandler = (event, target) => {
-    dispatch({ type: "setSorting", payload: { sorting: target } });
+  const sortingChangehandler = (_, target) => {
+    updateQueryParams({ sorting: target });
   };
   return (
     <Paper elevation={3}>

@@ -1,12 +1,4 @@
-import {
-  Box,
-  Divider,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, Grid, Link, Stack, Typography } from "@mui/material";
 import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -15,8 +7,6 @@ import { getWebApiUrl } from "../config";
 import { DefaultMargin } from "./defaultMargin";
 
 export default function Footer() {
-  const theme = useTheme();
-
   return (
     <DefaultMargin bgcolor="primary.dark">
       <Typography
@@ -76,7 +66,7 @@ export default function Footer() {
               <Box>
                 <Grid container direction="row" columnSpacing={1}>
                   {footerLogos.map((l) => (
-                    <Grid item xs={4}>
+                    <Grid item key={l.name} xs={4}>
                       <Link href={l.link}>
                         <Image src={l.imageSrc} fit="contain" height={60} />
                       </Link>

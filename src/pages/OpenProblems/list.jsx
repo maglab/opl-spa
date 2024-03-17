@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Chip,
+  CircularProgress,
   Grid,
   Link,
   List,
@@ -19,27 +20,29 @@ import {
 import React, { useContext, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import apiAnnotations from "../../api/apiAnnotations";
-import { OpenProblemsContext } from "../../context/context";
+import Center from "../../components/common/center";
+import QueryParamsContext from "../../contexts/queryParamsContext";
+import {
+  useGetProblemAllAnnotations,
+  useGetProblems,
+} from "../../queries/problems";
 import extractAnnotationInformation from "../../utils/functions/extractAnnotationInformation";
-import useGetApi from "../../utils/hooks/useApi";
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
   const { title, description, problem_id: id } = openProblem ?? "";
   const { first_name: firstName, last_name: lastName } = contact ?? "";
-  const { apiData, error } = useGetApi(
-    apiAnnotations.getAnnotationsForProblem,
-    {
-      all: true,
-      problemId: id,
-      fields: ["compound", "subject", "gene", "species"],
-    }
-  );
+  const getProblemAllAnnotationsState = useGetProblemAllAnnotations(id, [
+    "compound",
+    "subject",
+    "gene",
+    "species",
+  ]);
   const annotations = useMemo(() => {
     // The api returns a nested structure of all annotations relating to an open problem we need to flatten it first so its easy to display
-    if (apiData && !error) {
-      const flattenedAnnotations = Object.entries(apiData).flatMap(
+    if (getProblemAllAnnotationsState.isSuccess) {
+      const { data } = getProblemAllAnnotationsState.data;
+      const flattenedAnnotations = Object.entries(data).flatMap(
         ([key, values]) => values.map((value) => ({ [key]: value[key] }))
       );
       if (flattenedAnnotations.length === 0) return [];
@@ -53,7 +56,7 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
       return formattedAnnotations;
     }
     return [];
-  }, [id, apiData]);
+  }, [getProblemAllAnnotationsState]);
 
   return (
     <Card sx={{ width: "100%" }}>
@@ -135,43 +138,57 @@ function calculatePagination(count, view) {
   const dividedBy = view === "card" ? 10 : 20;
   return Math.ceil(count / dividedBy);
 }
-function OpenProblemList({ openProblems }) {
-  const { state, dispatch } = useContext(OpenProblemsContext);
-  const { view } = state;
 
+function OpenProblemList() {
+  const { queryParams, updateQueryParams } = useContext(QueryParamsContext);
+  const { query, pageNum, sorting, view } = queryParams;
+  const getProblemsState = useGetProblems({
+    query,
+    pageNum,
+    pageSize: view === "list" ? 20 : 10,
+    sorting,
+  });
   const [reportOpen, setReportOpen] = useState(false);
-  const handlePageChange = (event, newPage) => {
-    // Dispatch an action to update the page
-    dispatch({ type: "setPage", payload: { page: newPage } });
-  };
 
-  const paginationCount = useMemo(
-    () => calculatePagination(state.count, state.view),
-    [state.count, state.view]
-  );
+  const handlePageChange = (_, newPage) => {
+    updateQueryParams({ pageNum: newPage });
+  };
 
   if (view === "card") {
     return (
       <Stack spacing={2} py={4} alignItems="center">
         <Pagination
-          page={state.page}
-          count={paginationCount}
+          page={pageNum}
+          count={
+            getProblemsState.isSuccess
+              ? calculatePagination(getProblemsState.data.data.count, view)
+              : 0
+          }
           onChange={handlePageChange}
           size="large"
         />
-        {openProblems &&
-          openProblems.map((openProblem) => (
+        {getProblemsState.isPending ? (
+          <Center>
+            <CircularProgress />
+          </Center>
+        ) : (
+          getProblemsState.data.data.results.map((openProblem) => (
             <OpenProblemCard
               key={openProblem.problem_id}
               openProblem={openProblem}
               contact={openProblem.contact}
               setReportOpen={setReportOpen}
             />
-          ))}
+          ))
+        )}
         <ReportForm open={reportOpen} setOpen={setReportOpen} />
         <Pagination
-          page={state.page}
-          count={paginationCount}
+          page={pageNum}
+          count={
+            getProblemsState.isSuccess
+              ? calculatePagination(getProblemsState.data.data.count, view)
+              : 0
+          }
           onChange={handlePageChange}
           size="large"
         />
@@ -182,18 +199,23 @@ function OpenProblemList({ openProblems }) {
     <Stack alignItems="center" spacing={2} py={4}>
       <List disablePadding sx={{ width: "100%" }}>
         <Stack spacing={2}>
-          {openProblems &&
-            openProblems.map((openProblem) => (
+          {getProblemsState.isPending ? (
+            <Center>
+              <CircularProgress />
+            </Center>
+          ) : (
+            getProblemsState.data.data.results.map((openProblem) => (
               <ListItemComponent
                 key={openProblem.id}
                 title={openProblem.title}
                 id={openProblem.id}
               />
-            ))}
+            ))
+          )}
         </Stack>
       </List>
       <Pagination
-        page={state.page}
+        page={pageNum}
         count={10}
         onChange={handlePageChange}
         size="large"

@@ -1,5 +1,5 @@
 import { useTheme } from "@mui/material";
-import ExtendedTheme from "../theme/extendedTheme";
+import ExtendedTheme from "./extendedTheme";
 
 const useExtendedTheme = () => {
   const theme = useTheme();

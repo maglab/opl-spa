@@ -8,7 +8,7 @@ import { DefaultMargin } from "./defaultMargin";
 export default function Header() {
   return (
     <AppBar position="static" sx={{ bgcolor: "common.white" }}>
-      <DefaultMargin yPadding={2}>
+      <DefaultMargin yPadding={0.5}>
         <Grid
           container
           direction="row"

@@ -19,6 +19,7 @@ export const msalConfig = {
   },
   system: {
     loggerOptions: {
+      logLevel: LogLevel.Warning,
       loggerCallback: (level, message, containsPii) => {
         if (containsPii) {
           return;

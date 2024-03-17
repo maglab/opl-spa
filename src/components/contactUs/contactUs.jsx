@@ -2,7 +2,7 @@ import { Button, Grid, MenuItem, Paper, Typography } from "@mui/material";
 import { Form } from "formik";
 import React from "react";
 import contactUsText from "../../assets/contactUs.json";
-import useExtendedTheme from "../../hooks/useExtendedThem";
+import useExtendedTheme from "../../theme/useExtendedTheme";
 import Center from "../common/center";
 import HeaderContent from "../common/headerContent";
 import StandardGrid from "../common/standardGrid";

@@ -3,7 +3,7 @@ import React from "react";
 import Markdown from "react-markdown";
 import { Link as RouterLink } from "react-router-dom";
 import guidance from "../assets/submitGuidelines.md?raw";
-import useExtendedTheme from "../hooks/useExtendedThem";
+import useExtendedTheme from "../theme/useExtendedTheme";
 import Center from "./common/center";
 import HeaderContent from "./common/headerContent";
 import StandardStack from "./common/standardStack";
