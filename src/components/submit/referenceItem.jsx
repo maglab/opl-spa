@@ -15,8 +15,9 @@ import apiReferences from "../../api/apiReferences";
 import FormManagedTextField from "../formManagedTextField";
 
 export default function ReferenceItem({ index, remove }) {
-  const [field, fieldMeta] = useField(`references[${index}]`);
+  const [field, fieldMeta, { setValue }] = useField(`references[${index}]`);
   const [debouncedValues, setDebouncedValues] = useState({ valid: false });
+
   const fetchReferenceInfoState = useAsync(async () => {
     const { type, value } = debouncedValues;
     if (!type || !value) return null;
@@ -24,6 +25,7 @@ export default function ReferenceItem({ index, remove }) {
     const response = await apiReferences.verifyReference({ type, value });
     const { data } = response;
     if (!data) throw new Error();
+    setValue({ ...debouncedValues, data });
     return data;
   }, [debouncedValues]);
 
