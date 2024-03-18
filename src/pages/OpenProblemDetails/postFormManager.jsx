@@ -1,10 +1,10 @@
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
 
 const initialValues = {
   full_text: "",
-  references: [], // DOI and PMID values
+  references: [], // {type, value, data}. Typoe and value come from inputs, data is obtained via api call.,
   alias: "",
 };
 
@@ -29,7 +29,8 @@ const referenceSchema = Yup.object().shape({
 });
 
 const validationSchema = Yup.object().shape({
-  text: Yup.string().required("Post must not be empty"),
+  full_text: Yup.string().required("Post must not be empty"),
+  alias: Yup.string().required("Must provide a username/alias"),
   references: Yup.array().of(referenceSchema),
 });
 
@@ -40,7 +41,7 @@ export default function PostFormManager({ onSubmitHandler, children }) {
       validationSchema={validationSchema}
       onSubmit={onSubmitHandler}
     >
-      {children}
+      <Form>{children}</Form>
     </Formik>
   );
 }
