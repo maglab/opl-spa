@@ -6,6 +6,10 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import {
   Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Grid,
   IconButton,
@@ -40,13 +44,53 @@ function calculatePagination(count, pageSize) {
   return Math.ceil(count / pageSize);
 }
 
-function CommentForm() {
-  const onSubmitHandler = () => {
-    console.log("test");
+function SubmissionDialog({ open, setOpen, title, message }) {
+  return (
+    <Dialog open={open}>
+      <Stack width="100%" alignItems="center" spacing={2} p={2}>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{message}</DialogContentText>
+        </DialogContent>
+        <Button variant="contained" onClick={() => setOpen(false)}>
+          Close
+        </Button>
+      </Stack>
+    </Dialog>
+  );
+}
+
+function CommentForm({ id }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogContent, setDialogContent] = useState({
+    title: "",
+    message: "",
+  });
+  const onSubmitHandler = async (
+    values,
+    { setSubmitting, resetForm, setErrors }
+  ) => {
+    setSubmitting(true);
+    try {
+      const updatedValues = { ...values, post: id }; // Set the post parameter.
+      const response = await apiComments.post({ id, data: updatedValues });
+      if (response.status === 201) {
+        resetForm();
+        setDialogOpen(true);
+        setDialogContent({
+          title: "Success",
+          message: "Your comment has been posted and is under review",
+        });
+      }
+    } catch (error) {
+      setErrors({ submit: error.message });
+      setDialogContent({ title: "Unsuccesful", message: error.message });
+    }
+    setSubmitting(false);
   };
   return (
     <CommentFormManager onSubmitHandler={onSubmitHandler}>
-      <Stack spacing={2} width="100%">
+      <Stack spacing={2} width="100%" alignItems="center">
         <FormManagedTextField
           name="full_text"
           multiline
@@ -56,6 +100,19 @@ function CommentForm() {
           label="Your comment"
         />
         <FormManagedTextField name="alias" size="small" label="Comment as" />
+        <Stack width="fit-content" alignContent="center">
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
+        </Stack>
+        {dialogOpen && (
+          <SubmissionDialog
+            open={dialogOpen}
+            setOpen={setDialogOpen}
+            title={dialogContent.title}
+            message={dialogContent.message}
+          />
+        )}
       </Stack>
     </CommentFormManager>
   );
@@ -167,7 +224,7 @@ function PostMetaData({ postData }) {
 }
 
 function PostContent({ postData }) {
-  const { full_text: fullText, id } = postData;
+  const { full_text: fullText, id, references } = postData;
   const [commentOpen, setCommentOpen] = useState(false);
   const inputCommentHanlder = () => {
     setCommentOpen(!commentOpen);
@@ -181,10 +238,24 @@ function PostContent({ postData }) {
         <Typography variant="body1"> {fullText}</Typography>
       </Grid>
       <Grid item className="references" xs={12}>
-        <Typography variant="body1" sx={{ textDecoration: "underline" }}>
-          References
-        </Typography>
-        <Typography> None </Typography>
+        <List>
+          <Typography variant="body1" sx={{ textDecoration: "underline" }}>
+            References
+          </Typography>
+
+          {references.length > 0 ? (
+            references.map((reference) => (
+              <ListItem key={reference.id} disablePadding>
+                <ListItemText
+                  primary={reference.citation}
+                  primaryTypographyProps={{ variant: "subtitle2" }}
+                />
+              </ListItem>
+            ))
+          ) : (
+            <Typography>None</Typography>
+          )}
+        </List>
       </Grid>
       <Grid
         item
@@ -218,7 +289,7 @@ function PostContent({ postData }) {
       </Grid>
       {commentOpen && (
         <Grid item xs={12}>
-          <CommentForm />
+          <CommentForm id={id} />
         </Grid>
       )}
       <Grid item xs={12}>
@@ -284,16 +355,56 @@ function PostReferenceSection() {
 }
 
 function PostForm({ type }) {
-  const submitHandler = () => {
-    console.log("test");
+  const { id: openProblemId } = useParams();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogContent, setDialogContent] = useState({
+    title: "",
+    message: "",
+  });
+  const onSubmitHandler = async (
+    values,
+    { setSubmitting, resetForm, setErrors }
+  ) => {
+    let apiCall;
+    if (type === "solution") {
+      apiCall = apiPosts.solutionsSubmit;
+    } else if (type === "discussion") {
+      apiCall = apiPosts.discussionsSubmit;
+    }
+    setSubmitting(true);
+    try {
+      const referenceData = values.references.map(
+        (reference) => reference.data
+      );
+      const updatedValues = {
+        ...values,
+        references: referenceData,
+        open_problem: openProblemId,
+      }; // Set the open_problem parameter.
+      const response = await apiCall({
+        openProblemId,
+        data: updatedValues,
+      });
+      if (response.status === 201) {
+        setDialogOpen(true);
+        setDialogContent({
+          title: "Success",
+          message: `Your ${type} has been posted and is under review`,
+        });
+        resetForm();
+      }
+    } catch (error) {
+      setErrors({ submit: error.message });
+      setDialogContent({ title: "Unsuccessful", message: error.message });
+    }
+    setSubmitting(false);
   };
   const titleString = type === "discussion" ? "Your thoughts" : "Your solution";
-
   return (
-    <PostFormManager onSubmitHandler={submitHandler}>
+    <PostFormManager onSubmitHandler={onSubmitHandler}>
       <Stack padding={2} spacing={2} direction="column" width="100%">
         <FormManagedTextField
-          name="post"
+          name="full_text"
           variant="outlined"
           multiline
           rows={3}
@@ -301,7 +412,7 @@ function PostForm({ type }) {
           required
           label={titleString}
         />
-        <FormManagedTextField label="Comment as:" name="name" />
+        <FormManagedTextField label="Comment as:" name="alias" />
         <Stack direction="column">
           <PostReferenceSection />
         </Stack>
@@ -311,6 +422,12 @@ function PostForm({ type }) {
           </Button>
         </Stack>
       </Stack>
+      <SubmissionDialog
+        open={dialogOpen}
+        setOpen={setDialogOpen}
+        title={dialogContent.title}
+        message={dialogContent.message}
+      />
     </PostFormManager>
   );
 }
@@ -327,8 +444,15 @@ export function PostSection({ sectionType, sectionDescription }) {
 
   useEffect(() => {
     async function getData() {
-      const response = await apiPosts.forOpenProblem({
-        id,
+      let apiCall;
+      if (sectionType === "solution") {
+        apiCall = apiPosts.solutionsForOpenProblem;
+      }
+      if (sectionType === "discussion") {
+        apiCall = apiPosts.discussionsForOpenProblem;
+      }
+      const response = await apiCall({
+        openProblemId: id,
         params: { p: pagination, page_size: 6 },
       });
       if (response.data) {
@@ -338,7 +462,7 @@ export function PostSection({ sectionType, sectionDescription }) {
       }
     }
     getData();
-  }, [pagination]);
+  }, [pagination, sectionType, id]);
 
   return (
     <Grid container spacing={2} padding={2} direction="column" width="100%">
