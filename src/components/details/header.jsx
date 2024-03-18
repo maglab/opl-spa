@@ -29,14 +29,16 @@ export default function Header({ data }) {
       <Stack spacing={2} padding={2} width="100%">
         <Typography variant="h5"> {title} </Typography>
         <Divider />
-        <Typography variant="body1"> {description && description}</Typography>
+        {description && <Typography variant="body2"> {description}</Typography>}
         <List>
           <Typography variant="h6"> References </Typography>
-
           {references.length > 0 ? (
             references.map((reference) => (
               <ListItem disableGutters>
-                <ListItemText primary={reference.citation} />
+                <ListItemText
+                  primary={reference.citation}
+                  primaryTypographyProps={{ variant: "body2" }}
+                />
               </ListItem>
             ))
           ) : (
