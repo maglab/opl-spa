@@ -21,39 +21,20 @@ import { Link as RouterLink } from "react-router-dom";
 
 import apiAnnotations from "../../api/apiAnnotations";
 import { OpenProblemsContext } from "../../context/context";
-import extractAnnotationInformation from "../../utils/functions/extractAnnotationInformation";
 import useGetApi from "../../utils/hooks/useApi";
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
   const { title, description, problem_id: id } = openProblem ?? "";
   const { first_name: firstName, last_name: lastName } = contact ?? "";
-  const { apiData, error } = useGetApi(
+  const { apiData: annotations } = useGetApi(
     apiAnnotations.getAnnotationsForProblem,
     {
-      all: true,
-      problemId: id,
-      fields: ["compound", "subject", "gene", "species"],
+      annotation: "tag",
+      id,
+      fields: ["tag"],
     }
   );
-  const annotations = useMemo(() => {
-    // The api returns a nested structure of all annotations relating to an open problem we need to flatten it first so its easy to display
-    if (apiData && !error) {
-      const flattenedAnnotations = Object.entries(apiData).flatMap(
-        ([key, values]) => values.map((value) => ({ [key]: value[key] }))
-      );
-      if (flattenedAnnotations.length === 0) return [];
-
-      const formattedAnnotations = flattenedAnnotations.map((annotation) => {
-        const category = Object.keys(annotation)[0];
-        const annotationObject = Object.values(annotation)[0];
-        return extractAnnotationInformation(annotationObject, category);
-      });
-
-      return formattedAnnotations;
-    }
-    return [];
-  }, [id, apiData]);
 
   return (
     <Card sx={{ width: "100%" }}>
@@ -87,7 +68,7 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
                 annotations.map((annotation) => (
                   <Chip
                     label={annotation.title}
-                    variant="outlined"
+                    variant="filled"
                     color="primary"
                   />
                 ))}

@@ -1,4 +1,13 @@
-import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
+import {
+  Chip,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 import { useParams } from "react-router-dom";
@@ -6,10 +15,10 @@ import apiAnnotations from "../../api/apiAnnotations";
 import useGetApi from "../../utils/hooks/useApi";
 
 export default function Header({ data }) {
-  const { title, description } = data;
+  const { title, description, references = [] } = data;
   const { id } = useParams();
   // Subject will be tags:
-  const params = { annotation: "subject", id };
+  const params = { annotation: "tag", id };
   const { apiData: tags } = useGetApi(
     apiAnnotations.getAnnotationsForProblem,
     params,
@@ -21,6 +30,18 @@ export default function Header({ data }) {
         <Typography variant="h5"> {title} </Typography>
         <Divider />
         <Typography variant="body1"> {description && description}</Typography>
+        <Typography variant="h6"> References </Typography>
+        <List>
+          {references.length > 0 ? (
+            references.map((reference) => (
+              <ListItem disableGutters>
+                <ListItemText primary={reference.citation} />
+              </ListItem>
+            ))
+          ) : (
+            <Typography>None</Typography>
+          )}
+        </List>
         <Divider />
         <Stack spacing={2} direction="row">
           {tags &&
