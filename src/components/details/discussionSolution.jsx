@@ -31,13 +31,13 @@ import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
 import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
-import FormManagedTextField from "../../components/formManagedTextField";
-import ReferenceItem from "../../components/submit/referenceItem";
 import newRandomId from "../../utilities/randomId";
 import {
   formatFullName,
   setDate,
 } from "../../utils/functions/dataManipulation";
+import FormManagedTextField from "../formManagedTextField";
+import ReferenceItem from "../submit/referenceItem";
 import CommentFormManager from "./commentFormManager";
 import PostFormManager from "./postFormManager";
 
