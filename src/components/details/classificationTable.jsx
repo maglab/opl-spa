@@ -41,7 +41,7 @@ export default function ClassificationTable({ id }) {
           <TableHead>
             <TableRow>
               <TableCell colSpan={2} align="center">
-                <Typography> Classification</Typography>
+                <Typography variant="h6"> Classification</Typography>
               </TableCell>
             </TableRow>
           </TableHead>

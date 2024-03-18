@@ -29,6 +29,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
+import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
 import FormManagedTextField from "../../components/formManagedTextField";
 import ReferenceItem from "../../components/submit/referenceItem";
@@ -432,7 +433,7 @@ function PostForm({ type }) {
   );
 }
 
-export function PostSection({ sectionType, sectionDescription }) {
+function PostSection({ sectionType, sectionDescription }) {
   const { id } = useParams();
   const [pagination, setPagination] = useState(1);
   const [count, setCount] = useState(0);
@@ -471,7 +472,7 @@ export function PostSection({ sectionType, sectionDescription }) {
           {sectionType === "discussion" ? "Discussion" : "Solutions"}
         </Typography>
       </Grid>
-      <Grid item xs={12} textAlign="center">
+      <Grid item xs={12}>
         <Typography variant="body1" fontWeight="bold">
           {sectionDescription}
         </Typography>
@@ -506,7 +507,7 @@ export function PostSection({ sectionType, sectionDescription }) {
   );
 }
 
-export function DiscussionSolution() {
+export default function DiscussionSolution() {
   const [tabValue, setTabValue] = useState("solution");
   return (
     <Paper>
@@ -519,12 +520,15 @@ export function DiscussionSolution() {
         </Stack>
 
         <TabPanel value="solution">
-          <PostSection sectionType="solution" sectionDescription="" />
+          <PostSection
+            sectionType="solution"
+            sectionDescription={solutionDescription.mainText}
+          />
         </TabPanel>
         <TabPanel value="discussion">
           <PostSection
             sectionType="discussion"
-            sectionDescription={solutionDescription.mainText}
+            sectionDescription={discussionDescription.mainText}
           />
         </TabPanel>
       </TabContext>
