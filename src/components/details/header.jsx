@@ -30,8 +30,9 @@ export default function Header({ data }) {
         <Typography variant="h5"> {title} </Typography>
         <Divider />
         <Typography variant="body1"> {description && description}</Typography>
-        <Typography variant="h6"> References </Typography>
         <List>
+          <Typography variant="h6"> References </Typography>
+
           {references.length > 0 ? (
             references.map((reference) => (
               <ListItem disableGutters>
