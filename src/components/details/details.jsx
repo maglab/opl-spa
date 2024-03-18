@@ -1,4 +1,5 @@
-import { Grid, Paper } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { Button, Grid, Paper } from "@mui/material";
 import React, { useRef } from "react";
 
 import { useLoaderData, useParams } from "react-router-dom";
@@ -17,12 +18,20 @@ export default function Details() {
   const detailsRef = useRef(null);
   const solutionsRef = useRef(null);
   const relatedProblemsRef = useRef(null);
+  const topBarRef = useRef(null);
+
+  const scrollUpClickHander = () => {
+    if (topBarRef.current) {
+      topBarRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <Grid container direction="column" spacing={2}>
-      <Grid item xs={12} display={{ md: "none" }}>
+    <Grid container direction="column" spacing={2} alignItems="center">
+      <Grid item xs={12} display={{ md: "none" }} ref={topBarRef} width="100%">
         <TopBar refs={{ detailsRef, solutionsRef, relatedProblemsRef }} />
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} xs={12}>
         <Grid item md={3} xs={12}>
           <ClassificationTable id={id} />
         </Grid>
@@ -39,6 +48,16 @@ export default function Details() {
             <RelatedProblemsList upstream={upstream} downstream={downstream} />
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item xs={12} sx={{ display: { md: "none" } }}>
+        <Button
+          color="primary"
+          size="large"
+          startIcon={<ArrowUpwardIcon />}
+          onClick={scrollUpClickHander}
+        >
+          Back to top
+        </Button>
       </Grid>
     </Grid>
   );

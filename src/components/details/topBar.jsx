@@ -19,8 +19,8 @@ export default function TopBar({ refs }) {
   const { detailsRef, solutionsRef, relatedProblemsRef } = refs;
 
   return (
-    <AppBar position="static">
-      <Toolbar xs={{ width: "100%" }}>
+    <AppBar position="static" sx={{ flexGrow: 1, width: "100%" }}>
+      <Toolbar>
         <Stack
           spacing={2}
           direction="row"

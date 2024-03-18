@@ -17,7 +17,7 @@ export default function Header({ data }) {
   );
   return (
     <Paper>
-      <Stack spacing={2} padding={2}>
+      <Stack spacing={2} padding={2} width="100%">
         <Typography variant="h5"> {title} </Typography>
         <Divider />
         <Typography variant="body1"> {description && description}</Typography>
