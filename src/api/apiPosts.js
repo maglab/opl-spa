@@ -1,6 +1,8 @@
 import apiClient from "./apiClient";
 
 const apiPosts = {
+  getSolution: ({ id }) => apiClient.get(`posts/solutions/${id}`),
+  getDiscussion: ({ id }) => apiClient.get(`posts/solutions/${id}`),
   solutionsForOpenProblem: ({ openProblemId, params }) =>
     apiClient.get(`posts/solutions/${openProblemId}`, params),
   solutionsSubmit: ({ data, openProblemId }) =>

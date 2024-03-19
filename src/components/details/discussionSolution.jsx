@@ -25,12 +25,13 @@ import {
 import Tab from "@mui/material/Tab";
 import { blue } from "@mui/material/colors";
 import { FieldArray, useField } from "formik";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
 import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
+import PostContext from "../../context/postContext";
 import newRandomId from "../../utilities/randomId";
 import {
   formatFullName,
@@ -67,6 +68,7 @@ function CommentForm({ id }) {
     title: "",
     message: "",
   });
+  const postType = useContext(PostContext);
   const onSubmitHandler = async (
     values,
     { setSubmitting, resetForm, setErrors }
@@ -74,7 +76,11 @@ function CommentForm({ id }) {
     setSubmitting(true);
     try {
       const updatedValues = { ...values, post: id }; // Set the post parameter.
-      const response = await apiComments.post({ id, data: updatedValues });
+      const response = await apiComments.post({
+        id,
+        postType: `${postType}s`,
+        data: updatedValues,
+      });
       if (response.status === 201) {
         resetForm();
         setDialogOpen(true);
@@ -84,6 +90,7 @@ function CommentForm({ id }) {
         });
       }
     } catch (error) {
+      setDialogOpen(true);
       setErrors({ submit: error.message });
       setDialogContent({ title: "Unsuccesful", message: error.message });
     }
@@ -136,72 +143,87 @@ function Comment({ commentData }) {
     </ListItem>
   );
 }
-
 function CommentSection({ id }) {
+  const postType = useContext(PostContext);
   const [pageSize, setPageSize] = useState(3);
-  const [nextUrl, setNextUrl] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [count, setCount] = useState(0);
-  const [error, setError] = useState(false);
+  const [commentsData, setCommentsData] = useState({
+    comments: [],
+    count: 0,
+    nextUrl: null,
+    error: false,
+  });
 
-  // Allow the user to get all comments - set the number of comments retrieved by total number of comments in api (count)
   useEffect(() => {
-    async function getData() {
-      const response = await apiComments.getAll({
-        id,
-        params: { page_size: pageSize },
-      });
-      if (response.data) {
-        const { data } = response;
-        setComments(data.results);
-        setNextUrl(data.next);
-        setCount(data.count);
-      } else {
-        setError(true);
+    async function fetchData() {
+      try {
+        const response = await apiComments.getAll({
+          id,
+          postType: `${postType}s`,
+          params: { page_size: pageSize },
+        });
+
+        if (response.data) {
+          const { data } = response;
+          setCommentsData({
+            comments: data.results,
+            count: data.count,
+            nextUrl: data.next,
+            error: false,
+          });
+        }
+      } catch (error) {
+        setCommentsData((prevCommentsData) => ({
+          ...prevCommentsData,
+          error: true,
+        }));
       }
     }
-    getData();
-  }, [pageSize]);
 
-  const getAllHandler = () => {
-    if (!nextUrl) return;
-    setPageSize(count);
+    fetchData();
+  }, [id, pageSize, postType]);
+
+  const handleGetAll = () => {
+    if (commentsData.nextUrl) {
+      setPageSize(commentsData.count);
+    }
   };
-  const clearHandler = () => {
+
+  const handleClear = () => {
     setPageSize(3);
   };
-  if (error) {
-    return (
-      <Stack width="100%" justifyContent="center">
-        <Typography variant="body1" textAlign="center">
-          Error in retrieving comments.
-        </Typography>
-      </Stack>
-    );
-  }
-  if (comments.length > 0) {
-    return (
-      <Stack alignItems="flex-start" width="100%">
-        <Stack pl={4} width="100%" alignItems="center">
-          <List sx={{ width: "100%" }}>
-            {comments &&
-              comments.map((comment) => (
+
+  return (
+    <Stack>
+      {commentsData.error ? (
+        <Stack width="100%" justifyContent="center" p={2}>
+          <Typography variant="body1" textAlign="center" color="error">
+            Error in retrieving comments.
+          </Typography>
+        </Stack>
+      ) : (
+        <Stack alignItems="flex-start" width="100%">
+          <Stack pl={4} width="100%" alignItems="center">
+            <List sx={{ width: "100%" }}>
+              {commentsData.comments.map((comment) => (
                 <Comment commentData={comment} key={comment.id} />
               ))}
-          </List>
+            </List>
+          </Stack>
+          <Stack
+            px={8}
+            justifyContent="space-between"
+            direction="row"
+            width="100%"
+          >
+            {commentsData.nextUrl && (
+              <Button onClick={handleGetAll}>View all</Button>
+            )}
+            {pageSize > 3 && <Button onClick={handleClear}>View less</Button>}
+          </Stack>
         </Stack>
-        <Stack
-          px={8}
-          justifyContent="space-between"
-          direction="row"
-          width="100%"
-        >
-          {nextUrl && <Button onClick={getAllHandler}> View all</Button>}
-          {pageSize > 3 && <Button onClick={clearHandler}> View less </Button>}
-        </Stack>
-      </Stack>
-    );
-  }
+      )}
+    </Stack>
+  );
 }
 
 function PostMetaData({ postData }) {
@@ -300,8 +322,9 @@ function PostContent({ postData }) {
   );
 }
 
-function Post({ postData, type }) {
-  if (type === "discussion") {
+function Post({ postData }) {
+  const postType = useContext(PostContext);
+  if (postType === "discussion") {
     return (
       <Grid container spacing={2}>
         <PostContent postData={postData} />
@@ -362,14 +385,15 @@ function PostForm({ type }) {
     title: "",
     message: "",
   });
+  const postType = useContext(PostContext);
   const onSubmitHandler = async (
     values,
     { setSubmitting, resetForm, setErrors }
   ) => {
     let apiCall;
-    if (type === "solution") {
+    if (postType === "solution") {
       apiCall = apiPosts.solutionsSubmit;
-    } else if (type === "discussion") {
+    } else if (postType === "discussion") {
       apiCall = apiPosts.discussionsSubmit;
     }
     setSubmitting(true);
@@ -466,44 +490,44 @@ function PostSection({ sectionType, sectionDescription }) {
   }, [pagination, sectionType, id]);
 
   return (
-    <Grid container spacing={2} padding={2} direction="column" width="100%">
-      <Grid item xs={12}>
-        <Typography variant="h5" textAlign="center">
-          {sectionType === "discussion" ? "Discussion" : "Solutions"}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography variant="body1" fontWeight="bold">
-          {sectionDescription}
-        </Typography>
-      </Grid>
-      <Grid item container xs={12}>
-        {posts && posts.length > 0 ? (
-          posts.map((post) => (
-            <Post postData={post} key={post.id} type={sectionType} />
-          ))
-        ) : (
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" textAlign="center" width="100%">
-              No submitted {sectionType}s.
-            </Typography>
-          </Grid>
-        )}
-      </Grid>
+    <PostContext.Provider value={sectionType}>
+      <Grid container spacing={2} padding={2} direction="column" width="100%">
+        <Grid item xs={12}>
+          <Typography variant="h5" textAlign="center">
+            {sectionType === "discussion" ? "Discussion" : "Solutions"}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="body1" fontWeight="bold">
+            {sectionDescription}
+          </Typography>
+        </Grid>
+        <Grid item container xs={12}>
+          {posts && posts.length > 0 ? (
+            posts.map((post) => <Post postData={post} key={post.id} />)
+          ) : (
+            <Grid item xs={12}>
+              <Typography variant="subtitle1" textAlign="center" width="100%">
+                No submitted {sectionType}s.
+              </Typography>
+            </Grid>
+          )}
+        </Grid>
 
-      <Grid item xs={12}>
-        <Stack alignItems="center">
-          <Pagination
-            size="small"
-            count={pageNumbers}
-            onChange={(event, value) => setPagination(value)}
-          />
-        </Stack>
+        <Grid item xs={12}>
+          <Stack alignItems="center">
+            <Pagination
+              size="small"
+              count={pageNumbers}
+              onChange={(event, value) => setPagination(value)}
+            />
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <PostForm type={sectionType} />
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <PostForm type={sectionType} />
-      </Grid>
-    </Grid>
+    </PostContext.Provider>
   );
 }
 
@@ -514,8 +538,8 @@ export default function DiscussionSolution() {
       <TabContext value={tabValue}>
         <Stack width="100%" justifyContent="center" alignItems="center">
           <TabList onChange={(event, value) => setTabValue(value)}>
-            <Tab value="solution" label="SOLUTION" />
-            <Tab value="discussion" label="DISCUSSION" />
+            <Tab value="solution" label="SOLUTIONS" />
+            <Tab value="discussion" label="DISCUSSIONS" />
           </TabList>
         </Stack>
 

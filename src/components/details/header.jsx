@@ -10,11 +10,8 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import { useParams } from "react-router-dom";
-
 export default function Header({ data }) {
   const { title, description, references = [], tags = [] } = data;
-  const { id } = useParams();
   // Subject will be tags:
 
   return (
@@ -27,7 +24,7 @@ export default function Header({ data }) {
           <Typography variant="h6"> References </Typography>
           {references.length > 0 ? (
             references.map((reference) => (
-              <ListItem disableGutters>
+              <ListItem disableGutters key={reference.id}>
                 <ListItemText
                   primary={reference.citation}
                   primaryTypographyProps={{ variant: "body2" }}
