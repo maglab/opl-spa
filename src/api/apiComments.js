@@ -1,8 +1,11 @@
 import apiClient from "./apiClient";
 
 const apiComments = {
-  post: ({ id, data }) => apiClient.post(`posts/${id}/comments`, data),
-  getAll: ({ id, params }) => apiClient.get(`posts/${id}/comments`, { params }),
+  post: ({ id, postType, data }) =>
+    apiClient.post(`posts/${id}/${postType}/comments`, data),
+  get: ({ postType, id }) => apiClient.get(`posts/${postType}/comments/${id}`),
+  getAll: ({ id, postType, params }) =>
+    apiClient.get(`posts/${id}/${postType}/comments`, { params }),
 };
 
 export default apiComments;
