@@ -19,22 +19,12 @@ import {
 import React, { useContext, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import apiAnnotations from "../../api/apiAnnotations";
 import { OpenProblemsContext } from "../../context/context";
-import useGetApi from "../../utils/hooks/useApi";
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
-  const { title, description, problem_id: id } = openProblem ?? "";
+  const { title, description, problem_id: id, tags } = openProblem ?? "";
   const { first_name: firstName, last_name: lastName } = contact ?? "";
-  const { apiData: annotations } = useGetApi(
-    apiAnnotations.getAnnotationsForProblem,
-    {
-      annotation: "tag",
-      id,
-      fields: ["tag"],
-    }
-  );
 
   return (
     <Card sx={{ width: "100%" }}>
@@ -64,13 +54,9 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
           </Grid>
           <Grid item xs={12} py={2}>
             <Stack direction="row" spacing={2}>
-              {annotations &&
-                annotations.map((annotation) => (
-                  <Chip
-                    label={annotation.title}
-                    variant="filled"
-                    color="primary"
-                  />
+              {tags &&
+                tags.map((tag) => (
+                  <Chip label={tag.title} variant="filled" color="primary" />
                 ))}
             </Stack>
           </Grid>
