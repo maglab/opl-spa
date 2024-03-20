@@ -8,12 +8,12 @@ import About from "../components/about";
 import ContactUs from "../components/contactUs";
 import Details from "../components/details";
 import Hero from "../components/hero";
+import Login from "../components/login/login";
 import ScrollToTop from "../components/scrollToTop";
 import Submit from "../components/submit/submit";
 import SubmitGuidelines from "../components/submitGuidelines";
 import Team from "../components/team";
 import OpenProblemProvider from "../context/context";
-import Login from "../pages/Login/Login";
 import OpenProblems from "../pages/OpenProblems/openProblems";
 
 const router = createBrowserRouter([
