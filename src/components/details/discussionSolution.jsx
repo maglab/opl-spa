@@ -31,7 +31,7 @@ import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
 import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
-import PostContext from "../../context/postContext";
+import { PostContext, PostProvider } from "../../context/postCommentContext";
 import newRandomId from "../../utilities/randomId";
 import {
   formatFullName,
@@ -62,37 +62,49 @@ function SubmissionDialog({ open, setOpen, title, message }) {
   );
 }
 
-function CommentForm({ id }) {
+function CommentForm({ id, setCommentsData }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState({
     title: "",
     message: "",
   });
-  const postType = useContext(PostContext);
+  const { postType } = useContext(PostContext);
+
+  // Function to render the successful comment submission. We do not allow for now as there is no user management.
+  // const addComment = (newComment) => {
+  //   setCommentsData((prevState) => ({
+  //     ...prevState,
+  //     comments: [newComment, ...prevState.comments],
+  //     count: prevState.count + 1,
+  //   }));
+  // };
+
   const onSubmitHandler = async (
     values,
     { setSubmitting, resetForm, setErrors }
   ) => {
     setSubmitting(true);
     try {
-      const updatedValues = { ...values, post: id }; // Set the post parameter.
+      const updatedValues = { ...values, post: id };
       const response = await apiComments.post({
         id,
         postType: `${postType}s`,
         data: updatedValues,
       });
+
       if (response.status === 201) {
-        resetForm();
+        // addComment(response.data);
         setDialogOpen(true);
         setDialogContent({
-          title: "Success",
-          message: "Your comment has been posted and is under review",
+          title: "Comment submitted",
+          message: "Your comment has been submitted and is under review.",
         });
+        resetForm();
       }
     } catch (error) {
       setDialogOpen(true);
       setErrors({ submit: error.message });
-      setDialogContent({ title: "Unsuccesful", message: error.message });
+      setDialogContent({ title: "Unsuccessful", message: error.message });
     }
     setSubmitting(false);
   };
@@ -143,15 +155,9 @@ function Comment({ commentData }) {
     </ListItem>
   );
 }
-function CommentSection({ id }) {
-  const postType = useContext(PostContext);
+function CommentSection({ id, commentsData, setCommentsData }) {
+  const { postType } = useContext(PostContext);
   const [pageSize, setPageSize] = useState(3);
-  const [commentsData, setCommentsData] = useState({
-    comments: [],
-    count: 0,
-    nextUrl: null,
-    error: false,
-  });
 
   useEffect(() => {
     async function fetchData() {
@@ -180,7 +186,7 @@ function CommentSection({ id }) {
     }
 
     fetchData();
-  }, [id, pageSize, postType]);
+  }, [id, pageSize, postType, setCommentsData]);
 
   const handleGetAll = () => {
     if (commentsData.nextUrl) {
@@ -249,6 +255,12 @@ function PostMetaData({ postData }) {
 function PostContent({ postData }) {
   const { full_text: fullText, id, references } = postData;
   const [commentOpen, setCommentOpen] = useState(false);
+  const [commentsData, setCommentsData] = useState({
+    comments: [],
+    count: 0,
+    nextUrl: null,
+    error: false,
+  });
   const inputCommentHanlder = () => {
     setCommentOpen(!commentOpen);
   };
@@ -265,7 +277,6 @@ function PostContent({ postData }) {
           <Typography variant="body1" sx={{ textDecoration: "underline" }}>
             References
           </Typography>
-
           {references.length > 0 ? (
             references.map((reference) => (
               <ListItem key={reference.id} disablePadding>
@@ -312,18 +323,22 @@ function PostContent({ postData }) {
       </Grid>
       {commentOpen && (
         <Grid item xs={12}>
-          <CommentForm id={id} />
+          <CommentForm id={id} setCommentsData={setCommentsData} />
         </Grid>
       )}
       <Grid item xs={12}>
-        <CommentSection id={id} />
+        <CommentSection
+          id={id}
+          commentsData={commentsData}
+          setCommentsData={setCommentsData}
+        />
       </Grid>
     </>
   );
 }
 
 function Post({ postData }) {
-  const postType = useContext(PostContext);
+  const { postType } = useContext(PostContext);
   if (postType === "discussion") {
     return (
       <Grid container spacing={2}>
@@ -385,7 +400,7 @@ function PostForm({ type }) {
     title: "",
     message: "",
   });
-  const postType = useContext(PostContext);
+  const { postType } = useContext(PostContext);
   const onSubmitHandler = async (
     values,
     { setSubmitting, resetForm, setErrors }
@@ -490,7 +505,7 @@ function PostSection({ sectionType, sectionDescription }) {
   }, [pagination, sectionType, id]);
 
   return (
-    <PostContext.Provider value={sectionType}>
+    <PostProvider sectionType={sectionType}>
       <Grid container spacing={2} padding={2} direction="column" width="100%">
         <Grid item xs={12}>
           <Typography variant="h5" textAlign="center">
@@ -527,7 +542,7 @@ function PostSection({ sectionType, sectionDescription }) {
           <PostForm type={sectionType} />
         </Grid>
       </Grid>
-    </PostContext.Provider>
+    </PostProvider>
   );
 }
 
