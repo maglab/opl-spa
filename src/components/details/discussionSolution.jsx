@@ -62,22 +62,13 @@ function SubmissionDialog({ open, setOpen, title, message }) {
   );
 }
 
-function CommentForm({ id, setCommentsData }) {
+function CommentForm({ id }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState({
     title: "",
     message: "",
   });
   const { postType } = useContext(PostContext);
-
-  // Function to render the successful comment submission. We do not allow for now as there is no user management.
-  // const addComment = (newComment) => {
-  //   setCommentsData((prevState) => ({
-  //     ...prevState,
-  //     comments: [newComment, ...prevState.comments],
-  //     count: prevState.count + 1,
-  //   }));
-  // };
 
   const onSubmitHandler = async (
     values,
