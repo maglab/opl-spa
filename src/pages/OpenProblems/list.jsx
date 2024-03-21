@@ -22,6 +22,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import Center from "../../components/common/center";
 import QueryParamsContext from "../../contexts/queryParamsContext";
+import StateContext from "../../contexts/stateContext";
 import {
   useGetProblemAllAnnotations,
   useGetProblems,
@@ -140,10 +141,10 @@ function calculatePagination(count, view) {
 }
 
 function OpenProblemList() {
-  const { queryParams, updateQueryParams } = useContext(QueryParamsContext);
-  const { query, pageNum, sorting, view } = queryParams;
+  const { editQueryParams } = useContext(QueryParamsContext);
+  const { pageNum, sorting, view } = useContext(StateContext);
+
   const getProblemsState = useGetProblems({
-    query,
     pageNum,
     pageSize: view === "list" ? 20 : 10,
     sorting,
@@ -151,7 +152,9 @@ function OpenProblemList() {
   const [reportOpen, setReportOpen] = useState(false);
 
   const handlePageChange = (_, newPage) => {
-    updateQueryParams({ pageNum: newPage });
+    editQueryParams((draft) => {
+      draft.pageNum = newPage;
+    });
   };
 
   if (view === "card") {

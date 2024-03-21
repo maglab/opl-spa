@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const QueryParamsContext = createContext(null);
+const QueryParamsContext = createContext();
 
 export default QueryParamsContext;

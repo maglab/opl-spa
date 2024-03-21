@@ -31,6 +31,7 @@ const theme = createTheme({
     mainSpacing: 4,
     minorSpacing: 2,
     padding: 2,
+    selectWidth: (unit = 1) => unit * 30 + 120,
   },
 });
 

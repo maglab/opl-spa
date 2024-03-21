@@ -3,25 +3,27 @@ import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
+import StandardGrid from "./common/standardGrid";
+import StandardStack from "./common/standardStack";
 import { DefaultMargin } from "./defaultMargin";
 
 export default function Header() {
   return (
     <AppBar position="static" sx={{ bgcolor: "common.white" }}>
       <DefaultMargin yPadding={0.5}>
-        <Grid
-          container
+        <StandardGrid
+          minor
           direction="row"
           justifyContent="center"
           alignItems="center"
-          rowSpacing={2}
+          p={0}
         >
           <Grid item xs={12} sm>
-            <Stack
+            <StandardStack
               direction="row"
               justifyContent={{ xs: "center", sm: "left" }}
               alignItems="flex-end"
-              spacing={1}
+              p={0}
             >
               <Stack height="100%" justifyContent="center">
                 <Link component={RouterLink} to="/">
@@ -31,24 +33,17 @@ export default function Header() {
               <Typography variant="caption">
                 build: {import.meta.env.VITE_BUILD_VERSION}
               </Typography>
-            </Stack>
+            </StandardStack>
           </Grid>
           <Grid item>
-            <Grid container alignItems="center">
+            <StandardGrid minor p={0} alignItems="center">
               <Grid item xs />
               <Grid item>
-                <Stack direction="row" spacing={2}>
+                <StandardStack minor p={0} direction="row">
                   <Button
                     component={RouterLink}
                     to="/submit-guidelines"
                     variant="contained"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    component={RouterLink}
-                    to="/open-problems/submit"
-                    variant="outlined"
                   >
                     Submit
                   </Button>
@@ -62,11 +57,11 @@ export default function Header() {
                   <Button component={RouterLink} to="/login" variant="outlined">
                     Login / Register
                   </Button>
-                </Stack>
+                </StandardStack>
               </Grid>
-            </Grid>
+            </StandardGrid>
           </Grid>
-        </Grid>
+        </StandardGrid>
       </DefaultMargin>
     </AppBar>
   );

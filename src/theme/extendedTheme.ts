@@ -5,6 +5,7 @@ interface ExtendedTheme extends Theme {
     mainSpacing: number;
     minorSpacing: number;
     padding: number;
+    selectWidth: (arg0?: number) => number;
   };
 }
 

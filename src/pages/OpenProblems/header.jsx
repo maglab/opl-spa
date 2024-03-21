@@ -1,74 +1,74 @@
 import { ViewList } from "@mui/icons-material";
 import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import {
+  Divider,
   Grid,
   Paper,
-  Stack,
-  TextField,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import { capitalize } from "lodash";
 import React, { useContext } from "react";
+import StandardGrid from "../../components/common/standardGrid";
+import StandardStack from "../../components/common/standardStack";
+import SORTING_KEYS from "../../constants/problemSortingKeys";
+import VIEW_KEYS from "../../constants/problemViewKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
+import Search from "./search";
 
 function Header() {
-  const { queryParams, updateQueryParams } = useContext(QueryParamsContext);
+  const { queryParams, editQueryParams } = useContext(QueryParamsContext);
   const { sorting, view } = queryParams;
   const viewChangeHandler = (_, target) => {
-    updateQueryParams({ view: target });
+    editQueryParams((draft) => {
+      draft.view = target;
+    });
   };
   const sortingChangehandler = (_, target) => {
-    updateQueryParams({ sorting: target });
+    editQueryParams((draft) => {
+      draft.sorting = target;
+    });
   };
   return (
-    <Paper elevation={3}>
-      <Grid padding={2} container direction="column" gap={2}>
-        <Grid item>
-          <Stack>
-            <TextField
-              label="Search for an open problem"
-              fullWidth
-              variant="filled"
-              size="large"
-            />
-          </Stack>{" "}
-        </Grid>
-        <Grid
-          container
-          item
-          direction="row"
-          justifyContent="space-between"
-          xs={12}
-        >
-          <Grid item>
+    <Paper elevation={1}>
+      <StandardStack minor>
+        <Search />
+        <Divider />
+        <StandardGrid p={0} direction="row">
+          <Grid item xs="auto">
             <ToggleButtonGroup
+              size="small"
               variant="outlined"
               color="info"
               onChange={sortingChangehandler}
               value={sorting}
               exclusive
             >
-              <ToggleButton value="latest">Latest</ToggleButton>
-              <ToggleButton value="top"> Top</ToggleButton>
-              <ToggleButton value="answered">Answered</ToggleButton>
+              {Object.values(SORTING_KEYS).map((key) => (
+                <ToggleButton key={key} value={key}>
+                  {capitalize(key)}
+                </ToggleButton>
+              ))}
             </ToggleButtonGroup>
           </Grid>
-          <Grid item>
+          <Grid item xs />
+          <Grid item xs="auto">
             <ToggleButtonGroup
+              size="small"
               exclusive
               value={view}
               onChange={viewChangeHandler}
             >
-              <ToggleButton value="list">
+              <ToggleButton value={VIEW_KEYS.list}>
                 <ViewList />
               </ToggleButton>
-              <ToggleButton value="card">
+              <ToggleButton value={VIEW_KEYS.card}>
                 <ViewAgendaIcon />
               </ToggleButton>
             </ToggleButtonGroup>
           </Grid>
-        </Grid>
-      </Grid>
+        </StandardGrid>
+      </StandardStack>
     </Paper>
   );
 }

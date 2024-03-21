@@ -1,5 +1,6 @@
 import { TextField, TextFieldProps } from "@mui/material";
 import { useField } from "formik";
+import { merge } from "lodash";
 import React from "react";
 
 interface FormManagedTextFieldProps
@@ -13,8 +14,6 @@ function FormManagedTextField({
   children,
   ...props
 }: FormManagedTextFieldProps) {
-  props.fullWidth = props.fullWidth ?? true;
-
   const [field, meta] = useField(name as string);
   const errorText = meta.error && meta.touched ? meta.error : "";
 
@@ -26,7 +25,8 @@ function FormManagedTextField({
       onChange={field.onChange}
       onBlur={field.onBlur}
       value={field.value}
-      {...props}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...merge({ fullWidth: !props.select }, props)}
     >
       {children}
     </TextField>

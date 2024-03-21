@@ -22,7 +22,7 @@ export default function StandardStack({
   if (main) spacing = theme.layout.mainSpacing;
 
   spacing = divider ? spacing / 2 : spacing;
-  const mergedProps = merge({ spacing }, props);
+  const mergedProps = merge({ spacing, p: theme.layout.padding }, props);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
