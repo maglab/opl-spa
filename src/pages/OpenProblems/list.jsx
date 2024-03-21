@@ -31,7 +31,7 @@ import extractAnnotationInformation from "../../utils/functions/extractAnnotatio
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
-  const { title, description, problem_id: id } = openProblem ?? "";
+  const { title, description, problem_id: id, tags } = openProblem ?? "";
   const { first_name: firstName, last_name: lastName } = contact ?? "";
   const getProblemAllAnnotationsState = useGetProblemAllAnnotations(id, [
     "compound",
@@ -87,13 +87,9 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
           </Grid>
           <Grid item xs={12} py={2}>
             <Stack direction="row" spacing={2}>
-              {annotations &&
-                annotations.map((annotation) => (
-                  <Chip
-                    label={annotation.title}
-                    variant="outlined"
-                    color="primary"
-                  />
+              {tags &&
+                tags.map((tag) => (
+                  <Chip label={tag.title} variant="filled" color="primary" />
                 ))}
             </Stack>
           </Grid>
