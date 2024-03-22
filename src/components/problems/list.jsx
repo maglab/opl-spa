@@ -5,7 +5,6 @@ import {
   ButtonGroup,
   Card,
   CardContent,
-  Chip,
   CircularProgress,
   Grid,
   Link,
@@ -17,47 +16,18 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-
-import Center from "../../components/common/center";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import StateContext from "../../contexts/stateContext";
-import {
-  useGetProblemAllAnnotations,
-  useGetProblems,
-} from "../../queries/problems";
-import extractAnnotationInformation from "../../utils/functions/extractAnnotationInformation";
+import { useGetProblems } from "../../queries/problems";
+import Center from "../common/center";
+import ProblemTag from "../common/problemTag";
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
   const { title, description, problem_id: id, tags } = openProblem ?? "";
   const { first_name: firstName, last_name: lastName } = contact ?? "";
-  const getProblemAllAnnotationsState = useGetProblemAllAnnotations(id, [
-    "compound",
-    "subject",
-    "gene",
-    "species",
-  ]);
-  const annotations = useMemo(() => {
-    // The api returns a nested structure of all annotations relating to an open problem we need to flatten it first so its easy to display
-    if (getProblemAllAnnotationsState.isSuccess) {
-      const { data } = getProblemAllAnnotationsState.data;
-      const flattenedAnnotations = Object.entries(data).flatMap(
-        ([key, values]) => values.map((value) => ({ [key]: value[key] }))
-      );
-      if (flattenedAnnotations.length === 0) return [];
-
-      const formattedAnnotations = flattenedAnnotations.map((annotation) => {
-        const category = Object.keys(annotation)[0];
-        const annotationObject = Object.values(annotation)[0];
-        return extractAnnotationInformation(annotationObject, category);
-      });
-
-      return formattedAnnotations;
-    }
-    return [];
-  }, [getProblemAllAnnotationsState]);
 
   return (
     <Card sx={{ width: "100%" }}>
@@ -89,7 +59,7 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
             <Stack direction="row" spacing={2}>
               {tags &&
                 tags.map((tag) => (
-                  <Chip label={tag.title} variant="filled" color="primary" />
+                  <ProblemTag key={tag.id} label={tag.title} />
                 ))}
             </Stack>
           </Grid>

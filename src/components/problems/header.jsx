@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import { capitalize } from "lodash";
 import React, { useContext } from "react";
-import StandardGrid from "../../components/common/standardGrid";
-import StandardStack from "../../components/common/standardStack";
 import SORTING_KEYS from "../../constants/problemSortingKeys";
 import VIEW_KEYS from "../../constants/problemViewKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
+import StandardGrid from "../common/standardGrid";
+import StandardStack from "../common/standardStack";
 import Search from "./search";
 
 function Header() {
@@ -31,10 +31,10 @@ function Header() {
   };
   return (
     <Paper elevation={1}>
-      <StandardStack minor>
+      <StandardStack minor p>
         <Search />
         <Divider />
-        <StandardGrid p={0} direction="row">
+        <StandardGrid direction="row">
           <Grid item xs="auto">
             <ToggleButtonGroup
               size="small"

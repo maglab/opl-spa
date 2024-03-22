@@ -1,16 +1,16 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Chip, Grid, IconButton, MenuItem } from "@mui/material";
+import { Box, Chip, Grid, IconButton, MenuItem } from "@mui/material";
 import { blue, brown, grey, purple } from "@mui/material/colors";
 import { Form, Formik } from "formik";
 import { original as ori } from "immer";
 import { capitalize, isEqual } from "lodash";
 import React, { useContext, useMemo } from "react";
-import StandardGrid from "../../components/common/standardGrid";
-import StandardStack from "../../components/common/standardStack";
-import FormManagedTextField from "../../components/formManagedTextField";
 import SEARCH_SUBJECT_KEYS from "../../constants/problemQuerySubjectKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import useExtendedTheme from "../../theme/useExtendedTheme";
+import StandardGrid from "../common/standardGrid";
+import StandardStack from "../common/standardStack";
+import FormManagedTextField from "../formManagedTextField";
 
 const initialValues = { subject: SEARCH_SUBJECT_KEYS.title, text: "" };
 const criteriaColors = {
@@ -60,22 +60,19 @@ export default function Search() {
   };
 
   return (
-    <StandardStack minor p={0}>
+    <StandardStack minor>
       <Formik initialValues={initialValues} onSubmit={onSubmitHandler}>
         <Form>
-          <StandardStack minor p={0} direction="row" alignItems="center">
-            <FormManagedTextField
-              select
-              name="subject"
-              label="Subject"
-              sx={{ minWidth: theme.layout.selectWidth() }}
-            >
-              {Object.values(SEARCH_SUBJECT_KEYS).map((key) => (
-                <MenuItem key={key} value={key}>
-                  {capitalize(key)}
-                </MenuItem>
-              ))}
-            </FormManagedTextField>
+          <StandardStack minor direction="row" alignItems="center">
+            <Box width={theme.layout.selectWidth(2)}>
+              <FormManagedTextField select name="subject" label="Subject">
+                {Object.values(SEARCH_SUBJECT_KEYS).map((key) => (
+                  <MenuItem key={key} value={key}>
+                    {capitalize(key)}
+                  </MenuItem>
+                ))}
+              </FormManagedTextField>
+            </Box>
             <FormManagedTextField name="text" fullWidth />
             <IconButton type="submit">
               <AddCircleIcon fontSize="large" color="primary" />
@@ -84,11 +81,11 @@ export default function Search() {
         </Form>
       </Formik>
       {criteria.length ? (
-        <StandardGrid minor direction="row" p={0}>
+        <StandardGrid minor direction="row">
           {criteria.map((criterion) => (
             <Grid item xs="auto" key={`${criterion.subject}:${criterion.text}`}>
               <Chip
-                sx={{ backgroundColor: criteriaColors[criterion.subject] }}
+                sx={{ bgcolor: criteriaColors[criterion.subject] }}
                 label={`${capitalize(criterion.subject)} | ${criterion.text}`}
                 onDelete={() => onDeleteClicked(criterion)}
               />

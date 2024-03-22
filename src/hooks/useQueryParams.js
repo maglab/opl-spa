@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import React from "react";
+import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const toCamelCase = (str) =>
@@ -50,7 +50,7 @@ const useQueryParams = (schema = null) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const queryParams = React.useMemo(() => {
+  const queryParams = useMemo(() => {
     const obj = queryStringToObject(location.search);
 
     if (schema) {
@@ -69,25 +69,31 @@ const useQueryParams = (schema = null) => {
     }
   }, [location, schema]);
 
-  const editQueryParams = (action) => {
-    const obj = produce(queryParams, action);
-    Object.entries(obj).forEach(([key, value]) => {
-      if (
-        schema.describe().fields[key]?.type === "array" &&
-        !Array.isArray(value)
-      ) {
-        obj[key] = [value];
-      }
-    });
-    const queryString = objectToQueryString(obj);
+  const editQueryParams = useMemo(
+    () => (action) => {
+      const obj = produce(queryParams, action);
+      Object.entries(obj).forEach(([key, value]) => {
+        if (
+          schema.describe().fields[key]?.type === "array" &&
+          !Array.isArray(value)
+        ) {
+          obj[key] = [value];
+        }
+      });
+      const queryString = objectToQueryString(obj);
 
-    navigate(`${location.pathname}?${queryString}`, { replace: true });
-  };
+      navigate(`${location.pathname}?${queryString}`, { replace: true });
+    },
+    [schema, location, navigate, queryParams]
+  );
 
-  return {
-    queryParams,
-    editQueryParams,
-  };
+  return useMemo(
+    () => ({
+      queryParams,
+      editQueryParams,
+    }),
+    [queryParams, editQueryParams]
+  );
 };
 
 export default useQueryParams;

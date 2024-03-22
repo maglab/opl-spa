@@ -16,14 +16,12 @@ export default function Header() {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          p={0}
         >
           <Grid item xs={12} sm>
             <StandardStack
               direction="row"
               justifyContent={{ xs: "center", sm: "left" }}
               alignItems="flex-end"
-              p={0}
             >
               <Stack height="100%" justifyContent="center">
                 <Link component={RouterLink} to="/">
@@ -36,10 +34,10 @@ export default function Header() {
             </StandardStack>
           </Grid>
           <Grid item>
-            <StandardGrid minor p={0} alignItems="center">
+            <StandardGrid minor alignItems="center">
               <Grid item xs />
               <Grid item>
-                <StandardStack minor p={0} direction="row">
+                <StandardStack minor direction="row">
                   <Button
                     component={RouterLink}
                     to="/submit-guidelines"

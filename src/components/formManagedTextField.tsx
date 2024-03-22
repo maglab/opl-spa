@@ -26,7 +26,7 @@ function FormManagedTextField({
       onBlur={field.onBlur}
       value={field.value}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...merge({ fullWidth: !props.select }, props)}
+      {...merge({ fullWidth: true }, props)}
     >
       {children}
     </TextField>

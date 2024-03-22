@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { FieldArray, useField } from "formik";
 import React from "react";
+import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
 import newRandomId from "../../utilities/randomId";
 import HeaderContent from "../common/headerContent";
 import StandardStack from "../common/standardStack";
@@ -20,7 +21,11 @@ export default function ReferenceSection() {
             <Button
               variant="outlined"
               onClick={() =>
-                push({ id: newRandomId(), type: "DOI", value: "" })
+                push({
+                  id: newRandomId(),
+                  type: REFERENCE_TYPE_KEYS.doi,
+                  value: "",
+                })
               }
             >
               Add Reference

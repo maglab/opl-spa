@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
 
 const initialValues = {
   title: "",
@@ -14,15 +15,15 @@ const initialValues = {
 };
 
 const referenceSchema = Yup.object().shape({
-  type: Yup.string().oneOf(["PMID", "DOI"]),
+  type: Yup.string().oneOf(Object.values(REFERENCE_TYPE_KEYS)),
   value: Yup.string()
     .required("Identifier is required")
-    .when("type", (type, schema) => {
+    .when("type", ([type], schema) => {
       switch (type) {
-        case "PMID":
+        case REFERENCE_TYPE_KEYS.pmid:
           schema.matches(/^\d+$/, "Must be a valid PubMed ID");
           return;
-        case "DOI":
+        case REFERENCE_TYPE_KEYS.doi:
           schema.matches(
             /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i,
             "Must be a valid DOI"

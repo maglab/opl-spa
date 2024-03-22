@@ -10,6 +10,9 @@ const theme = createTheme({
     secondary: {
       main: blueGrey[900],
     },
+    problemTag: {
+      main: blue[100],
+    },
   },
   typography: {
     fontFamily: "Lato, sans-serif",
