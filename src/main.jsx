@@ -2,12 +2,10 @@ import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
 import { msalConfig } from "./authConfig";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import store from "./store/index";
 
 // Microsoft Authentication
 const msalInstance = new PublicClientApplication(msalConfig);
@@ -16,9 +14,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <MsalProvider instance={msalInstance}>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <App />
     </MsalProvider>
   </React.StrictMode>
 );

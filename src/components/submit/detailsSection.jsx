@@ -1,16 +1,13 @@
-import { Typography } from "@mui/material";
-import { Stack } from "@mui/system";
 import React from "react";
+import HeaderContent from "../common/headerContent";
+import StandardStack from "../common/standardStack";
 import FormManagedTextField from "../formManagedTextField";
 import DuplicatedReminder from "./duplicatedReminder";
 
 export default function DetailsSection() {
   return (
-    <Stack spacing={4}>
-      <Typography variant="h5" textAlign="center">
-        Details
-      </Typography>
-      <Stack spacing={2}>
+    <HeaderContent header="Details">
+      <StandardStack minor>
         <FormManagedTextField
           name="title"
           label="Title"
@@ -24,9 +21,9 @@ export default function DetailsSection() {
           label="Description"
           required
           multiline
-          rows={6}
+          minRows={6}
         />
-      </Stack>
-    </Stack>
+      </StandardStack>
+    </HeaderContent>
   );
 }

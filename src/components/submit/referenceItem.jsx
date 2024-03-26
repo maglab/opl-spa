@@ -1,20 +1,17 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  Box,
-  Grid,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Grid, IconButton, MenuItem, Stack, Typography } from "@mui/material";
 import { useField } from "formik";
 import _ from "lodash";
 import React, { useState } from "react";
 import { useAsync, useDebounce } from "react-use";
 import apiReferences from "../../api/apiReferences";
+import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
+import useExtendedTheme from "../../theme/useExtendedTheme";
+import StandardGrid from "../common/standardGrid";
 import FormManagedTextField from "../formManagedTextField";
 
 export default function ReferenceItem({ index, remove }) {
+  const theme = useExtendedTheme();
   const [field, fieldMeta, { setValue }] = useField(`references[${index}]`);
   const [debouncedValues, setDebouncedValues] = useState({ valid: false });
 
@@ -46,42 +43,34 @@ export default function ReferenceItem({ index, remove }) {
 
   return (
     <Stack>
-      <Box>
-        <Grid
-          container
-          direction="row"
-          alignItems="flex-start"
-          columnSpacing={1}
-        >
-          <Grid item xs="auto">
-            <IconButton color="error" onClick={() => remove(index)}>
-              <DeleteIcon />
-            </IconButton>
-          </Grid>
-
-          <Grid item xs={2}>
-            <FormManagedTextField
-              name={`references[${index}].type`}
-              label="Type"
-              select
-              size="small"
-            >
-              {["PMID", "DOI"].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </FormManagedTextField>
-          </Grid>
-          <Grid item xs>
-            <FormManagedTextField
-              name={`references[${index}].value`}
-              label="Identifier"
-              size="small"
-            />
-          </Grid>
+      <StandardGrid minor direction="row" alignItems="flex-start">
+        <Grid item xs="auto">
+          <IconButton color="error" onClick={() => remove(index)}>
+            <DeleteIcon />
+          </IconButton>
         </Grid>
-      </Box>
+        <Grid item width={theme.layout.selectWidth()}>
+          <FormManagedTextField
+            name={`references[${index}].type`}
+            label="Type"
+            select
+            size="small"
+          >
+            {Object.values(REFERENCE_TYPE_KEYS).map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </FormManagedTextField>
+        </Grid>
+        <Grid item xs>
+          <FormManagedTextField
+            name={`references[${index}].value`}
+            label="Identifier"
+            size="small"
+          />
+        </Grid>
+      </StandardGrid>
       <Typography>
         {fetchReferenceInfoState.error
           ? "Couldn't fetch reference information from databases, are you sure the reference is correct?"

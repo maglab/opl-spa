@@ -1,5 +1,4 @@
 import {
-  Chip,
   Divider,
   List,
   ListItem,
@@ -9,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import ProblemTag from "../common/problemTag";
 
 export default function Header({ data }) {
   const { title, description, references = [], tags = [] } = data;
@@ -38,9 +38,7 @@ export default function Header({ data }) {
         <Divider />
         <Stack spacing={2} direction="row">
           {tags &&
-            tags.map((tag) => (
-              <Chip color="primary" label={tag.title} key={tag.id} />
-            ))}
+            tags.map((tag) => <ProblemTag key={tag.id} label={tag.title} />)}
         </Stack>
       </Stack>
     </Paper>

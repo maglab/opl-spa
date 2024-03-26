@@ -8,24 +8,84 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
+
+import auth from "../../firebase";
 import FormManagedTextField from "../formManagedTextField";
 import LoginFormManager from "./loginFormHandler";
 import PasswordTextField from "./passwordTextField";
 import RegisterFormManager from "./registerFormHandler";
 
-export function EmailPasswordForm() {
+export function SignInForm({ setRegistering }) {
+  const registerHandler = async (
+    values,
+    { setSubmitting, resetForms, setError }
+  ) => {
+    const { password, email } = values; // For firebase
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // we need to send this to both firebase and our api. For now we just deal with firebase
+  };
+
   return (
-    <LoginFormManager>
-      <Stack spacing={2}>
-        <FormManagedTextField label="Email" name="email" />
-        <FormManagedTextField label="Password" name="password" />
-      </Stack>
+    <LoginFormManager onSubmitHandler={registerHandler}>
+      <Grid container direction="column" spacing={2} justifyContent="center">
+        <Grid item xs={12}>
+          <FormManagedTextField label="Email" name="email" />
+        </Grid>
+        <Grid item>
+          <PasswordTextField label="Password" name="password" />
+        </Grid>
+        <Grid item container justifyContent="center">
+          <Button
+            variant="contained"
+            sx={{ width: "fit-content" }}
+            type="submit"
+          >
+            Sign in
+          </Button>
+        </Grid>
+        <Grid item container justifyContent="center" alignItems="center">
+          <Stack direction="row" alignItems="center">
+            <Typography> New here? </Typography>
+            <Button variant="text" disableRipple onClick={registerHandler}>
+              Register
+            </Button>
+          </Stack>
+        </Grid>
+        <Grid item>
+          <Divider> Alternatively </Divider>
+        </Grid>
+        <Grid item>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={2}
+          >
+            <IconButton size="large">
+              <MicrosoftIcon />
+            </IconButton>
+            <IconButton size="large">
+              <GoogleIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Grid>
     </LoginFormManager>
   );
 }
 
-export function RegisterForm() {
+export function RegisterForm({ setRegistering }) {
+  const signUpHandler = (e) => {
+    e.preventDefault();
+
+    setRegistering(false);
+  };
   return (
     <RegisterFormManager>
       <Grid container direction="column" spacing={2} padding={2}>
@@ -82,8 +142,7 @@ export function RegisterForm() {
         </Grid>
         <Grid item container alignItems="center" justifyContent="center">
           <Typography>Already have an account?</Typography>
-          <Button variant="text" size="large">
-            {" "}
+          <Button variant="text" size="large" onClick={signUpHandler}>
             Sign in.
           </Button>
         </Grid>
