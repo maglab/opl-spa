@@ -52,7 +52,11 @@ export function SignInForm({ setRegistering }) {
         <Grid item container justifyContent="center" alignItems="center">
           <Stack direction="row" alignItems="center">
             <Typography> New here? </Typography>
-            <Button variant="text" disableRipple onClick={registerHandler}>
+            <Button
+              variant="text"
+              disableRipple
+              onClick={() => setRegistering(true)}
+            >
               Register
             </Button>
           </Stack>
@@ -142,7 +146,11 @@ export function RegisterForm({ setRegistering }) {
         </Grid>
         <Grid item container alignItems="center" justifyContent="center">
           <Typography>Already have an account?</Typography>
-          <Button variant="text" size="large" onClick={signUpHandler}>
+          <Button
+            variant="text"
+            size="large"
+            onClick={() => setRegistering(false)}
+          >
             Sign in.
           </Button>
         </Grid>

@@ -1,23 +1,27 @@
-import { Grid, Paper, Stack, Typography } from "@mui/material";
-import React from "react";
-import { RegisterForm } from "./forms";
+import { Grid, Paper, Typography } from "@mui/material";
+import React, { useState } from "react";
+import StandardGrid from "../common/standardGrid";
+import { RegisterForm, SignInForm } from "./forms";
 
 function Login() {
+  const [registering, setRegistering] = useState(true);
   return (
-    <Stack justifyContent="center" alignItems="center" height="100%">
-      <Paper>
-        <Grid container direction="column" spacing={2} padding={2}>
-          <Grid item>
-            <Typography variant="h5" textAlign="center">
-              Register
-            </Typography>
-          </Grid>
-          <Grid item>
-            <RegisterForm />
-          </Grid>
+    <Paper>
+      <StandardGrid container direction="column" height="100%" width="100%" p>
+        <Grid item>
+          <Typography variant="h5" textAlign="center">
+            {registering ? "Register" : "Log in"}
+          </Typography>
         </Grid>
-      </Paper>
-    </Stack>
+        <Grid item>
+          {registering ? (
+            <RegisterForm setRegistering={setRegistering} />
+          ) : (
+            <SignInForm setRegistering={setRegistering} />
+          )}
+        </Grid>
+      </StandardGrid>
+    </Paper>
   );
 }
 

@@ -6,13 +6,13 @@ import ContactUs from "../components/contactUs";
 import Details from "../components/details";
 import Hero from "../components/hero";
 import Layout from "../components/layout";
-import Login from "../components/login";
+import Login from "../components/login/login";
+import LoginLayout from "../components/login/loginLayout";
 import Problems from "../components/problems/problems";
 import ScrollToTop from "../components/scrollToTop";
 import Submit from "../components/submit/submit";
 import SubmitGuidelines from "../components/submitGuidelines";
 import Team from "../components/team";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,10 +27,6 @@ const router = createBrowserRouter([
         path: "/",
         index: true,
         element: <Hero />,
-      },
-      {
-        path: "login",
-        element: <Login />,
       },
       {
         path: "/open-problems",
@@ -62,6 +58,11 @@ const router = createBrowserRouter([
         loader: async ({ params }) => apiProblems.getDetails(params),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginLayout />,
+    children: [{ path: "/login", index: true, element: <Login /> }],
   },
 ]);
 
