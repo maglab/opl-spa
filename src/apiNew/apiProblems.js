@@ -1,8 +1,7 @@
 import { RECAPTCHA_SECRET_KEY } from "../config";
 import apiClient from "./apiClient";
 
-export const getDetails = async ({ id }) =>
-  apiClient.get(`open-problems/${id}`);
+export const getDetails = async (id) => apiClient.get(`open-problems/${id}`);
 
 export const getProblems = async ({ query, pageNum, pageSize } = {}) =>
   apiClient.get("open-problems", {

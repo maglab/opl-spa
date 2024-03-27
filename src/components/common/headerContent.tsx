@@ -15,7 +15,7 @@ function createHeaderComponent(
   if (typeof header === "string") {
     const props = merge(
       {
-        variant: "h5",
+        variant: "h6",
         sx: { width: "100%" },
       },
       headerProps ?? {}
@@ -37,7 +37,7 @@ export default function HeaderContent({
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <StandardStack main {...props}>
+    <StandardStack minor {...props}>
       {headerComponent}
       {children}
     </StandardStack>

@@ -3,14 +3,14 @@ import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
+import DefaultMargin from "./common/defaultMargin";
 import StandardGrid from "./common/standardGrid";
 import StandardStack from "./common/standardStack";
-import { DefaultMargin } from "./defaultMargin";
 
 export default function Header() {
   return (
     <AppBar position="static" sx={{ bgcolor: "common.white" }}>
-      <DefaultMargin yPadding={0.5}>
+      <DefaultMargin py={0.5}>
         <StandardGrid
           minor
           direction="row"
@@ -35,7 +35,7 @@ export default function Header() {
           </Grid>
           <Grid item>
             <StandardGrid minor alignItems="center">
-              <Grid item xs />
+              <Grid item xs={0} sm />
               <Grid item>
                 <StandardStack minor direction="row">
                   <Button

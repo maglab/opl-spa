@@ -4,9 +4,9 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import footerLogos from "../assets/footerLogos";
 import { getWebApiUrl } from "../config";
+import DefaultMargin from "./common/defaultMargin";
 import StandardGrid from "./common/standardGrid";
 import StandardStack from "./common/standardStack";
-import { DefaultMargin } from "./defaultMargin";
 
 export default function Footer() {
   return (

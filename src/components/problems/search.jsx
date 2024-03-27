@@ -8,9 +8,9 @@ import React, { useContext, useMemo } from "react";
 import SEARCH_SUBJECT_KEYS from "../../constants/problemQuerySubjectKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import useExtendedTheme from "../../theme/useExtendedTheme";
+import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
-import FormManagedTextField from "../formManagedTextField";
 
 const initialValues = { subject: SEARCH_SUBJECT_KEYS.title, text: "" };
 const criteriaColors = {

@@ -7,8 +7,8 @@ import { useAsync, useDebounce } from "react-use";
 import apiReferences from "../../api/apiReferences";
 import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
 import useExtendedTheme from "../../theme/useExtendedTheme";
+import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
-import FormManagedTextField from "../formManagedTextField";
 
 export default function ReferenceItem({ index, remove }) {
   const theme = useExtendedTheme();

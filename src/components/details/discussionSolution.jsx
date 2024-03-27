@@ -37,7 +37,7 @@ import {
   formatFullName,
   setDate,
 } from "../../utils/functions/dataManipulation";
-import FormManagedTextField from "../formManagedTextField";
+import FormManagedTextField from "../common/formManagedTextField";
 import ReferenceItem from "../submit/referenceItem";
 import CommentFormManager from "./commentFormManager";
 import PostFormManager from "./postFormManager";
@@ -537,10 +537,15 @@ function PostSection({ sectionType, sectionDescription }) {
   );
 }
 
-export default function DiscussionSolution() {
+export default function DiscussionSolution({ addScroller }) {
   const [tabValue, setTabValue] = useState("solution");
   return (
-    <Paper>
+    <Paper
+      ref={(el) => {
+        addScroller("solutions", el, () => setTabValue("solution"));
+        addScroller("discussion", el, () => setTabValue("discussion"));
+      }}
+    >
       <TabContext value={tabValue}>
         <Stack width="100%" justifyContent="center" alignItems="center">
           <TabList onChange={(event, value) => setTabValue(value)}>

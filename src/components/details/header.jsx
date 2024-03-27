@@ -10,12 +10,12 @@ import {
 import React from "react";
 import ProblemTag from "../common/problemTag";
 
-export default function Header({ data }) {
+export default function Header({ data, addScroller }) {
   const { title, description, references = [], tags = [] } = data;
   // Subject will be tags:
 
   return (
-    <Paper>
+    <Paper ref={(el) => addScroller("description", el)}>
       <Stack spacing={2} padding={2} width="100%">
         <Typography variant="h5"> {title} </Typography>
         <Divider />

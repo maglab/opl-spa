@@ -1,6 +1,7 @@
 const QUERY_KEYS = {
   getProblems: "getProblems",
-  getProblemAllAnnotation: "getProblemAllAnnotation",
+  getProblemDetail: "getProblemDetail",
+  getProblemAllAnnotations: "getProblemAllAnnotations",
 };
 
 export default QUERY_KEYS;

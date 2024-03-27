@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { DefaultMargin } from "./defaultMargin";
+import DefaultMargin from "./common/defaultMargin";
 import Footer from "./footer";
 import Header from "./header";
 
@@ -13,7 +13,7 @@ export default function Layout() {
         <Header />
       </Grid>
       <Grid item xs>
-        <DefaultMargin bgcolor={grey[100]}>
+        <DefaultMargin sx={{ height: "100%" }} bgcolor={grey[100]}>
           <Outlet />
         </DefaultMargin>
       </Grid>
