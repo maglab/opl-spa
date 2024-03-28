@@ -3,6 +3,7 @@ import React, { createContext, useMemo } from "react";
 const postInitialValues = {
   postType: "",
 };
+export const PostContext = createContext(postInitialValues);
 
 export function PostProvider({ sectionType, children }) {
   // Add other post and comment related state and functions as needed
@@ -11,4 +12,3 @@ export function PostProvider({ sectionType, children }) {
     <PostContext.Provider value={contextValue}>{children}</PostContext.Provider>
   );
 }
-export const PostContext = createContext(postInitialValues);
