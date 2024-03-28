@@ -1,21 +1,24 @@
-import { PublicClientApplication } from "@azure/msal-browser";
-import { MsalProvider } from "@azure/msal-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { msalConfig } from "./authConfig";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-// Microsoft Authentication
-const msalInstance = new PublicClientApplication(msalConfig);
+// Auth0 Authentication
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MsalProvider instance={msalInstance}>
+    <Auth0Provider
+      domain={import.meta.env.VITE_AUTH0_DOMAIN}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
       <App />
-    </MsalProvider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 

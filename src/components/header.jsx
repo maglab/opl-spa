@@ -1,13 +1,63 @@
-import { AppBar, Button, Grid, Link, Stack, Typography } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  AppBar,
+  Button,
+  Grid,
+  Link,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Image from "mui-image";
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
 import StandardGrid from "./common/standardGrid";
 import StandardStack from "./common/standardStack";
 import { DefaultMargin } from "./defaultMargin";
 
+function AccountButton() {
+  const [anchorElement, setAnchorElement] = useState(null);
+  const open = Boolean(anchorElement);
+  const handleClick = (event) => {
+    setAnchorElement(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorElement(null);
+  };
+
+  const { user, logout } = useAuth0();
+  const username = user.name;
+  return (
+    <StandardStack>
+      <Button
+        startIcon={<AccountCircleIcon />}
+        onClick={handleClick}
+        variant="outlined"
+      >
+        {username}
+      </Button>
+      <Menu
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+          sx: { width: anchorElement && anchorElement.offsetWidth },
+        }}
+        anchorEl={anchorElement}
+        open={open}
+        onClose={handleClose}
+        sx={{ width: "100%" }}
+      >
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </Menu>
+    </StandardStack>
+  );
+}
+
 export default function Header() {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
   return (
     <AppBar position="static" sx={{ bgcolor: "common.white" }}>
       <DefaultMargin yPadding={0.5}>
@@ -52,9 +102,13 @@ export default function Header() {
                   >
                     Problems
                   </Button>
-                  <Button component={RouterLink} to="/login" variant="outlined">
-                    Login / Register
-                  </Button>
+                  {isAuthenticated ? (
+                    <AccountButton />
+                  ) : (
+                    <Button onClick={() => loginWithRedirect()}>
+                      Login / Register
+                    </Button>
+                  )}
                 </StandardStack>
               </Grid>
             </StandardGrid>

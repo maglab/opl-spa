@@ -8,31 +8,29 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 
-import auth from "../../firebase";
 import FormManagedTextField from "../formManagedTextField";
 import LoginFormManager from "./loginFormHandler";
 import PasswordTextField from "./passwordTextField";
 import RegisterFormManager from "./registerFormHandler";
 
 export function SignInForm({ setRegistering }) {
-  const registerHandler = async (
-    values,
-    { setSubmitting, resetForms, setError }
-  ) => {
-    const { password, email } = values; // For firebase
-    const userCredentials = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    // we need to send this to both firebase and our api. For now we just deal with firebase
-  };
+  // const registerHandler = async (
+  //   values,
+  //   { setSubmitting, resetForms, setError }
+  // ) => {
+  //   const { password, email } = values; // For firebase
+  //   const userCredentials = await signInWithEmailAndPassword(
+  //     auth,
+  //     email,
+  //     password
+  //   );
+  //   // we need to send this to both firebase and our api. For now we just deal with firebase
+  // };
 
   return (
-    <LoginFormManager onSubmitHandler={registerHandler}>
+    <LoginFormManager>
       <Grid container direction="column" spacing={2} justifyContent="center">
         <Grid item xs={12}>
           <FormManagedTextField label="Email" name="email" />
@@ -85,11 +83,11 @@ export function SignInForm({ setRegistering }) {
 }
 
 export function RegisterForm({ setRegistering }) {
-  const signUpHandler = (e) => {
-    e.preventDefault();
+  // const signUpHandler = (e) => {
+  //   e.preventDefault();
 
-    setRegistering(false);
-  };
+  //   setRegistering(false);
+  // };
   return (
     <RegisterFormManager>
       <Grid container direction="column" spacing={2} padding={2}>
