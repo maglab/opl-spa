@@ -15,6 +15,8 @@ import LoginFormManager from "./loginFormHandler";
 import PasswordTextField from "./passwordTextField";
 import RegisterFormManager from "./registerFormHandler";
 
+// Not needed with Auth0
+
 export function SignInForm({ setRegistering }) {
   // const registerHandler = async (
   //   values,
