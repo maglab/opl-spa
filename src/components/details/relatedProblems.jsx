@@ -1,14 +1,16 @@
 import {
+  Box,
   Divider,
   Link,
   List,
   ListItem,
   Paper,
-  Stack,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import HeaderContent from "../common/headerContent";
+import StandardStack from "../common/standardStack";
 
 const linkStyles = {
   transition: "color 0.3s",
@@ -24,65 +26,60 @@ export default function RelatedProblemsList({
 }) {
   return (
     <Paper>
-      <Stack spacing={2} padding={2}>
-        <Typography
-          variant="h6"
-          ref={(el) => {
-            addScroller("upstream", el);
-          }}
-        >
-          Upstream Open Problem
-        </Typography>
-        <List disablePadding>
-          {upstream.length > 0 ? (
-            upstream.map((child) => (
-              <ListItem key={child.problem_id} disableGutters>
-                <Link
-                  component={RouterLink}
-                  to={`/open-problems/${child.problem_id}`}
-                  underline="hover"
-                >
-                  <Typography variant="subtitle1" sx={linkStyles}>
-                    {" "}
-                    {child.title}
-                  </Typography>
-                </Link>
-              </ListItem>
-            ))
-          ) : (
-            <Typography>None</Typography>
-          )}
-        </List>
-        <Divider />
-        <Typography
-          variant="h6"
-          ref={(el) => {
-            addScroller("downstream", el);
-          }}
-        >
-          Downstream Open Problems{" "}
-        </Typography>
-        <List disablePadding>
-          {downstream.length > 0 ? (
-            downstream.map((child) => (
-              <ListItem key={child.problem_id} disableGutters>
-                <Link
-                  component={RouterLink}
-                  to={`/open-problems/${child.problem_id}`}
-                  underline="hover"
-                >
-                  <Typography variant="subtitle1" sx={linkStyles}>
-                    {" "}
-                    {child.title}
-                  </Typography>
-                </Link>
-              </ListItem>
-            ))
-          ) : (
-            <Typography>None</Typography>
-          )}
-        </List>
-      </Stack>
+      <StandardStack minor p divider={<Divider />}>
+        {upstream.length ? (
+          <Box
+            ref={(el) => {
+              addScroller("upstream", el);
+            }}
+          >
+            <HeaderContent header="Upstream Problems">
+              <List>
+                {upstream.map((child) => (
+                  <ListItem key={child.problem_id} disableGutters>
+                    <Link
+                      component={RouterLink}
+                      to={`/open-problems/${child.problem_id}`}
+                      underline="hover"
+                    >
+                      <Typography variant="subtitle1" sx={linkStyles}>
+                        {" "}
+                        {child.title}
+                      </Typography>
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </HeaderContent>
+          </Box>
+        ) : undefined}
+        {downstream.length ? (
+          <Box
+            ref={(el) => {
+              addScroller("downstream", el);
+            }}
+          >
+            <HeaderContent header="Downstream Problems">
+              <List>
+                {downstream.map((child) => (
+                  <ListItem key={child.problem_id} disableGutters>
+                    <Link
+                      component={RouterLink}
+                      to={`/open-problems/${child.problem_id}`}
+                      underline="hover"
+                    >
+                      <Typography variant="subtitle1" sx={linkStyles}>
+                        {" "}
+                        {child.title}
+                      </Typography>
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </HeaderContent>
+          </Box>
+        ) : undefined}
+      </StandardStack>
     </Paper>
   );
 }

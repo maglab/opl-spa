@@ -10,8 +10,8 @@ import useExtendedTheme from "../../theme/useExtendedTheme";
 import Center from "../common/center";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
+import Description from "./description";
 import DiscussionSolution from "./discussionSolution";
-import Header from "./header";
 import RelatedProblemsList from "./relatedProblems";
 import SideIndex from "./sideIndex";
 import TopIndex from "./topIndex";
@@ -82,7 +82,7 @@ export default function Details() {
             <StandardStack minor>
               {problem ? (
                 <>
-                  <Header data={problem} addScroller={addScroller} />
+                  <Description data={problem} addScroller={addScroller} />
                   <DiscussionSolution addScroller={addScroller} />
                   <RelatedProblemsList
                     upstream={problem.upstream}
