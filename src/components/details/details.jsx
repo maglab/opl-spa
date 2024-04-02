@@ -12,7 +12,8 @@ import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
 import Description from "./description";
 import DiscussionSolution from "./discussionSolution";
-import RelatedProblemsList from "./relatedProblems";
+import References from "./references";
+import RelatedProblems from "./relatedProblems";
 import SideIndex from "./sideIndex";
 import TopIndex from "./topIndex";
 
@@ -80,17 +81,19 @@ export default function Details() {
               </Box>
             )}
             <StandardStack minor>
-              {problem ? (
-                <>
-                  <Description data={problem} addScroller={addScroller} />
-                  <DiscussionSolution addScroller={addScroller} />
-                  <RelatedProblemsList
-                    upstream={problem.upstream}
-                    downstream={problem.downstream}
-                    addScroller={addScroller}
-                  />
-                </>
+              <Description data={problem} addScroller={addScroller} />
+              {problem.references?.length ? (
+                <References
+                  references={problem.references}
+                  addScroller={addScroller}
+                />
               ) : undefined}
+              <RelatedProblems
+                upstream={problem.upstream}
+                downstream={problem.downstream}
+                addScroller={addScroller}
+              />
+              <DiscussionSolution addScroller={addScroller} />
             </StandardStack>
           </StandardStack>
         </Grid>

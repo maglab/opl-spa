@@ -2,6 +2,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Grid, Menu, Paper, Stack } from "@mui/material";
 import { capitalize } from "lodash";
 import React, { useMemo, useRef, useState } from "react";
+import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import StandardGrid from "../common/standardGrid";
 import IndexItem from "./indexItem";
 
@@ -27,10 +28,18 @@ export default function TopIndex({ problem, scroller }) {
       <StandardGrid direction="row">
         <Grid item xs="auto">
           <IndexItem
-            label="Description"
-            onClick={() => scroller("description")}
+            label="Problem"
+            onClick={() => scroller(SECTION_KEYS.problem)}
           />
         </Grid>
+        {problem.references?.length ? (
+          <Grid item xs="auto">
+            <IndexItem
+              label="References"
+              onClick={() => scroller(SECTION_KEYS.references)}
+            />
+          </Grid>
+        ) : undefined}
         {shouldShowAnnotations ? (
           <Grid item xs="auto">
             <IndexItem
@@ -69,12 +78,15 @@ export default function TopIndex({ problem, scroller }) {
           </Grid>
         ) : undefined}
         <Grid item xs="auto">
-          <IndexItem label="Solutions" onClick={() => scroller("solutions")} />
+          <IndexItem
+            label="Solutions"
+            onClick={() => scroller(SECTION_KEYS.solutions)}
+          />
         </Grid>
         <Grid item xs="auto">
           <IndexItem
             label="Discussion"
-            onClick={() => scroller("discussion")}
+            onClick={() => scroller(SECTION_KEYS.discussion)}
           />
         </Grid>
       </StandardGrid>
@@ -109,14 +121,14 @@ export default function TopIndex({ problem, scroller }) {
               <IndexItem
                 label="Upstream"
                 badgeLabel={problem.upstream.length}
-                onClick={() => scroller("upstream")}
+                onClick={() => scroller(SECTION_KEYS.upstreamProblems)}
               />
             ) : undefined}
             {problem.downstream.length ? (
               <IndexItem
                 label="Downstream"
                 badgeLabel={problem.downstream.length}
-                onClick={() => scroller("downstream")}
+                onClick={() => scroller(SECTION_KEYS.downstreamProblems)}
               />
             ) : undefined}
           </Stack>

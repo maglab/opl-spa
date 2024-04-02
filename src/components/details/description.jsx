@@ -1,56 +1,37 @@
-import {
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
+import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import ProblemTag from "../common/problemTag";
+import Referenceable from "../common/referenceable";
+import StandardCard from "../common/standardCard";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
 
 export default function Description({ data, addScroller }) {
-  const { title, description, references = [], tags = [] } = data;
+  const { title, description, tags } = data;
   // Subject will be tags:
 
   return (
-    <Paper ref={(el) => addScroller("description", el)}>
-      <StandardStack minor p>
-        <Typography variant="h5"> {title} </Typography>
-        <Divider />
-        {description && <Typography variant="body2"> {description}</Typography>}
-        <List>
-          <Typography variant="h6"> References </Typography>
-          {references.length > 0 ? (
-            references.map((reference) => (
-              <ListItem disableGutters key={reference.id}>
-                <ListItemText
-                  primary={reference.citation}
-                  primaryTypographyProps={{ variant: "body2" }}
-                />
-              </ListItem>
-            ))
-          ) : (
-            <Typography>None</Typography>
-          )}
-        </List>
-        {tags && tags.length ? (
-          <>
-            <Divider />
+    <Referenceable ref={(el) => addScroller(SECTION_KEYS.problem, el)}>
+      <StandardCard header="Problem">
+        <StandardStack minor>
+          <Typography variant="h5">{title}</Typography>
+          {description ? (
+            <Typography variant="body2">{description}</Typography>
+          ) : undefined}
+          {tags && tags.length ? (
             <StandardGrid minor direction="row">
-              {tags &&
-                tags.map((tag) => (
-                  <Grid item key={tag.id} xs="auto">
-                    <ProblemTag label={tag.title} />
-                  </Grid>
-                ))}
+              {tags
+                ? tags.map((tag) => (
+                    <Grid item key={tag.id} xs="auto">
+                      <ProblemTag label={tag.title} />
+                    </Grid>
+                  ))
+                : undefined}
             </StandardGrid>
-          </>
-        ) : undefined}
-      </StandardStack>
-    </Paper>
+          ) : undefined}
+        </StandardStack>
+      </StandardCard>
+    </Referenceable>
   );
 }

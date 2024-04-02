@@ -31,6 +31,7 @@ import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
 import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
+import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import { PostContext, PostProvider } from "../../context/postCommentContext";
 import newRandomId from "../../utilities/randomId";
 import {
@@ -330,7 +331,7 @@ function PostContent({ postData }) {
 
 function Post({ postData }) {
   const { postType } = useContext(PostContext);
-  if (postType === "discussion") {
+  if (postType === SECTION_KEYS.discussion) {
     return (
       <Grid container spacing={2}>
         <PostContent postData={postData} />
@@ -397,9 +398,9 @@ function PostForm({ type }) {
     { setSubmitting, resetForm, setErrors }
   ) => {
     let apiCall;
-    if (postType === "solution") {
+    if (postType === SECTION_KEYS.solutions) {
       apiCall = apiPosts.solutionsSubmit;
-    } else if (postType === "discussion") {
+    } else if (postType === SECTION_KEYS.discussion) {
       apiCall = apiPosts.discussionsSubmit;
     }
     setSubmitting(true);
@@ -430,7 +431,8 @@ function PostForm({ type }) {
     }
     setSubmitting(false);
   };
-  const titleString = type === "discussion" ? "Your thoughts" : "Your solution";
+  const titleString =
+    type === SECTION_KEYS.discussion ? "Your thoughts" : "Your solution";
   return (
     <PostFormManager onSubmitHandler={onSubmitHandler}>
       <Stack padding={2} spacing={2} direction="column" width="100%">
@@ -476,10 +478,10 @@ function PostSection({ sectionType, sectionDescription }) {
   useEffect(() => {
     async function getData() {
       let apiCall;
-      if (sectionType === "solution") {
+      if (sectionType === SECTION_KEYS.solutions) {
         apiCall = apiPosts.solutionsForOpenProblem;
       }
-      if (sectionType === "discussion") {
+      if (sectionType === SECTION_KEYS.discussion) {
         apiCall = apiPosts.discussionsForOpenProblem;
       }
       const response = await apiCall({
@@ -500,7 +502,9 @@ function PostSection({ sectionType, sectionDescription }) {
       <Grid container spacing={2} padding={2} direction="column" width="100%">
         <Grid item xs={12}>
           <Typography variant="h5" textAlign="center">
-            {sectionType === "discussion" ? "Discussion" : "Solutions"}
+            {sectionType === SECTION_KEYS.discussion
+              ? "Discussion"
+              : "Solutions"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -538,31 +542,35 @@ function PostSection({ sectionType, sectionDescription }) {
 }
 
 export default function DiscussionSolution({ addScroller }) {
-  const [tabValue, setTabValue] = useState("solution");
+  const [tabValue, setTabValue] = useState(SECTION_KEYS.solutions);
   return (
     <Paper
       ref={(el) => {
-        addScroller("solutions", el, () => setTabValue("solution"));
-        addScroller("discussion", el, () => setTabValue("discussion"));
+        addScroller(SECTION_KEYS.solutions, el, () =>
+          setTabValue(SECTION_KEYS.solutions)
+        );
+        addScroller(SECTION_KEYS.discussion, el, () =>
+          setTabValue(SECTION_KEYS.discussion)
+        );
       }}
     >
       <TabContext value={tabValue}>
         <Stack width="100%" justifyContent="center" alignItems="center">
           <TabList onChange={(event, value) => setTabValue(value)}>
-            <Tab value="solution" label="SOLUTIONS" />
-            <Tab value="discussion" label="DISCUSSIONS" />
+            <Tab value={SECTION_KEYS.solutions} label="SOLUTIONS" />
+            <Tab value={SECTION_KEYS.discussion} label="DISCUSSIONS" />
           </TabList>
         </Stack>
 
-        <TabPanel value="solution">
+        <TabPanel value={SECTION_KEYS.solutions}>
           <PostSection
-            sectionType="solution"
+            sectionType={SECTION_KEYS.solutions}
             sectionDescription={solutionDescription.mainText}
           />
         </TabPanel>
-        <TabPanel value="discussion">
+        <TabPanel value={SECTION_KEYS.discussion}>
           <PostSection
-            sectionType="discussion"
+            sectionType={SECTION_KEYS.discussion}
             sectionDescription={discussionDescription.mainText}
           />
         </TabPanel>
