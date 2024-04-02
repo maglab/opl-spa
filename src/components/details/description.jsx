@@ -3,8 +3,8 @@ import React from "react";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import ProblemTag from "../common/problemTag";
 import Referenceable from "../common/referenceable";
-import StandardCard from "../common/standardCard";
 import StandardGrid from "../common/standardGrid";
+import StandardSection from "../common/standardSection";
 import StandardStack from "../common/standardStack";
 
 export default function Description({ data, addScroller }) {
@@ -13,7 +13,7 @@ export default function Description({ data, addScroller }) {
 
   return (
     <Referenceable ref={(el) => addScroller(SECTION_KEYS.problem, el)}>
-      <StandardCard header="Problem">
+      <StandardSection header="Problem">
         <StandardStack minor>
           <Typography variant="h5">{title}</Typography>
           {description ? (
@@ -31,7 +31,7 @@ export default function Description({ data, addScroller }) {
             </StandardGrid>
           ) : undefined}
         </StandardStack>
-      </StandardCard>
+      </StandardSection>
     </Referenceable>
   );
 }

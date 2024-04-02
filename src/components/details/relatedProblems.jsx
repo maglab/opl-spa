@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import NumberedList from "../common/numberedList";
 import Referenceable from "../common/referenceable";
-import StandardCard from "../common/standardCard";
+import StandardSection from "../common/standardSection";
 import StandardStack from "../common/standardStack";
 
 export default function RelatedProblems({
@@ -13,7 +13,7 @@ export default function RelatedProblems({
   addScroller,
 }) {
   return (
-    <StandardCard header="Related Problems">
+    <StandardSection header="Related Problems">
       <StandardStack minor divider={<Divider />}>
         {upstream.length ? (
           <Referenceable
@@ -54,6 +54,6 @@ export default function RelatedProblems({
           </Referenceable>
         ) : undefined}
       </StandardStack>
-    </StandardCard>
+    </StandardSection>
   );
 }

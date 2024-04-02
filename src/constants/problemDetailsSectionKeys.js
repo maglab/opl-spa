@@ -4,7 +4,7 @@ const SECTION_KEYS = {
   annotations: "annotations",
   geneAnnotations: "geneAnnotations",
   compoundAnnotations: "compoundAnnotations",
-  speciesAnnotations: "speciesAnnotations",
+  taxonAnnotations: "taxonAnnotations",
   solutions: "solutions",
   discussion: "discussion",
   relatedProblems: "relatedProblems",

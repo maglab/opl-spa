@@ -1,6 +1,5 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, List, Paper } from "@mui/material";
-import { capitalize } from "lodash";
 import React, { useState } from "react";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import IndexItem from "./indexItem";
@@ -33,17 +32,30 @@ export default function SideIndex({ problem, scroller }) {
             />
             <Collapse in={openAnnotations} unmountOnExit>
               <List disablePadding>
-                {Object.entries(problem.annotations)
-                  .filter(([, values]) => values.length)
-                  .map(([type, values]) => (
-                    <IndexItem
-                      key={type}
-                      label={capitalize(type)}
-                      badgeLabel={values.length}
-                      pl={2}
-                      onClick={() => scroller(type)}
-                    />
-                  ))}
+                {problem.annotations.compound?.length ? (
+                  <IndexItem
+                    label="Compound"
+                    badgeLabel={problem.annotations.compound.length}
+                    pl={2}
+                    onClick={() => scroller(SECTION_KEYS.compoundAnnotations)}
+                  />
+                ) : undefined}
+                {problem.annotations.species?.length ? (
+                  <IndexItem
+                    label="Taxon"
+                    badgeLabel={problem.annotations.species.length}
+                    pl={2}
+                    onClick={() => scroller(SECTION_KEYS.taxonAnnotations)}
+                  />
+                ) : undefined}
+                {problem.annotations.gene?.length ? (
+                  <IndexItem
+                    label="Gene"
+                    badgeLabel={problem.annotations.gene.length}
+                    pl={2}
+                    onClick={() => scroller(SECTION_KEYS.geneAnnotations)}
+                  />
+                ) : undefined}
               </List>
             </Collapse>
           </>

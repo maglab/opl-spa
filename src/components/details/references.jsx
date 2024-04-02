@@ -3,13 +3,13 @@ import React from "react";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import NumberedList from "../common/numberedList";
 import Referenceable from "../common/referenceable";
-import StandardCard from "../common/standardCard";
+import StandardSection from "../common/standardSection";
 import Reference from "../reference";
 
 export default function References({ references, addScroller }) {
   return (
     <Referenceable ref={(el) => addScroller(SECTION_KEYS.references, el)}>
-      <StandardCard header="References">
+      <StandardSection header="References">
         <NumberedList
           items={references.map((reference) => ({
             key: reference.id,
@@ -18,7 +18,7 @@ export default function References({ references, addScroller }) {
             href: `https://doi.org/${reference.doi}`,
           }))}
         />
-      </StandardCard>
+      </StandardSection>
     </Referenceable>
   );
 }

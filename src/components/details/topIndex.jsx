@@ -1,6 +1,5 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Grid, Menu, Paper, Stack } from "@mui/material";
-import { capitalize } from "lodash";
 import React, { useMemo, useRef, useState } from "react";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import StandardGrid from "../common/standardGrid";
@@ -97,16 +96,30 @@ export default function TopIndex({ problem, scroller }) {
           onClick={() => setOpenAnnotationsMenu(false)}
         >
           <Stack>
-            {Object.entries(problem.annotations)
-              .filter(([, values]) => values.length)
-              .map(([type, values]) => (
-                <IndexItem
-                  key={type}
-                  label={capitalize(type)}
-                  badgeLabel={values.length}
-                  onClick={() => scroller(type)}
-                />
-              ))}
+            {problem.annotations.compound?.length ? (
+              <IndexItem
+                label="Compound"
+                badgeLabel={problem.annotations.compound.length}
+                pl={2}
+                onClick={() => scroller(SECTION_KEYS.compoundAnnotations)}
+              />
+            ) : undefined}
+            {problem.annotations.species?.length ? (
+              <IndexItem
+                label="Taxon"
+                badgeLabel={problem.annotations.species.length}
+                pl={2}
+                onClick={() => scroller(SECTION_KEYS.taxonAnnotations)}
+              />
+            ) : undefined}
+            {problem.annotations.gene?.length ? (
+              <IndexItem
+                label="Gene"
+                badgeLabel={problem.annotations.gene.length}
+                pl={2}
+                onClick={() => scroller(SECTION_KEYS.geneAnnotations)}
+              />
+            ) : undefined}
           </Stack>
         </Menu>
       )}

@@ -10,6 +10,7 @@ import useExtendedTheme from "../../theme/useExtendedTheme";
 import Center from "../common/center";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
+import Annotations from "./annotations";
 import Description from "./description";
 import DiscussionSolution from "./discussionSolution";
 import References from "./references";
@@ -88,6 +89,7 @@ export default function Details() {
                   addScroller={addScroller}
                 />
               ) : undefined}
+              <Annotations addScroller={addScroller} />
               <RelatedProblems
                 upstream={problem.upstream}
                 downstream={problem.downstream}

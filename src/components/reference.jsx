@@ -17,6 +17,10 @@ export default function Reference({ doi }) {
     return purified;
   }, []);
 
+  if (state.loading) {
+    return <Typography fontStyle="italic">Fetching...</Typography>;
+  }
+
   if (state.error) {
     return (
       <Typography variant="subtitle2" fontStyle="italic">
