@@ -1,12 +1,12 @@
 import React from "react";
 import FormManagedTextField from "../common/formManagedTextField";
-import HeaderContent from "../common/headerContent";
+import StandardSection from "../common/standardSection";
 import StandardStack from "../common/standardStack";
 import DuplicatedReminder from "./duplicatedReminder";
 
 export default function DetailsSection() {
   return (
-    <HeaderContent header="Details">
+    <StandardSection header="Problem">
       <StandardStack minor>
         <FormManagedTextField
           name="title"
@@ -24,6 +24,6 @@ export default function DetailsSection() {
           minRows={6}
         />
       </StandardStack>
-    </HeaderContent>
+    </StandardSection>
   );
 }
