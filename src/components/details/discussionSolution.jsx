@@ -32,7 +32,7 @@ import apiPosts from "../../api/apiPosts";
 import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
-import { PostContext, PostProvider } from "../../context/postCommentContext";
+import { PostContext, PostProvider } from "../../contexts/postCommentContext";
 import newRandomId from "../../utilities/randomId";
 import {
   formatFullName,
