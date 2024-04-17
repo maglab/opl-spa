@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import apiProblems from "../api/apiProblems";
 import About from "../components/about";
 import ContactUs from "../components/contactUs";
 import Details from "../components/details";
@@ -54,7 +53,6 @@ const router = createBrowserRouter([
       {
         path: "open-problems/:id",
         element: <Details />,
-        loader: async ({ params }) => apiProblems.getDetails(params),
       },
     ],
   },

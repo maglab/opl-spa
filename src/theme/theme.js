@@ -20,16 +20,6 @@ const theme = createTheme({
       textTransform: "none",
     },
   },
-  components: {
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          textDecoration: "none",
-          color: "inherit",
-        },
-      },
-    },
-  },
   layout: {
     mainSpacing: 4,
     minorSpacing: 2,

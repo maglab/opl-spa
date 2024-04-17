@@ -1,4 +1,4 @@
-import { Box, Grid, GridProps } from "@mui/material";
+import { Box, BoxProps, Grid, GridProps } from "@mui/material";
 import { isBoolean, merge } from "lodash";
 import React from "react";
 import useExtendedTheme from "../../theme/useExtendedTheme";
@@ -7,12 +7,14 @@ interface StandardGridProps extends Omit<GridProps, "p"> {
   main?: boolean;
   minor?: boolean;
   p?: boolean | GridProps["p"];
+  containerProps?: BoxProps;
 }
 
 export default function StandardGrid({
   main,
   minor,
   p,
+  containerProps,
   children, // children must be deconstructed here otherwise React will thinks you are iterating them and give you key error
   ...props
 }: StandardGridProps) {
@@ -21,6 +23,13 @@ export default function StandardGrid({
   let spacing = 0;
   if (minor) spacing = theme.layout.minorSpacing;
   if (main) spacing = theme.layout.mainSpacing;
+
+  const mergedContainerProps = merge(
+    {
+      sx: { width: "100%" },
+    },
+    containerProps
+  );
 
   const mergedProps = merge(
     {
@@ -31,7 +40,8 @@ export default function StandardGrid({
   );
 
   return (
-    <Box>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Box {...mergedContainerProps}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Grid container {...mergedProps}>
         {children}
@@ -44,4 +54,5 @@ StandardGrid.defaultProps = {
   main: false,
   minor: false,
   p: undefined,
+  containerProps: {},
 };

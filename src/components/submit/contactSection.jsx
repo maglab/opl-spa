@@ -1,12 +1,12 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import HeaderContent from "../common/headerContent";
+import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
-import FormManagedTextField from "../formManagedTextField";
+import StandardSection from "../common/standardSection";
 
 export default function ContactSection() {
   return (
-    <HeaderContent header="Contact">
+    <StandardSection header="Contact">
       <StandardGrid minor direction="row">
         <Grid item xs={3}>
           <FormManagedTextField
@@ -50,6 +50,6 @@ export default function ContactSection() {
           />
         </Grid>
       </StandardGrid>
-    </HeaderContent>
+    </StandardSection>
   );
 }

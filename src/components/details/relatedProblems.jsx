@@ -1,68 +1,59 @@
-import {
-  Divider,
-  Link,
-  List,
-  ListItem,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
+import NumberedList from "../common/numberedList";
+import Referenceable from "../common/referenceable";
+import StandardSection from "../common/standardSection";
+import StandardStack from "../common/standardStack";
 
-const linkStyles = {
-  transition: "color 0.3s",
-  "&:hover": {
-    color: "primary.main",
-  },
-};
-
-export default function RelatedProblemsList({
-  upstream = "",
+export default function RelatedProblems({
+  upstream = [],
   downstream = [],
+  addScroller,
 }) {
   return (
-    <Paper>
-      <Stack spacing={2} padding={2}>
-        <Typography variant="h6"> Upstream Open Problem</Typography>
-        <ListItem disableGutters>
-          {upstream ? (
-            <Link
-              component={RouterLink}
-              to={`/open-problems/${upstream.problem_id}`}
-              underline="hover"
-            >
-              <Typography variant="subtitle1" sx={linkStyles}>
-                {upstream.title}
-              </Typography>
-            </Link>
-          ) : (
-            <Typography>None</Typography>
-          )}
-        </ListItem>{" "}
-        <Divider />
-        <Typography variant="h6"> Downstream Open Problems </Typography>
-        <List disablePadding>
-          {downstream.length > 0 ? (
-            downstream.map((child) => (
-              <ListItem key={child.problem_id} disableGutters>
-                <Link
-                  component={RouterLink}
-                  to={`/open-problems/${child.problem_id}`}
-                  underline="hover"
-                >
-                  <Typography variant="subtitle1" sx={linkStyles}>
-                    {" "}
-                    {child.title}
-                  </Typography>
-                </Link>
-              </ListItem>
-            ))
-          ) : (
-            <Typography>None</Typography>
-          )}
-        </List>
-      </Stack>
-    </Paper>
+    <StandardSection header="Related Problems">
+      <StandardStack minor divider={<Divider />}>
+        {upstream.length ? (
+          <Referenceable
+            ref={(el) => {
+              addScroller(SECTION_KEYS.upstreamProblems, el);
+            }}
+          >
+            <NumberedList
+              header="Upstream"
+              items={upstream.map((problem) => ({
+                key: problem.problem_id,
+                item: (
+                  <Typography variant="subtitle1">{problem.title}</Typography>
+                ),
+                component: RouterLink,
+                to: `/open-problems/${problem.problem_id}`,
+              }))}
+            />
+          </Referenceable>
+        ) : undefined}
+        {downstream.length ? (
+          <Referenceable
+            ref={(el) => {
+              addScroller(SECTION_KEYS.downstreamProblems, el);
+            }}
+          >
+            <NumberedList
+              header="Downstream"
+              items={downstream.map((problem) => ({
+                key: problem.problem_id,
+                item: (
+                  <Typography variant="subtitle1">{problem.title}</Typography>
+                ),
+                component: RouterLink,
+                to: `/open-problems/${problem.problem_id}`,
+              }))}
+            />
+          </Referenceable>
+        ) : undefined}
+      </StandardStack>
+    </StandardSection>
   );
 }

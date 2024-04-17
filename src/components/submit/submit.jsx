@@ -5,8 +5,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
-  Paper,
 } from "@mui/material";
 import { Form } from "formik";
 import React, { useState } from "react";
@@ -18,7 +16,7 @@ import StandardStack from "../common/standardStack";
 import ContactSection from "./contactSection";
 import DetailsSection from "./detailsSection";
 import FormManager from "./formManager";
-import ReferenceSection from "./referenceSection";
+import ReferencesSection from "./referencesSection";
 
 export default function Submit() {
   const theme = useExtendedTheme();
@@ -37,17 +35,11 @@ export default function Submit() {
       <FormManager onSubmitHandler={submit}>
         <Form>
           <StandardStack main>
-            <Paper elevation={1}>
-              <StandardStack
-                main
-                p={theme.layout.padding}
-                divider={<Divider orientation="horizontal" />}
-              >
-                <DetailsSection />
-                <ReferenceSection />
-                <ContactSection />
-              </StandardStack>
-            </Paper>
+            <StandardStack minor>
+              <DetailsSection />
+              <ReferencesSection />
+              <ContactSection />
+            </StandardStack>
             <Center>
               {submitState.loading ? (
                 <CircularProgress />

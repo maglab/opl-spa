@@ -4,9 +4,9 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import footerLogos from "../assets/footerLogos";
 import { getWebApiUrl } from "../config";
+import DefaultMargin from "./common/defaultMargin";
 import StandardGrid from "./common/standardGrid";
 import StandardStack from "./common/standardStack";
-import { DefaultMargin } from "./defaultMargin";
 
 export default function Footer() {
   return (
@@ -40,37 +40,72 @@ export default function Footer() {
             <Grid container justifyContent="space-between">
               <Grid item>
                 <Stack spacing={1} alignItems="flex-start">
-                  <Link component={RouterLink} to="/">
+                  <Link
+                    component={RouterLink}
+                    to="/"
+                    color="primary.contrastText"
+                  >
                     Home
                   </Link>
-                  <Link component={RouterLink} to="open-problems">
+                  <Link
+                    component={RouterLink}
+                    to="open-problems"
+                    color="primary.contrastText"
+                  >
                     Problem list
                   </Link>
-                  <Link component={RouterLink} to="submit-guidelines">
+                  <Link
+                    component={RouterLink}
+                    to="submit-guidelines"
+                    color="primary.contrastText"
+                  >
                     Submit problem
                   </Link>
                 </Stack>
               </Grid>
               <Grid item>
                 <Stack spacing={1} alignItems="flex-start">
-                  <Link component={RouterLink} to="about">
+                  <Link
+                    component={RouterLink}
+                    to="about"
+                    color="primary.contrastText"
+                  >
                     About this project
                   </Link>
-                  <Link component={RouterLink} to="team">
+                  <Link
+                    component={RouterLink}
+                    to="team"
+                    color="primary.contrastText"
+                  >
                     Our team
                   </Link>
-                  <Link component={RouterLink} to="contact">
+                  <Link
+                    component={RouterLink}
+                    to="contact"
+                    color="primary.contrastText"
+                  >
                     Contact us
                   </Link>
                 </Stack>
               </Grid>
               <Grid item>
                 <Stack spacing={1} alignItems="flex-start">
-                  <Link href={`${getWebApiUrl()}/swagger`}>API</Link>
-                  <Link href="https://github.com/maglab/opl-web-api">
+                  <Link
+                    href={`${getWebApiUrl()}/swagger`}
+                    color="primary.contrastText"
+                  >
+                    API
+                  </Link>
+                  <Link
+                    href="https://github.com/maglab/opl-web-api"
+                    color="primary.contrastText"
+                  >
                     Source code &#40;API&#41;
                   </Link>
-                  <Link href="https://github.com/maglab/opl-spa">
+                  <Link
+                    href="https://github.com/maglab/opl-spa"
+                    color="primary.contrastText"
+                  >
                     Source code &#40;SPA&#41;
                   </Link>
                 </Stack>

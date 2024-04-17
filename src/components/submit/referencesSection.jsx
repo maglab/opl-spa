@@ -3,15 +3,15 @@ import { FieldArray, useField } from "formik";
 import React from "react";
 import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
 import newRandomId from "../../utilities/randomId";
-import HeaderContent from "../common/headerContent";
+import StandardSection from "../common/standardSection";
 import StandardStack from "../common/standardStack";
 import ReferenceItem from "./referenceItem";
 
-export default function ReferenceSection() {
+export default function ReferencesSection() {
   const [field] = useField("references");
 
   return (
-    <HeaderContent header="References">
+    <StandardSection header="References">
       <FieldArray name="references">
         {({ push, remove }) => (
           <StandardStack minor direction="column">
@@ -33,6 +33,6 @@ export default function ReferenceSection() {
           </StandardStack>
         )}
       </FieldArray>
-    </HeaderContent>
+    </StandardSection>
   );
 }
