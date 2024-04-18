@@ -470,10 +470,7 @@ function PostSection({ sectionType, sectionDescription }) {
   const [pagination, setPagination] = useState(1);
   const [count, setCount] = useState(0);
   const [posts, setPosts] = useState([]);
-  const pageNumbers = useMemo(
-    () => calculatePagination(count, 6),
-    [pagination, count]
-  );
+  const pageNumbers = useMemo(() => calculatePagination(count, 6), [count]);
 
   useEffect(() => {
     async function getData() {

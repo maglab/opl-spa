@@ -6,10 +6,10 @@ import {
 } from "../apiNew/apiProblems";
 import QUERY_KEYS from "./queryKeys";
 
-export function useGetProblems({ query, pageNum, pageSize } = {}) {
+export function useGetProblems({ query, pageNum, pageSize, sorting } = {}) {
   return useQuery({
-    queryKey: [QUERY_KEYS.getProblems, query, pageNum, pageSize],
-    queryFn: () => getProblems({ query, pageNum, pageSize }),
+    queryKey: [QUERY_KEYS.getProblems, query, pageNum, pageSize, sorting],
+    queryFn: () => getProblems({ query, pageNum, pageSize, sorting }),
   });
 }
 
