@@ -26,8 +26,16 @@ import ProblemTag from "../common/problemTag";
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
-  const { title, description, problem_id: id, tags } = openProblem ?? "";
+  const {
+    title,
+    description,
+    problem_id: id,
+    tags,
+    solution_count: solutionCount,
+    discussion_count: discussionCount,
+  } = openProblem ?? "";
   const { first_name: firstName, last_name: lastName } = contact ?? "";
+  const postCounts = solutionCount + discussionCount;
 
   return (
     <Card sx={{ width: "100%" }}>
@@ -72,7 +80,7 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
                 component={RouterLink}
                 to={`./${id}`}
               >
-                0 Posts
+                {postCounts} Posts
               </Button>
               <Button
                 startIcon={<FlagIcon />}

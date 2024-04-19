@@ -1,6 +1,10 @@
 import apiClient from "./apiClient";
 
-export const post = ({ id, postRequestData }) =>
-  apiClient.post(`posts/post/${id}/comment/submit`, postRequestData);
+export const post = ({ id, postType, postRequestData }) =>
+  apiClient.post(
+    `posts/post/${id}/${postType}/comment/submit`,
+    postRequestData
+  );
 
-export const getAll = ({ id }) => apiClient.get(`posts/get/${id}/comments`);
+export const getAll = ({ id, postType, params }) =>
+  apiClient.get(`posts/${id}/${postType}/comments`, { params });

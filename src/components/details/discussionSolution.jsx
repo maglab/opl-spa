@@ -27,8 +27,11 @@ import { blue } from "@mui/material/colors";
 import { FieldArray, useField } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import apiComments from "../../api/apiComments";
 import apiPosts from "../../api/apiPosts";
+import {
+  getAll as getAllComments,
+  post as postComment,
+} from "../../apiNew/apiComments";
 import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
@@ -78,10 +81,10 @@ function CommentForm({ id }) {
     setSubmitting(true);
     try {
       const updatedValues = { ...values, post: id };
-      const response = await apiComments.post({
+      const response = await postComment({
         id,
-        postType: `${postType}s`,
-        data: updatedValues,
+        postType: `${postType}`,
+        postRequestData: updatedValues,
       });
 
       if (response.status === 201) {
@@ -154,9 +157,9 @@ function CommentSection({ id, commentsData, setCommentsData }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await apiComments.getAll({
+        const response = await getAllComments({
           id,
-          postType: `${postType}s`,
+          postType,
           params: { page_size: pageSize },
         });
 
