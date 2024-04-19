@@ -7,7 +7,10 @@ export const PostContext = createContext(postInitialValues);
 
 export function PostProvider({ sectionType, children }) {
   // Add other post and comment related state and functions as needed
-  const contextValue = useMemo(() => ({ postType: sectionType }), []);
+  const contextValue = useMemo(
+    () => ({ postType: sectionType }),
+    [sectionType]
+  );
   return (
     <PostContext.Provider value={contextValue}>{children}</PostContext.Provider>
   );

@@ -32,10 +32,10 @@ export default function SideIndex({ problem, scroller }) {
             />
             <Collapse in={openAnnotations} unmountOnExit>
               <List disablePadding>
-                {problem.annotations.compound?.length ? (
+                {problem.annotations.compounds?.length ? (
                   <IndexItem
                     label="Compound"
-                    badgeLabel={problem.annotations.compound.length}
+                    badgeLabel={problem.annotations.compounds.length}
                     pl={2}
                     onClick={() => scroller(SECTION_KEYS.compoundAnnotations)}
                   />
@@ -48,10 +48,10 @@ export default function SideIndex({ problem, scroller }) {
                     onClick={() => scroller(SECTION_KEYS.taxonAnnotations)}
                   />
                 ) : undefined}
-                {problem.annotations.gene?.length ? (
+                {problem.annotations.genes?.length ? (
                   <IndexItem
                     label="Gene"
-                    badgeLabel={problem.annotations.gene.length}
+                    badgeLabel={problem.annotations.genes.length}
                     pl={2}
                     onClick={() => scroller(SECTION_KEYS.geneAnnotations)}
                   />

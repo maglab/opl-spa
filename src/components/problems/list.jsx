@@ -107,10 +107,11 @@ function calculatePagination(count, view) {
 }
 
 function OpenProblemList() {
-  const { editQueryParams } = useContext(QueryParamsContext);
+  const { editQueryParams, value } = useContext(QueryParamsContext);
   const { pageNum, sorting, view } = useContext(StateContext);
 
   const getProblemsState = useGetProblems({
+    query: value,
     pageNum,
     pageSize: view === "list" ? 20 : 10,
     sorting,

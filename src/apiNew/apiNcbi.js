@@ -10,4 +10,8 @@ export const getNcbiGenes = (ids) =>
     `https://api.ncbi.nlm.nih.gov/datasets/v2alpha/gene/id/${ids.join(",")}`
   );
 
+export const getNcbiCompounds = (ids) =>
+  apiClient.get(
+    `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${ids.join(",")}`
+  );
 export default undefined;
