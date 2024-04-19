@@ -2,10 +2,7 @@ import { Box, CircularProgress, Grid, useMediaQuery } from "@mui/material";
 import React, { useCallback, useMemo, useRef } from "react";
 
 import { useParams } from "react-router-dom";
-import {
-  useGetProblemAllAnnotations,
-  useGetProblemDetail,
-} from "../../queries/problems";
+import { useGetProblemDetail } from "../../queries/problems";
 import useExtendedTheme from "../../theme/useExtendedTheme";
 import Center from "../common/center";
 import StandardGrid from "../common/standardGrid";
@@ -22,21 +19,21 @@ export default function Details() {
   const theme = useExtendedTheme();
   const { id: problemId } = useParams();
   const getDetailState = useGetProblemDetail(problemId);
-  const getAnnotationsState = useGetProblemAllAnnotations(problemId);
+  // So currently we do not need to download
+  // const getAnnotationsState = useGetProblemAllAnnotations(problemId);
   const problem = useMemo(() => {
-    if (getDetailState.data?.data && getAnnotationsState.data?.data) {
+    if (getDetailState.data?.data) {
       const details = getDetailState.data.data;
-      const annotations = getAnnotationsState.data.data;
-
+      const { genes, species, compounds } = details;
       return {
         ...details,
         upstream: details.parent_problem ? [details.parent_problem] : [],
         downstream: details.children,
-        annotations: { ...annotations },
+        annotations: { genes, species, compounds },
       };
     }
     return null;
-  }, [getDetailState, getAnnotationsState]);
+  }, [getDetailState]);
   const compact = useMediaQuery(theme.breakpoints.up("md"));
   const scrollerRefs = useRef({});
   const addScroller = useCallback((key, el, additionalAction) => {
@@ -89,7 +86,12 @@ export default function Details() {
                   addScroller={addScroller}
                 />
               ) : undefined}
-              <Annotations addScroller={addScroller} />
+              <Annotations
+                addScroller={addScroller}
+                compounds={problem.annotations.compounds}
+                genes={problem.annotations.genes}
+                species={problem.annotations.species}
+              />
               <RelatedProblems
                 upstream={problem.upstream}
                 downstream={problem.downstream}
