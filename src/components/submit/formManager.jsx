@@ -7,7 +7,10 @@ const initialValues = {
   title: "",
   description: "",
   references: [], // DOI and PMID values
-  first_name: "",
+  tags: [], // new
+  compounds: [], // new
+  species: [], // new
+  genes: [], // new  first_name: "",
   last_name: "",
   organisation: "",
   job_field: "",
@@ -40,6 +43,10 @@ const validationSchema = Yup.object().shape({
   description: Yup.string().required("Description must not be empty"),
   references: Yup.array().of(referenceSchema),
   email: Yup.string().email("Must be a valid email address"),
+  tags: Yup.array().of(Yup.string()).required("At least one tag is required"),
+  compounds: Yup.array(),
+  species: Yup.array(),
+  genes: Yup.array(),
 });
 
 export default function FormManager({ onSubmitHandler, children }) {

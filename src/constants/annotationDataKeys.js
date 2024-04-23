@@ -20,3 +20,9 @@ export const SPECIES_DATA_KEYS = {
   species: "species",
   ncbiTaxonId: "ncbi_tax_id",
 };
+
+export const TAGS_DATA_KEYS = {
+  id: "id",
+  title: "title",
+  description: "description",
+};

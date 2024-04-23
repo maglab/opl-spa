@@ -19,8 +19,6 @@ export default function Details() {
   const theme = useExtendedTheme();
   const { id: problemId } = useParams();
   const getDetailState = useGetProblemDetail(problemId);
-  // So currently we do not need to download
-  // const getAnnotationsState = useGetProblemAllAnnotations(problemId);
   const problem = useMemo(() => {
     if (getDetailState.data?.data) {
       const details = getDetailState.data.data;
