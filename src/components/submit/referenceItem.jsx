@@ -7,6 +7,7 @@ import { useAsync, useDebounce } from "react-use";
 import apiReferences from "../../api/apiReferences";
 import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
 import useExtendedTheme from "../../theme/useExtendedTheme";
+import newRandomId from "../../utilities/randomId";
 import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
 
@@ -71,7 +72,7 @@ export default function ReferenceItem({ index, remove }) {
           />
         </Grid>
       </StandardGrid>
-      <Typography>
+      <Typography key={newRandomId}>
         {fetchReferenceInfoState.error
           ? "Couldn't fetch reference information from databases, are you sure the reference is correct?"
           : fetchReferenceInfoState?.value?.title ?? ""}

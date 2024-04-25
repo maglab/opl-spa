@@ -1,6 +1,7 @@
 const QUERY_KEYS = {
   getProblems: "getProblems",
   getProblemDetail: "getProblemDetail",
+  postProblem: "postProblem",
   getAnnotationEntries: "getAnnotationEntries",
   getChemblMolecule: "getChemblMolecule",
   getNcbiTaxons: "getNcbiTaxons",

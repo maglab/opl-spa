@@ -1,5 +1,5 @@
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabList } from "@mui/lab";
 import {
   Autocomplete,
   Box,
@@ -25,6 +25,7 @@ import useGetAnnotationEntries from "../../queries/annotations";
 import StandardGrid from "../common/standardGrid";
 import StandardSection from "../common/standardSection";
 import StandardStack from "../common/standardStack";
+import TabPanel from "../common/tabPanel";
 
 function TagChip({ label, getTagProps, index }) {
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -42,6 +43,7 @@ function CustomAutocomplete({
   getOptionLabelFn,
   valueKey,
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
   const renderTags = (value, getTagProps) =>
     value.map((option, index) => (
@@ -61,13 +63,16 @@ function CustomAutocomplete({
       placeholder={placeholder}
       error={meta.touched && Boolean(meta.error)}
       helperText={meta.touched && meta.error}
+      value={field.value}
+      onBlur={() => helpers.setTouched(true)}
     />
   );
   const onChangeHandler = (newValue) => {
-    const destructuredValues = newValue.map(
-      (value) => value[valueKey] || value
+    helpers.setValue(
+      newValue.map((value) =>
+        typeof value === "object" ? value : { [valueKey]: value }
+      )
     );
-    helpers.setValue(destructuredValues);
   };
 
   return (
@@ -121,12 +126,11 @@ function Species() {
   const { data, isPending } = useGetAnnotationEntries("species");
   const species = data?.data || [];
 
-  const filterAutocompleteOptions = (options, inputValue) =>
+  const filterAutocompleteOptions = (options, { inputValue }) =>
     matchSorter(options, inputValue, {
-      keys: [SPECIES_DATA_KEYS.name],
+      keys: [SPECIES_DATA_KEYS.genus, SPECIES_DATA_KEYS.species],
     });
-  const getOptionLabelFn = (option) =>
-    option[COMPOUND_DATA_KEYS.name] || option;
+  const getOptionLabelFn = (option) => option[SPECIES_DATA_KEYS.name] || option;
 
   return (
     <CustomAutocomplete
@@ -147,8 +151,9 @@ function Genes() {
   const { data, isPending } = useGetAnnotationEntries("gene");
   const genes = data?.data || [];
   const getOptionLabelFn = (option) =>
-    `${option[GENE_DATA_KEYS.symbol]}:${option[GENE_DATA_KEYS.name]}` || option;
-  const filterAutocompleteOptions = (options, inputValue) =>
+    `${option[GENE_DATA_KEYS.symbol]} : ${option[GENE_DATA_KEYS.name]}` ||
+    option;
+  const filterAutocompleteOptions = (options, { inputValue }) =>
     matchSorter(options, inputValue, {
       keys: [GENE_DATA_KEYS.name, GENE_DATA_KEYS.symbol],
     });
@@ -260,6 +265,7 @@ function AnnotationTabs() {
         centered
         sx={{ borderBottom: 1, borderColor: "divider" }}
       >
+        {}
         <Tab
           label={<Typography variant="subtitle1">Tags</Typography>}
           value="tags"
