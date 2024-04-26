@@ -12,6 +12,7 @@ interface FormManagedTextFieldProps
 function FormManagedTextField({
   name,
   children,
+  id,
   ...props
 }: FormManagedTextFieldProps) {
   const [field, meta] = useField(name as string);
@@ -19,6 +20,7 @@ function FormManagedTextField({
 
   return (
     <TextField
+      id={id}
       error={Boolean(errorText)}
       helperText={errorText}
       name={field.name}

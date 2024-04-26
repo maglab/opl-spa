@@ -3,7 +3,7 @@ import { useField } from "formik";
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDebounce } from "react-use";
-import apiProblems from "../../api/apiProblems";
+import { getProblems } from "../../apiNew/apiProblems";
 import StandardStack from "../common/standardStack";
 
 export default function DuplicatedReminder() {
@@ -14,8 +14,8 @@ export default function DuplicatedReminder() {
     if (!searchQuery) {
       setSimilarProblems([]);
     } else {
-      const queryParams = { search: searchQuery };
-      const response = await apiProblems.getProblems({ queryParams });
+      const query = { search: searchQuery };
+      const response = await getProblems({ query });
       setSimilarProblems(response.data.results);
     }
   }
@@ -25,7 +25,7 @@ export default function DuplicatedReminder() {
       searchProblems(field.value);
     },
     500,
-    [field]
+    [field.value]
   );
 
   return (

@@ -15,15 +15,15 @@ export const getAnnotationsForProblem = async ({
       : `annotations/${annotation}/filter/by-problem:${id}`;
   const queryParams = fields ? { fields: fields.join(",") } : {};
   return apiClient.get(path, { params: queryParams });
-};
+}; // Not sure we need this anymore
 
 export const getProblemsForAnnotation = async ({ annotation, annotationId }) =>
   apiClient.get(
     `annotations/${annotation}/filter/by-annotation:${annotationId}`
   );
 
-export const getAnnotationEntries = async ({ annotation }) =>
-  apiClient.get(`annotations/${annotation}/`);
+export const getAnnotationEntries = async ({ annotationType }) =>
+  apiClient.get(`annotations/${annotationType}/`);
 
 export const sendFilters = async ({ filters }) =>
   apiClient.post("annotations/filter", filters);
