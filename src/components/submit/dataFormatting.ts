@@ -25,16 +25,16 @@ export class DataFormatter {
       if (typeof item === "string") {
         return item; // Return strings as is
       }
-      return excludeField(item, "open_problem_count"); // Process objects to exclude the specified field
+      return excludeField(item, "open_problem_count");
     });
   }
 
   static formatSubmissionData(submission: Submission): {
     references: Object[];
-    tags: (Omit<Tag, "openProblemCount"> | string)[];
-    genes: (Omit<Gene, "openProblemCount"> | string)[];
-    compounds: (Omit<Compound, "openProblemCount"> | string)[];
-    species: (Omit<Species, "openProblemCount"> | string)[];
+    tags: (Omit<Tag, "open_problem_count"> | string)[];
+    genes: (Omit<Gene, "open_problem_count"> | string)[];
+    compounds: (Omit<Compound, "open_problem_count"> | string)[];
+    species: (Omit<Species, "open_problem_count"> | string)[];
   } {
     const { references, tags, genes, compounds, species } = submission;
     return {
