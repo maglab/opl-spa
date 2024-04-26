@@ -13,7 +13,9 @@ import StandardGrid from "../common/standardGrid";
 
 export default function ReferenceItem({ index, remove }) {
   const theme = useExtendedTheme();
-  const [field, fieldMeta, { setValue }] = useField(`references[${index}]`);
+  const [field, fieldMeta, { setValue, setError }] = useField(
+    `references[${index}]`
+  );
   const [debouncedValues, setDebouncedValues] = useState({ valid: false });
 
   const fetchReferenceInfoState = useAsync(async () => {
@@ -22,7 +24,9 @@ export default function ReferenceItem({ index, remove }) {
 
     const response = await apiReferences.verifyReference({ type, value });
     const { data } = response;
-    if (!data) throw new Error();
+    if (!data || !response.ok) {
+      setError("Unable to retrieve reference");
+    }
     setValue({ ...debouncedValues, data });
     return data;
   }, [debouncedValues]);
