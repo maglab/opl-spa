@@ -9,7 +9,6 @@ import StandardStack from "../common/standardStack";
 
 export default function Description({ data, addScroller }) {
   const { title, description, tags } = data;
-  // Subject will be tags:
 
   return (
     <Referenceable ref={(el) => addScroller(SECTION_KEYS.problem, el)}>

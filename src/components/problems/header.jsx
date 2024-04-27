@@ -1,5 +1,3 @@
-import { ViewList } from "@mui/icons-material";
-import ViewAgendaIcon from "@mui/icons-material/ViewAgenda";
 import {
   Divider,
   Grid,
@@ -10,7 +8,6 @@ import {
 import { capitalize } from "lodash";
 import React, { useContext } from "react";
 import SORTING_KEYS from "../../constants/problemSortingKeys";
-import VIEW_KEYS from "../../constants/problemViewKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
@@ -18,12 +15,7 @@ import Search from "./search";
 
 function Header() {
   const { queryParams, editQueryParams } = useContext(QueryParamsContext);
-  const { sorting, view } = queryParams;
-  const viewChangeHandler = (_, target) => {
-    editQueryParams((draft) => {
-      draft.view = target;
-    });
-  };
+  const { sorting } = queryParams;
   const sortingChangehandler = (_, target) => {
     editQueryParams((draft) => {
       draft.sorting = target;
@@ -34,8 +26,8 @@ function Header() {
       <StandardStack minor p>
         <Search />
         <Divider />
-        <StandardGrid direction="row">
-          <Grid item xs="auto">
+        <StandardGrid direction="row" container>
+          <Grid item xs={12} container>
             <ToggleButtonGroup
               size="small"
               variant="outlined"
@@ -52,21 +44,6 @@ function Header() {
             </ToggleButtonGroup>
           </Grid>
           <Grid item xs />
-          <Grid item xs="auto">
-            <ToggleButtonGroup
-              size="small"
-              exclusive
-              value={view}
-              onChange={viewChangeHandler}
-            >
-              <ToggleButton value={VIEW_KEYS.list}>
-                <ViewList />
-              </ToggleButton>
-              <ToggleButton value={VIEW_KEYS.card}>
-                <ViewAgendaIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
         </StandardGrid>
       </StandardStack>
     </Paper>

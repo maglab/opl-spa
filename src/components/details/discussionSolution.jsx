@@ -233,7 +233,7 @@ function PostMetaData({ postData }) {
     first_name: firstName,
     last_name: lastName,
   } = postData;
-  const dateString = setDate(date);
+  const dateString = date ? setDate(date) : null;
   const fullName = formatFullName(firstName, lastName);
   return (
     <Stack alignItems="flex-end">
