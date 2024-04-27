@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getWebApiUrl } from "../config";
 
-// Create an instance of Axios with default configuration
 const apiClient = axios.create({
   baseURL: getWebApiUrl(), // Replace with API base URL
   timeout: 10000, // Request timeout in milliseconds
