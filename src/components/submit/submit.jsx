@@ -16,7 +16,6 @@ import FormManager from "./formManager";
 import ReferencesSection from "./referencesSection";
 
 export default function Submit() {
-  // const theme = useExtendedTheme();
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [dialogText, setDialogText] = useState({ title: "", message: "" });
 
@@ -35,7 +34,6 @@ export default function Submit() {
   });
 
   const postHandler = (values) => {
-    console.log(values);
     const formattedData = formatSubmitData(values);
     mutate(formattedData);
   };

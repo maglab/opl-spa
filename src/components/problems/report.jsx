@@ -1,4 +1,6 @@
+import CheckIcon from "@mui/icons-material/Check";
 import {
+  Alert,
   Button,
   Card,
   Dialog,
@@ -10,52 +12,85 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField,
 } from "@mui/material";
-import { Form, Formik } from "formik";
+import { useMutation } from "@tanstack/react-query";
+import { useField } from "formik";
 import React from "react";
+import { reportProblem } from "../../apiNew/apiReport";
+import { openProblemReport } from "../../constants/reportMappings";
+import FormManagedTextField from "../common/formManagedTextField";
+import ReportFormManager from "./reportFormManager";
 
-const initialValues = {
-  reason: "",
-  description: "",
-};
+function SelectSubject({ name, children }) {
+  const [field, meta] = useField(name);
+  return (
+    <Select
+      name={field.name}
+      onChange={field.onChange}
+      onBlur={field.onBlur}
+      error={Boolean(meta.error)}
+      value={field.value}
+    >
+      {children}
+    </Select>
+  );
+}
 
 export default function ReportForm({ setOpen, open }) {
+  const { mutate, isSuccess } = useMutation({
+    mutationFn: (postData) => reportProblem(postData),
+  });
+  const onSubmitHandler = (value, props) => {
+    mutate(value);
+    if (isSuccess) {
+      props.resetForm();
+    }
+  };
   return (
     <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
       <Card>
-        <Formik initialValues={initialValues}>
-          <Form>
-            <DialogTitle> Report a problem </DialogTitle>
-            <DialogContent>
-              <Stack spacing={2} direction="column">
-                <DialogContentText>
-                  Select a reason and add additional information if necessary
-                </DialogContentText>
-                <FormControl variant="filled">
-                  <InputLabel> Reason</InputLabel>
-                  <Select>
-                    <MenuItem value="duplicate"> Duplicate </MenuItem>
-                    <MenuItem value="content"> Incorrect Content </MenuItem>
-                    <MenuItem value="other"> Other</MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  multiline
-                  minRows={3}
-                  variant="filled"
-                  label="Additional information"
-                />
-                <Stack direction="row" justifyContent="center" spacing={2}>
-                  <Button variant="outlined" onClick={() => setOpen(false)}>
-                    Close
-                  </Button>
-                  <Button variant="contained"> Submit</Button>
-                </Stack>
+        {isSuccess && (
+          <Alert icon={<CheckIcon />} severity="success">
+            Report sent
+          </Alert>
+        )}
+        <ReportFormManager onSubmit={onSubmitHandler}>
+          <DialogTitle> Report a problem </DialogTitle>
+          <DialogContent>
+            <Stack spacing={2} direction="column">
+              <DialogContentText>
+                Select a reason and add additional information if necessary
+              </DialogContentText>
+              <FormControl variant="filled">
+                <InputLabel> Reason</InputLabel>
+                <SelectSubject name="subject">
+                  <MenuItem value={openProblemReport.duplicate}>
+                    Duplicate
+                  </MenuItem>
+                  <MenuItem value={openProblemReport.content}>
+                    Incorrect Content
+                  </MenuItem>
+                  <MenuItem value={openProblemReport.other}> Other</MenuItem>
+                </SelectSubject>
+              </FormControl>
+              <FormManagedTextField
+                name="detail"
+                multiline
+                rows={3}
+                label="Additional information"
+              />
+              <Stack direction="row" justifyContent="center" spacing={2}>
+                <Button variant="outlined" onClick={() => setOpen(false)}>
+                  Close
+                </Button>
+                <Button variant="contained" type="submit">
+                  {" "}
+                  Submit
+                </Button>
               </Stack>
-            </DialogContent>
-          </Form>
-        </Formik>
+            </Stack>
+          </DialogContent>
+        </ReportFormManager>
       </Card>
     </Dialog>
   );

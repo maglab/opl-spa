@@ -16,13 +16,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import StateContext from "../../contexts/stateContext";
+import useQueryParams from "../../hooks/useQueryParams";
 import { useGetProblems } from "../../queries/problems";
+import { problemsQueryScheme } from "../../routes/querySchemes";
 import Center from "../common/center";
 import ProblemTag from "../common/problemTag";
+import formatEntries from "./queryFormat";
 import ReportForm from "./report";
 
 function OpenProblemCard({ openProblem, contact, setReportOpen }) {
@@ -115,11 +118,18 @@ function calculatePagination(count, view) {
 }
 
 function OpenProblemList() {
-  const { editQueryParams, value } = useContext(QueryParamsContext);
+  const { editQueryParams } = useContext(QueryParamsContext);
+  const { queryParams } = useQueryParams(problemsQueryScheme);
   const { pageNum, sorting, view } = useContext(StateContext);
 
+  const query = useMemo(() => {
+    if (queryParams.search) {
+      return formatEntries(queryParams.search);
+    }
+    return {};
+  }, [queryParams]);
   const getProblemsState = useGetProblems({
-    query: value,
+    query,
     pageNum,
     pageSize: view === "list" ? 20 : 10,
     sorting,
@@ -150,7 +160,7 @@ function OpenProblemList() {
             <CircularProgress />
           </Center>
         ) : (
-          getProblemsState.data.data.results.map((openProblem) => (
+          getProblemsState.data?.data.results.map((openProblem) => (
             <OpenProblemCard
               key={openProblem.problem_id}
               openProblem={openProblem}

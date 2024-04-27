@@ -1,4 +1,6 @@
 import {
+  Button,
+  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -10,9 +12,14 @@ function Dialog({ open, setOpen, message, title }) {
   return (
     <MuiDialog open={open} onClose={() => setOpen(false)}>
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
+      <DialogContent dividers>
         <DialogContentText>{message}</DialogContentText>
       </DialogContent>
+      <DialogActions>
+        <Button variant="contained" onClick={() => setOpen(false)}>
+          Close
+        </Button>
+      </DialogActions>
     </MuiDialog>
   );
 }
