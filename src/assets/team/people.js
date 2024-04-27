@@ -15,8 +15,7 @@ const people = [
     photoSrc: angeloPhoto,
     name: "Angelo Talay",
     position: "Bioinformatician",
-    introduction:
-      "A bioinformatician mistakenly hired to do full-stack development on this platform",
+    introduction: "Bioinformatician and project lead.",
     email: "a.g.talay@bham.ac.uk",
   },
   {

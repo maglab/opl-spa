@@ -13,6 +13,7 @@ import {
 import React, { useContext, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import OPEN_PROBLEM_KEYS from "../../constants/problemDataKeys";
+import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import StateContext from "../../contexts/stateContext";
 import useQueryParams from "../../hooks/useQueryParams";
@@ -47,18 +48,23 @@ function ProblemCard({
             <Link component={RouterLink} to={`./${id}`} underline="hover">
               <Typography variant="h6">{title}</Typography>
             </Link>
-            <IconButton size="small">
-              <Badge
-                badgeContent={solutionCount + discussionCount}
-                color="primary"
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-              >
-                <MessageIcon />
-              </Badge>
-            </IconButton>
+            <Link
+              component={RouterLink}
+              to={`./${id}#${SECTION_KEYS.solutions}`}
+            >
+              <IconButton size="small" com>
+                <Badge
+                  badgeContent={solutionCount + discussionCount}
+                  color="primary"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                >
+                  <MessageIcon />
+                </Badge>
+              </IconButton>
+            </Link>
           </StandardStack>
         </Grid>
         <Grid

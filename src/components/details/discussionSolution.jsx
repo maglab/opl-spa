@@ -562,7 +562,7 @@ export default function DiscussionSolution({ addScroller }) {
           </TabList>
         </Stack>
 
-        <TabPanel value={SECTION_KEYS.solutions}>
+        <TabPanel value={SECTION_KEYS.solutions} id={SECTION_KEYS.solutions}>
           <PostSection
             sectionType={SECTION_KEYS.solutions}
             sectionDescription={solutionDescription.mainText}
