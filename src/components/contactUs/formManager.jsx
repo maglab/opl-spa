@@ -8,13 +8,17 @@ const initialValues = {
   organisation: "",
   position: "",
   email: "",
-  subject: "",
+  subject: 1,
   message: "",
 };
 
 const validationSchema = Yup.object().shape({
+  first_name: Yup.string(),
+  last_name: Yup.string(),
+  organisation: Yup.string(),
+  position: Yup.string(),
   email: Yup.string().email("Must be a valid email address"),
-  subject: Yup.string().required("Subject is required"),
+  subject: Yup.number().required("Subject is required"),
   message: Yup.string().required("Message must not be empty"),
 });
 

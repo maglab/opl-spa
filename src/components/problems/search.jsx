@@ -1,6 +1,14 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Box, Chip, Grid, IconButton, MenuItem } from "@mui/material";
-import { blue, brown, grey, purple } from "@mui/material/colors";
+import {
+  blue,
+  brown,
+  green,
+  grey,
+  orange,
+  purple,
+  teal,
+} from "@mui/material/colors";
 import { Form, Formik } from "formik";
 import { original as ori } from "immer";
 import { capitalize, isEqual } from "lodash";
@@ -18,6 +26,9 @@ const criteriaColors = {
   [SEARCH_SUBJECT_KEYS.gene]: blue[200],
   [SEARCH_SUBJECT_KEYS.reference]: brown[200],
   [SEARCH_SUBJECT_KEYS.author]: purple[200],
+  [SEARCH_SUBJECT_KEYS.tag]: green[200],
+  [SEARCH_SUBJECT_KEYS.species]: orange[200],
+  [SEARCH_SUBJECT_KEYS.compound]: teal[200],
 };
 
 const queryParamToObject = (param) => {
@@ -68,7 +79,7 @@ export default function Search() {
               <FormManagedTextField select name="subject" label="Subject">
                 {Object.values(SEARCH_SUBJECT_KEYS).map((key) => (
                   <MenuItem key={key} value={key}>
-                    {capitalize(key)}
+                    {key}
                   </MenuItem>
                 ))}
               </FormManagedTextField>

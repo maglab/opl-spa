@@ -1,9 +1,14 @@
 import { Button, Grid, MenuItem, Paper, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { Form } from "formik";
-import React from "react";
+import React, { useState } from "react";
+
+import { reportContactUs } from "../../apiNew/apiReport";
 import contactUsText from "../../assets/contactUs.json";
+import { generalReport } from "../../constants/reportMappings";
 import useExtendedTheme from "../../theme/useExtendedTheme";
 import Center from "../common/center";
+import Dialog from "../common/dialog";
 import FormManagedTextField from "../common/formManagedTextField";
 import HeaderContent from "../common/headerContent";
 import StandardGrid from "../common/standardGrid";
@@ -12,9 +17,31 @@ import FormManager from "./formManager";
 
 export default function ContactUs() {
   const theme = useExtendedTheme();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogText, setDialogText] = useState({ title: "", message: "" });
+  const { mutate } = useMutation({
+    mutationFn: (postData) => reportContactUs(postData),
+    onSuccess: () => {
+      setDialogOpen(true);
+      setDialogText({
+        title: contactUsText.dialog.success.title,
+        message: contactUsText.dialog.success.message,
+      });
+    },
+    onError: () => {
+      setDialogOpen(true);
+      setDialogText({
+        title: contactUsText.dialog.error.title,
+        message: contactUsText.dialog.error.message,
+      });
+    },
+  });
+  const submitHandler = (values) => {
+    mutate(values);
+  };
 
   return (
-    <FormManager>
+    <FormManager onSubmitHandler={submitHandler}>
       <Form>
         <HeaderContent header="Contact Us">
           <Typography whiteSpace="pre-wrap">
@@ -76,10 +103,10 @@ export default function ContactUs() {
                     required
                     select
                   >
-                    {["Suggestion", "Bug Report", "Comment", "Other"].map(
-                      (option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
+                    {Object.entries(generalReport).map(
+                      ([textValue, integerValue]) => (
+                        <MenuItem key={integerValue} value={integerValue}>
+                          {textValue}
                         </MenuItem>
                       )
                     )}
@@ -101,6 +128,12 @@ export default function ContactUs() {
             </Button>
           </Center>
         </HeaderContent>
+        <Dialog
+          open={dialogOpen}
+          setOpen={setDialogOpen}
+          title={dialogText.title}
+          message={dialogText.message}
+        />
       </Form>
     </FormManager>
   );
