@@ -43,7 +43,7 @@ function OpenProblemCard({ openProblem, contact, setReportOpen }) {
         <Grid container direction="column" spacing={2} padding={4}>
           <Grid item>
             <Typography variant="subtitle2">
-              Posted by: {firstName} {lastName}
+              {firstName} {lastName}
             </Typography>
           </Grid>
           <Grid item>
