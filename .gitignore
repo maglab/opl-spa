@@ -1,4 +1,4 @@
-
+README.md
 ### react ###
 .DS_*
 *.log
@@ -19,3 +19,7 @@ sketch
 build/
 
 Dockerfile.prod
+
+dist/
+package-lock.json
+

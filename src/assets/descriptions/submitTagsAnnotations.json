@@ -1,0 +1,19 @@
+{
+  "tags": {
+    "header": "Tags",
+    "description": "Search and filter through our tags that represents the topics of your open problem, or create your own tag by pressing enter."
+  },
+  "compounds": {
+    "header": "Compounds",
+    "description": "Search and select any compounds that are involved in your open problem using the name, CHEMBL id or PubChem id. Add a compound that is not in the list by by pressing enter."
+  },
+  "species": {
+    "header": "Species",
+    "description": "Search and select any species involved in your open problem. Add a species that's not in the list by pressing enter."
+  },
+  "genes": {
+    "header": "Genes",
+    "description": "Search and select for any genes involved in your open problem using either the gene name or HGNC symbol. Add a gene that's not in the list by pressing enter."
+  },
+  "sectionDescription": "Tags and annotations provide quick access to key topics in longevity science, helping readers navigate and explore specific areas of interest within our posts with ease."
+}

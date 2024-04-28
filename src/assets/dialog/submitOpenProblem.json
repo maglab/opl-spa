@@ -1,0 +1,10 @@
+{
+  "success": {
+    "title": "Successfully submitted new open problem",
+    "message": "Your open problem has been submitted and is under review"
+  },
+  "error": {
+    "title": "Failed to submit new open problem",
+    "message": "The problem has not been successfully submitted due to technical issues."
+  }
+}
