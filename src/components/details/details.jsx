@@ -50,7 +50,7 @@ export default function Details() {
 
   if (problem) {
     return (
-      <StandardGrid main>
+      <StandardGrid main >
         {compact && (
           <Grid item md="auto" xs={12}>
             <Box
@@ -95,7 +95,7 @@ export default function Details() {
                 downstream={problem.downstream}
                 addScroller={addScroller}
               />
-              <DiscussionSolution addScroller={addScroller} />
+              <DiscussionSolution addScroller={addScroller}/>
             </StandardStack>
           </StandardStack>
         </Grid>

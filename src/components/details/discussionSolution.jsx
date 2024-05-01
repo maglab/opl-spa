@@ -1,5 +1,3 @@
-import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
-import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import { TabPanel } from "@mui/lab";
 import TabContext from "@mui/lab/TabContext";
@@ -12,7 +10,6 @@ import {
   DialogTitle,
   Divider,
   Grid,
-  IconButton,
   List,
   ListItem,
   ListItemIcon,
@@ -343,7 +340,7 @@ function Post({ postData }) {
   }
   return (
     <Grid item container direction="row" alignItems="flex-start" spacing={2}>
-      <Grid item xs={1}>
+      {/* <Grid item xs={1}>
         <Stack justifyContent="center" alignItems="center">
           <IconButton size="large" color="primary">
             <ArrowCircleUpIcon />
@@ -353,7 +350,7 @@ function Post({ postData }) {
             <ArrowCircleDownIcon />
           </IconButton>
         </Stack>
-      </Grid>
+      </Grid> */}
       <Grid item container direction="column" spacing={2} xs={11}>
         <PostContent postData={postData} />
       </Grid>
