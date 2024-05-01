@@ -125,6 +125,7 @@ function Compounds() {
 function Species() {
   const { data, isPending } = useGetAnnotationEntries("species");
   const species = data?.data || [];
+  console.log(species);
 
   const filterAutocompleteOptions = (options, { inputValue }) =>
     matchSorter(options, inputValue, {
