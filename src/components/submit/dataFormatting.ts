@@ -33,7 +33,7 @@ export default function formatSubmitData(values: Submission) {
     EXCLUDE_DATA_KEYS.openProblemCount
   );
   const species = formatArray(
-    values.genes,
+    values.species,
     excludeField,
     EXCLUDE_DATA_KEYS.openProblemCount
   );
