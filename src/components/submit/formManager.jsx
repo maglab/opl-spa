@@ -16,7 +16,7 @@ const initialValues = {
   organisation: "",
   job_field: "",
   email: "",
-  contact_user: false,
+  notify_user: false,
 };
 
 const referenceSchema = Yup.object().shape({
@@ -42,16 +42,16 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title must not be empty"),
   description: Yup.string().required("Description must not be empty"),
   references: Yup.array().of(referenceSchema),
-  contact_user: Yup.boolean(),
+  notify_user: Yup.boolean(),
   email: Yup.string()
     .email("Must be a valid email address")
-    .when("contact_user", (contact_user, schema) => {
-      if (contact_user === true) {
-        return schema.required(
-          "An email must be provided when contact_user is true"
-        );
-      }
-      return schema;
+    .when("notify_user", {
+      is: true,
+      then: (schema) =>
+        schema.required(
+          "An email must be provided when agreeing to be notified."
+        ),
+      otherwise: (schema) => schema,
     }),
   tags: Yup.array()
     .of(

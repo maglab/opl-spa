@@ -11,6 +11,7 @@ export default function ContactSection() {
   // Pass up the helper functions from the child form managed checkbox for flexible setting of the value.
   const checkBoxHandler = (e, helpers) => {
     const { checked } = e.target;
+    console.log(checked);
     helpers.setValue(checked);
   };
   return (
@@ -59,7 +60,7 @@ export default function ContactSection() {
         </Grid>
         <Grid item>
           <FormManagedCheckbox
-            name="contact_user"
+            name="notify_user"
             checkboxValue
             label="I agree to be emailed when this open problem is confirmed and published"
             onChange={checkBoxHandler}
@@ -73,7 +74,7 @@ export default function ContactSection() {
         </Grid>
         <Grid item>
           <Typography fontWeight="bold">
-            Read our
+            Read our{" "}
             <Link
               component={RouterLink}
               to="../privacy-policy"
@@ -81,7 +82,7 @@ export default function ContactSection() {
               color="primary.main"
             >
               privacy policy
-            </Link>
+            </Link>{" "}
             for information on how we handle this data.
           </Typography>
         </Grid>
