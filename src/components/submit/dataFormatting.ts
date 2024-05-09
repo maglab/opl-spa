@@ -1,8 +1,10 @@
 import { EXCLUDE_DATA_KEYS } from "../../constants/annotationDataKeys";
 import { Submission } from "../../constants/annotationInterfaces";
+
 // Data reformatting for submission data.
 function excludeField<T, K extends keyof T>(item: T, fieldName: K): Omit<T, K> {
-  const { [fieldName]: _, ...rest } = item;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const { [fieldName]: _ignored, ...rest } = item;
   return rest;
 }
 
