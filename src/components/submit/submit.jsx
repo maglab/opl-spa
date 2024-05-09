@@ -36,7 +36,6 @@ export default function Submit() {
 
   const postHandler = (values) => {
     const formattedData = formatSubmitData(values);
-    console.log(formattedData);
     mutate(formattedData);
   };
 
