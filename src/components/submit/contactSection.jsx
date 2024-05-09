@@ -1,10 +1,19 @@
-import { Grid } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+
+import FormManagedCheckbox from "../common/formManagedCheckbox";
 import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
 import StandardSection from "../common/standardSection";
 
 export default function ContactSection() {
+  // Pass up the helper functions from the child form managed checkbox for flexible setting of the value.
+  const checkBoxHandler = (e, helpers) => {
+    const { checked } = e.target;
+    console.log(checked);
+    helpers.setValue(checked);
+  };
   return (
     <StandardSection header="Contact">
       <StandardGrid minor direction="row">
@@ -48,6 +57,34 @@ export default function ContactSection() {
             type="email"
             size="small"
           />
+        </Grid>
+        <Grid item>
+          <FormManagedCheckbox
+            name="notify_user"
+            checkboxValue
+            label="I agree to be emailed when this open problem is confirmed and published"
+            onChange={checkBoxHandler}
+          />
+        </Grid>
+        <Grid item>
+          <Typography>
+            By submitting any amount of your contact details you have read and
+            agree with our privacy policy.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography fontWeight="bold">
+            Read our{" "}
+            <Link
+              component={RouterLink}
+              to="../privacy-policy"
+              underline="hover"
+              color="primary.main"
+            >
+              privacy policy
+            </Link>{" "}
+            for information on how we handle this data.
+          </Typography>
         </Grid>
       </StandardGrid>
     </StandardSection>

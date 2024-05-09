@@ -7,15 +7,16 @@ const initialValues = {
   title: "",
   description: "",
   references: [], // DOI and PMID values
-  tags: [], // new
-  compounds: [], // new
-  species: [], // new
-  genes: [], // new
+  tags: [],
+  compounds: [],
+  species: [],
+  genes: [],
   first_name: "",
   last_name: "",
   organisation: "",
   job_field: "",
   email: "",
+  notify_user: false,
 };
 
 const referenceSchema = Yup.object().shape({
@@ -25,16 +26,14 @@ const referenceSchema = Yup.object().shape({
     .when("type", ([type], schema) => {
       switch (type) {
         case REFERENCE_TYPE_KEYS.pmid:
-          schema.matches(/^\d+$/, "Must be a valid PubMed ID");
-          return;
+          return schema.matches(/^\d+$/, "Must be a valid PubMed ID");
         case REFERENCE_TYPE_KEYS.doi:
-          schema.matches(
+          return schema.matches(
             /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i,
             "Must be a valid DOI"
           );
-          return;
         default:
-          throw new Error("Should not reach this line");
+          return schema; // No validation if type is missing or unknown
       }
     }),
 });
@@ -43,7 +42,17 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title must not be empty"),
   description: Yup.string().required("Description must not be empty"),
   references: Yup.array().of(referenceSchema),
-  email: Yup.string().email("Must be a valid email address"),
+  notify_user: Yup.boolean(),
+  email: Yup.string()
+    .email("Must be a valid email address")
+    .when("notify_user", {
+      is: true,
+      then: (schema) =>
+        schema.required(
+          "An email must be provided when agreeing to be notified."
+        ),
+      otherwise: (schema) => schema,
+    }),
   tags: Yup.array()
     .of(
       Yup.mixed().test(

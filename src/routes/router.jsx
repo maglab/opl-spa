@@ -5,6 +5,7 @@ import ContactUs from "../components/contactUs";
 import Details from "../components/details";
 import Hero from "../components/hero";
 import Layout from "../components/layout";
+import PrivacyPolicy from "../components/privacyPolicy";
 import Problems from "../components/problems/problems";
 import ScrollToTop from "../components/scrollToTop";
 import Submit from "../components/submit/submit";
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "team",

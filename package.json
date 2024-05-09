@@ -21,7 +21,7 @@
     "@tanstack/react-query": "^5.28.2",
     "axios": "^1.6.7",
     "citation-js": "^0.7.10",
-    "dompurify": "^3.0.11",
+    "dompurify": "^3.1.2",
     "dotenv": "^16.4.5",
     "formik": "^2.4.5",
     "html-react-parser": "^5.1.10",

@@ -3,6 +3,7 @@ import { Container } from "@mui/system";
 import { useMutation } from "@tanstack/react-query";
 import { Form } from "formik";
 import React, { useState } from "react";
+
 import { postProblem } from "../../apiNew/apiProblems";
 import dialogTextJson from "../../assets/dialog/submitOpenProblem.json";
 import Center from "../common/center";
@@ -35,6 +36,7 @@ export default function Submit() {
 
   const postHandler = (values) => {
     const formattedData = formatSubmitData(values);
+    console.log(formattedData);
     mutate(formattedData);
   };
 
