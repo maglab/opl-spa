@@ -9,7 +9,7 @@ function PrivacyPolicy() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("privacyPolicy.html")
+    fetch("public/privacyPolicy.html")
       .then((response) => response.text())
       .then((data) => {
         const sanitizedContent = DOMPurify.sanitize(data);
