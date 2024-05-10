@@ -2,6 +2,8 @@ import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import DOMPurify from "dompurify";
 import React, { useEffect, useState } from "react";
+// eslint-disable-next-line import/no-unresolved
+import privacyPolicy from "../assets/privacyPolicy.html?raw";
 
 function PrivacyPolicy() {
   const [htmlContent, setHtmlContent] = useState("");
@@ -9,18 +11,14 @@ function PrivacyPolicy() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/privacyPolicy.html")
-      .then((response) => response.text())
-      .then((data) => {
-        const sanitizedContent = DOMPurify.sanitize(data);
-        setHtmlContent(sanitizedContent);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-        setLoading(false);
-      });
-  }, []);
+    if (privacyPolicy) {
+      const sanitizedContent = DOMPurify.sanitize(privacyPolicy);
+      setHtmlContent(sanitizedContent);
+      setLoading(false);
+    } else {
+      setErrorMessage("Unable to fetch privacy policy.");
+    }
+  }, [setHtmlContent]);
 
   return (
     <Stack className="privacy-policy">
