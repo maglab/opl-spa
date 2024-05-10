@@ -62,7 +62,7 @@ export default function ContactSection() {
           <FormManagedCheckbox
             name="notify_user"
             checkboxValue
-            label="I agree to be emailed when this open problem is confirmed and published"
+            label="I agree to be emailed when this open problem is confirmed and published."
             onChange={checkBoxHandler}
           />
         </Grid>
