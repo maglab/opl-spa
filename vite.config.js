@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  assetsInclude: ["**/*.md", "**/*.html"],
+  assetsInclude: ["**/*.md"],
   server: {
     // this ensures that the browser opens upon server start
     open: true,
