@@ -53,18 +53,17 @@ const validationSchema = Yup.object().shape({
         ),
       otherwise: (schema) => schema,
     }),
-  tags: Yup.array()
-    .of(
-      Yup.mixed().test(
-        "is-string-or-object",
-        "Each tag must be either a string or an object",
-        (value) =>
-          typeof value === "string" ||
-          (typeof value === "object" && value !== null)
-      )
+  tags: Yup.array().of(
+    Yup.mixed().test(
+      "is-string-or-object",
+      "Each tag must be either a string or an object",
+      (value) =>
+        typeof value === "string" ||
+        (typeof value === "object" && value !== null)
     )
-    .required("At least one tag is required")
-    .min(1, "At least one tag is required"),
+  ),
+  // .required("At least one tag is required")
+  // .min(1, "At least one tag is required")
   compounds: Yup.array().of(
     Yup.mixed().test(
       "is-string-or-object",
