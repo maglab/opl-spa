@@ -16,27 +16,41 @@ import DetailsSection from "./detailsSection";
 import FormManager from "./formManager";
 import ReferencesSection from "./referencesSection";
 
+function partialFormReset(setFieldValue) {
+  setFieldValue("title", "");
+  setFieldValue("description", "");
+  setFieldValue("references", []);
+  setFieldValue("tags", []);
+  setFieldValue("compounds", []);
+  setFieldValue("species", []);
+  setFieldValue("genes", []);
+}
+
 export default function Submit() {
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [dialogText, setDialogText] = useState({ title: "", message: "" });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (postData) => postProblem(postData),
+    mutationFn: (data) => {
+      const { formattedData } = data;
+      return postProblem(formattedData);
+    },
     onError: () => {
       setOpenErrorDialog(true);
       const { title, message } = dialogTextJson.error;
       setDialogText({ title, message });
     },
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       setOpenErrorDialog(true);
       const { title, message } = dialogTextJson.success;
       setDialogText({ title, message });
+      partialFormReset(variables.setFieldValue);
     },
   });
 
-  const postHandler = (values) => {
+  const postHandler = (values, { setFieldValue }) => {
     const formattedData = formatSubmitData(values);
-    mutate(formattedData);
+    mutate({ formattedData, setFieldValue });
   };
 
   return (
