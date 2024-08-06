@@ -19,7 +19,6 @@ export default function DetailsSection() {
         <FormManagedTextField
           name="description"
           label="Description"
-          required
           multiline
           minRows={6}
         />
