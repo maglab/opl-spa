@@ -40,7 +40,7 @@ const referenceSchema = Yup.object().shape({
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title must not be empty"),
-  description: Yup.string().required("Description must not be empty"),
+  description: Yup.string(),
   references: Yup.array().of(referenceSchema),
   notify_user: Yup.boolean(),
   email: Yup.string()
