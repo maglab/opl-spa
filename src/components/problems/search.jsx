@@ -19,6 +19,7 @@ import useExtendedTheme from "../../theme/useExtendedTheme";
 import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
+import { objectToQueryParam, queryParamToObject } from "./queryFormat";
 
 const initialValues = { subject: SEARCH_SUBJECT_KEYS.title, text: "" };
 const criteriaColors = {
@@ -30,16 +31,6 @@ const criteriaColors = {
   [SEARCH_SUBJECT_KEYS.species]: orange[200],
   [SEARCH_SUBJECT_KEYS.compound]: teal[200],
 };
-
-const queryParamToObject = (param) => {
-  const sepIndex = param.indexOf(":");
-  return {
-    subject: param.substring(0, sepIndex),
-    text: param.substring(sepIndex + 1),
-  };
-};
-
-const objectToQueryParam = (obj) => `${obj.subject}:${obj.text}`;
 
 export default function Search() {
   const theme = useExtendedTheme();

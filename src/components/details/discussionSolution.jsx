@@ -33,11 +33,8 @@ import discussionDescription from "../../assets/descriptions/discussion.json";
 import solutionDescription from "../../assets/descriptions/solution.json";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
 import { PostContext, PostProvider } from "../../contexts/postCommentContext";
+import { formatFullName, setDate } from "../../utilities/dataManipulation";
 import newRandomId from "../../utilities/randomId";
-import {
-  formatFullName,
-  setDate,
-} from "../../utils/functions/dataManipulation";
 import FormManagedTextField from "../common/formManagedTextField";
 import ReferenceItem from "../submit/referenceItem";
 import CommentFormManager from "./commentFormManager";

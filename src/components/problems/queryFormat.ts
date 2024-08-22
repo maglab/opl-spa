@@ -5,6 +5,11 @@ interface QueryType {
   value: string;
 }
 
+interface QueryObject {
+  subject: string;
+  text: string;
+}
+
 interface QueryResult {
   title: string;
   references: string[];
@@ -82,6 +87,18 @@ function updateResult(
   }
   return updateFunction(result, value);
 }
+
+const objectToQueryParam = (obj: QueryObject) => `${obj.subject}:${obj.text}`;
+
+const queryParamToObject = (param: string): QueryObject => {
+  const sepIndex = param.indexOf(":");
+  return {
+    subject: param.substring(0, sepIndex),
+    text: param.substring(sepIndex + 1),
+  };
+};
+
+export { objectToQueryParam, queryParamToObject };
 
 export default function formatEntries(entries: string[]): QueryResult {
   return entries.reduce((acc, entry) => {

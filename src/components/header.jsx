@@ -94,13 +94,6 @@ export default function Header() {
                   <Button component={RouterLink} to="/" variant="outlined">
                     Home
                   </Button>
-                  {/* {isAuthenticated ? (
-                    <AccountButton />
-                  ) : (
-                    <Button onClick={() => loginWithRedirect()}>
-                      Login / Register
-                    </Button>
-                  )} */}
                 </StandardStack>
               </Grid>
             </StandardGrid>

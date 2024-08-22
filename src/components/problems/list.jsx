@@ -10,21 +10,22 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { original as ori } from "immer";
 import React, { useContext, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+
 import OPEN_PROBLEM_KEYS from "../../constants/problemDataKeys";
 import SECTION_KEYS from "../../constants/problemDetailsSectionKeys";
+import SEARCH_SUBJECT_KEYS from "../../constants/problemQuerySubjectKeys";
 import QueryParamsContext from "../../contexts/queryParamsContext";
 import StateContext from "../../contexts/stateContext";
-import useQueryParams from "../../hooks/useQueryParams";
 import { useGetProblems } from "../../queries/problems";
-import { problemsQueryScheme } from "../../routes/querySchemes";
 import Center from "../common/center";
 import ProblemTag from "../common/problemTag";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
 import { UserInformation } from "../details/postMetaData";
-import formatEntries from "./queryFormat";
+import formatEntries, { objectToQueryParam } from "./queryFormat";
 import ReportForm from "./report";
 
 function ProblemCard({
@@ -35,6 +36,7 @@ function ProblemCard({
   contact,
   discussionCount,
   solutionCount,
+  onTagClick,
 }) {
   return (
     <Paper sx={{ width: "100%" }}>
@@ -88,7 +90,10 @@ function ProblemCard({
               {tags
                 ? tags.map((tag) => (
                     <Grid item key={tag.id} xs="auto">
-                      <ProblemTag label={tag.title} />
+                      <ProblemTag
+                        label={tag.title}
+                        onClick={() => onTagClick(tag.title)}
+                      />
                     </Grid>
                   ))
                 : undefined}
@@ -109,16 +114,16 @@ function calculatePagination(count, view) {
 }
 
 function OpenProblemList() {
-  const { editQueryParams } = useContext(QueryParamsContext);
-  const { queryParams } = useQueryParams(problemsQueryScheme);
+  const { queryParams, editQueryParams } = useContext(QueryParamsContext);
+  // const { queryParams } = useQueryParams(problemsQueryScheme);
   const { pageNum, sorting, view } = useContext(StateContext);
-
   const query = useMemo(() => {
     if (queryParams.search) {
       return formatEntries(queryParams.search);
     }
     return {};
   }, [queryParams]);
+
   const getProblemsState = useGetProblems({
     query,
     pageNum,
@@ -130,6 +135,19 @@ function OpenProblemList() {
   const handlePageChange = (_, newPage) => {
     editQueryParams((draft) => {
       draft.pageNum = newPage;
+    });
+  };
+
+  const handleTagClick = (tagTitle) => {
+    const newCriteria = { subject: SEARCH_SUBJECT_KEYS.tag, text: tagTitle }; // Assuming "tag" is the subject
+    editQueryParams((draft) => {
+      const original = ori(draft);
+      const param = objectToQueryParam(newCriteria);
+      if (!Array.isArray(original.search)) {
+        draft.search = [param];
+      } else if (!original.search.includes(param)) {
+        draft.search.push(param);
+      }
     });
   };
 
@@ -161,6 +179,7 @@ function OpenProblemList() {
               solutionCount={openProblem[OPEN_PROBLEM_KEYS.solutionCount]}
               discussionCount={openProblem[OPEN_PROBLEM_KEYS.discussionCount]}
               contact={openProblem[OPEN_PROBLEM_KEYS.contact]}
+              onTagClick={handleTagClick}
             />
           ))
         )}

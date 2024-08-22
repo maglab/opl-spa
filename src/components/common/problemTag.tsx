@@ -6,7 +6,7 @@ import useExtendedTheme from "../../theme/useExtendedTheme";
 export default function ProblemTag(props: ChipProps) {
   const theme = useExtendedTheme();
   const mergedProps = merge(
-    { sx: { bgcolor: theme.palette.problemTag.main } },
+    { sx: { bgcolor: theme.palette.problemTag.main }, clickable: true }, // Ensure the Chip is clickable
     props
   );
 
