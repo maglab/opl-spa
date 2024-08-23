@@ -115,7 +115,6 @@ function calculatePagination(count, view) {
 
 function OpenProblemList() {
   const { queryParams, editQueryParams } = useContext(QueryParamsContext);
-  // const { queryParams } = useQueryParams(problemsQueryScheme);
   const { pageNum, sorting, view } = useContext(StateContext);
   const query = useMemo(() => {
     if (queryParams.search) {
@@ -139,7 +138,7 @@ function OpenProblemList() {
   };
 
   const handleTagClick = (tagTitle) => {
-    const newCriteria = { subject: SEARCH_SUBJECT_KEYS.tag, text: tagTitle }; // Assuming "tag" is the subject
+    const newCriteria = { subject: SEARCH_SUBJECT_KEYS.tag, text: tagTitle };
     editQueryParams((draft) => {
       const original = ori(draft);
       const param = objectToQueryParam(newCriteria);
