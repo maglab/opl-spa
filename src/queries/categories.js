@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 
-import getCategories from "../apiNew/apiCategories";
+import { getCategories, getCategory } from "../apiNew/apiCategories";
 
-function useCategories() {
+export function useCategories() {
   return useQuery({
     queryKey: ["categories"], // Add a unique key for this query
     queryFn: getCategories,
   });
 }
 
-export default useCategories;
+export function useCategory(id) {
+  return useQuery({
+    queryKey: ["category", id],
+    queryFn: () => getCategory(id),
+  });
+}

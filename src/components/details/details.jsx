@@ -22,7 +22,7 @@ export default function Details() {
   const problem = useMemo(() => {
     if (getDetailState.data?.data) {
       const details = getDetailState.data.data;
-      const { genes, species, compounds } = details;
+      const { genes, species, compounds, categories } = details;
       return {
         ...details,
         upstream: details.parent_problem ? [details.parent_problem] : [],
@@ -32,6 +32,7 @@ export default function Details() {
     }
     return null;
   }, [getDetailState]);
+
   const compact = useMediaQuery(theme.breakpoints.up("md"));
   const scrollerRefs = useRef({});
   const addScroller = useCallback((key, el, additionalAction) => {
@@ -50,7 +51,7 @@ export default function Details() {
 
   if (problem) {
     return (
-      <StandardGrid main >
+      <StandardGrid main>
         {compact && (
           <Grid item md="auto" xs={12}>
             <Box
@@ -94,8 +95,9 @@ export default function Details() {
                 upstream={problem.upstream}
                 downstream={problem.downstream}
                 addScroller={addScroller}
+                category={problem.categories}
               />
-              <DiscussionSolution addScroller={addScroller}/>
+              <DiscussionSolution addScroller={addScroller} />
             </StandardStack>
           </StandardStack>
         </Grid>

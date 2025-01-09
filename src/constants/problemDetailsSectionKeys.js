@@ -8,8 +8,6 @@ const SECTION_KEYS = {
   solutions: "solutions",
   discussion: "discussion",
   relatedProblems: "relatedProblems",
-  upstreamProblems: "upstreamProblems",
-  downstreamProblems: "downstreamProblems",
 };
 
 export default SECTION_KEYS;

@@ -8,8 +8,9 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 
+import CATEGORY_DATA_KEYS from "../../constants/categoryDataKeys";
 import OPEN_PROBLEM_KEYS from "../../constants/problemDataKeys";
-import useCategories from "../../queries/categories";
+import { useCategories } from "../../queries/categories";
 import StandardSection from "../common/standardSection";
 import StandardStack from "../common/standardStack";
 
@@ -25,7 +26,7 @@ function CategoryHeader() {
   return (
     <Paper>
       <StandardStack direction="column" main p>
-        <Typography variant="h3">Browse Open Problems by Category </Typography>
+        <Typography variant="h4">Browse Open Problems by Category </Typography>
       </StandardStack>
     </Paper>
   );
@@ -43,7 +44,7 @@ function CategoriesList({ category }) {
               to={`/open-problems/${openProblem[OPEN_PROBLEM_KEYS.id]}`}
               key={openProblem.id}
             >
-              <ListItemText primary={openProblem.title} />
+              <ListItemText primary={openProblem[OPEN_PROBLEM_KEYS.title]} />
             </ListItemButton>
           ))}
       </List>
@@ -65,7 +66,10 @@ function Categories() {
       <Paper>
         {categoriesState.isSuccess &&
           categoriesState.data.data.map((category) => (
-            <CategoriesList category={category} key={category.id} />
+            <CategoriesList
+              category={category}
+              key={category[CATEGORY_DATA_KEYS.id]}
+            />
           ))}
       </Paper>
     </StandardStack>
