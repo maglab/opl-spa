@@ -22,7 +22,7 @@ export default function Details() {
   const problem = useMemo(() => {
     if (getDetailState.data?.data) {
       const details = getDetailState.data.data;
-      const { genes, species, compounds, categories } = details;
+      const { genes, species, compounds } = details;
       return {
         ...details,
         upstream: details.parent_problem ? [details.parent_problem] : [],

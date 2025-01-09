@@ -24,7 +24,6 @@ import Center from "../common/center";
 import ProblemTag from "../common/problemTag";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
-import { UserInformation } from "../details/postMetaData";
 import formatEntries, { objectToQueryParam } from "./queryFormat";
 import ReportForm from "./report";
 
@@ -33,7 +32,6 @@ function ProblemCard({
   description,
   id,
   tags,
-  contact,
   discussionCount,
   solutionCount,
   onTagClick,
@@ -97,9 +95,6 @@ function ProblemCard({
                     </Grid>
                   ))
                 : undefined}
-            </Grid>
-            <Grid item>
-              <UserInformation contact={contact} />
             </Grid>
           </StandardStack>
         </Grid>
