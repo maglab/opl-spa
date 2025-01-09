@@ -11,12 +11,13 @@ import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
+import { defaultProblemUrl } from "../queries/queryKeys";
 import DefaultMargin from "./common/defaultMargin";
 import StandardGrid from "./common/standardGrid";
 import StandardStack from "./common/standardStack";
 
 const BUTTON_OPTIONS = ["Problems", "Problem Categories"];
-const ROUTES = ["/open-problems", "/categories"];
+const ROUTES = [defaultProblemUrl, "/categories"];
 
 function SplitButtonProblems() {
   const [open, setOpen] = React.useState(false);

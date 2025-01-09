@@ -137,8 +137,11 @@ function OpenProblemList() {
     });
   };
 
-  const handleTagClick = (tagTitle) => {
-    const newCriteria = { subject: SEARCH_SUBJECT_KEYS.tag, text: tagTitle };
+  const handleCategoryClick = (categoryTitle) => {
+    const newCriteria = {
+      subject: SEARCH_SUBJECT_KEYS.categories,
+      text: categoryTitle,
+    };
     editQueryParams((draft) => {
       const original = ori(draft);
       const param = objectToQueryParam(newCriteria);
@@ -178,7 +181,7 @@ function OpenProblemList() {
               solutionCount={openProblem[OPEN_PROBLEM_KEYS.solutionCount]}
               discussionCount={openProblem[OPEN_PROBLEM_KEYS.discussionCount]}
               contact={openProblem[OPEN_PROBLEM_KEYS.contact]}
-              onTagClick={handleTagClick}
+              onTagClick={handleCategoryClick}
             />
           ))
         )}

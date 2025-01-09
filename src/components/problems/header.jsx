@@ -19,6 +19,7 @@ function Header() {
   const sortingChangehandler = (_, target) => {
     editQueryParams((draft) => {
       draft.sorting = target;
+      draft.pageNum = 1;
     });
   };
   return (

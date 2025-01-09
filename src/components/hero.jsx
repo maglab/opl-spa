@@ -4,6 +4,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import heroImage from "../assets/images/question2.png";
 import mainPageTexts from "../assets/mainPageTexts.json";
+import { defaultProblemUrl } from "../queries/queryKeys";
 
 export default function Hero() {
   return (
@@ -46,7 +47,7 @@ export default function Hero() {
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Button
                     component={RouterLink}
-                    to="/open-problems"
+                    to={defaultProblemUrl}
                     variant="contained"
                     size="large"
                     sx={{ minWidth: 180 }}

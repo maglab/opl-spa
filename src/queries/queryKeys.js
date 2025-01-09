@@ -8,4 +8,6 @@ const QUERY_KEYS = {
   getNcbiGenes: "getNcbiGenes",
 };
 
+export const defaultProblemUrl = "/open-problems?sorting=alphabetical";
+
 export default QUERY_KEYS;
