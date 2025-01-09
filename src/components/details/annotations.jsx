@@ -29,8 +29,11 @@ export default function Annotations({
     .filter((species_entry) => species_entry[SPECIES_DATA_KEYS.ncbiTaxonId])
     .map((species_entry) => species_entry[SPECIES_DATA_KEYS.ncbiTaxonId]);
 
+  const isOpen =
+    compoundItems.length > 0 || geneItems.length > 0 || speciesItems.length > 0;
+
   return (
-    <StandardSection header="Annotations">
+    <StandardSection header="Annotations" isOpen={isOpen}>
       <Referenceable
         ref={(el) => addScroller(SECTION_KEYS.compoundAnnotations, el)}
       >
