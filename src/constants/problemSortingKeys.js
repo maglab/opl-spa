@@ -1,5 +1,5 @@
 const SORTING_KEYS = {
-  top: "top",
+  alphabetical: "alphabetical",
   latest: "latest",
   answered: "answered",
 };

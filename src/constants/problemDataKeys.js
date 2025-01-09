@@ -10,6 +10,7 @@ const OPEN_PROBLEM_KEYS = {
   genes: "genes",
   discussionCount: "discussion_count",
   solutionCount: "solution_count",
+  categories: "categories",
 };
 
 export default OPEN_PROBLEM_KEYS;

@@ -5,6 +5,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useAsync, useDebounce } from "react-use";
 import apiReferences from "../../api/apiReferences";
+
 import REFERENCE_TYPE_KEYS from "../../constants/referenceTypes";
 import useExtendedTheme from "../../theme/useExtendedTheme";
 import newRandomId from "../../utilities/randomId";
@@ -23,6 +24,7 @@ export default function ReferenceItem({ index, remove }) {
     if (!type || !value) return null;
 
     const response = await apiReferences.verifyReference({ type, value });
+
     const { data } = response;
     if (!data || !response.ok) {
       setError("Unable to retrieve reference");

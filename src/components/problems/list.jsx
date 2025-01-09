@@ -173,7 +173,7 @@ function OpenProblemList() {
               key={openProblem[OPEN_PROBLEM_KEYS.id]}
               title={openProblem[OPEN_PROBLEM_KEYS.title]}
               id={openProblem[OPEN_PROBLEM_KEYS.id]}
-              tags={openProblem[OPEN_PROBLEM_KEYS.tags]}
+              tags={openProblem[OPEN_PROBLEM_KEYS.categories]}
               description={openProblem[OPEN_PROBLEM_KEYS.description]}
               solutionCount={openProblem[OPEN_PROBLEM_KEYS.solutionCount]}
               discussionCount={openProblem[OPEN_PROBLEM_KEYS.discussionCount]}

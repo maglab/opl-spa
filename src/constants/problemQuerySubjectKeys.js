@@ -6,6 +6,7 @@ const SEARCH_SUBJECT_KEYS = {
   species: "Species",
   compound: "Compound",
   tag: "Tag",
+  category: "Category",
 };
 
 export default SEARCH_SUBJECT_KEYS;

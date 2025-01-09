@@ -13,8 +13,8 @@ import OpenProblemList from "./list";
 
 const initialState = {
   pageNum: 1,
-  sorting: SORTING_KEYS.latest,
-  view: VIEW_KEYS.card,
+  sorting: SORTING_KEYS.alphabetical,
+  view: VIEW_KEYS.card, // Card view only used for now.
 };
 
 function Problems() {
