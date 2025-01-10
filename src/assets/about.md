@@ -1,19 +1,26 @@
-# Unraveling the Mysteries of Aging: A Collaborative Journey
+# About the Longevity Knowledge App
 
-Despite considerable advances in understanding the biological underpinnings of longevity, many questions remain unanswered, highlighting the vast uncharted territories of aging research. Our initiative, "An online comprehensive compilation of open problems in longevity science," aims to illuminate these mysteries by fostering a collaborative environment where users can share insights, challenges, and controversies in the biology of aging.
+The **Longevity Knowledge App** is a dedicated platform for exploring and addressing the most pressing challenges in ageing and longevity science. Born from the need to foster collaboration and innovation in this rapidly evolving field, our project compiles, organises, and presents **100 open problems** in the current field of ageing and longevity.
 
-## A Framework for Collective Inquiry
+## Aims
 
-At the heart of our project lies the ambition to create a dynamic online platform dedicated to aggregating and curating the open questions that define the current landscape of aging and longevity research. By making this resource freely available, we aim to democratize access to information and empower individuals from diverse backgrounds to contribute to the discourse on aging.
+We aim to:
 
-## Charting the Course: The Technical Blueprint
+- Highlight unanswered questions in longevity science.
+- Facilitate collaboration by connecting researchers, ideas, and resources.
+- Provide an interactive and accessible resource for both scientists and the public.
 
-The technical foundation of our project is based on developing a relational database that catalogues the myriad open problems, questions, and challenges pervasive in longevity science. An interactive interface will serve as the portal through which users can navigate this complex web of information, offering an unprecedented level of accessibility and engagement with the content. Our commitment to meticulous curation, relevance, accuracy, and the elimination of biases ensures that this platform will stand as a testament to the collective wisdom of the research community.
+## How It Began
 
-## The Path Forward: Milestones and Vision
+This project was shaped by contributions from the scientific community through an open submission platform and a collaborative conference with ageing experts. Each problem was rigorously refined and validated using a combination of community input, manual collaboration as well as natural language processing.
 
-Our timeline outlines a series of milestones that guide our progress from the initial literature review and community engagement to the culmination of a comprehensive online repository. The phased approach ensures a systematic compilation, curation, and annotation of the open questions in longevity science, underscored by a commitment to community feedback and collaborative improvement. A hybrid workshop and the publication of an open-access journal paper are envisioned as pivotal moments for consolidating community input and showcasing the results of our collective efforts.
+## What You'll Find
 
-# Conclusion
+On our platform, you can:
 
-The "Open Problems in Longevity" project is a significant step forward in longevity science. By bridging knowledge gaps and fostering inclusive scientific exchange, we aim to accelerate progress in understanding aging.
+- **Explore** the 100 open problems, organised into thematic categories such as ageing mechanisms, biomarkers, interventions, and more.
+- **Contribute** by submitting your own ideas or proposing solutions to existing challenges.
+
+## Why It Matters
+
+Longevity science seeks to address one of the most fundamental challenges in biology: understanding the mechanisms of ageing and developing interventions to improve both lifespan and healthspan. By identifying and prioritising these open problems, we aim to guide research efforts, bridge knowledge gaps, and foster interdisciplinary collaboration. Addressing these challenges is essential to unlocking breakthroughs that could redefine the way we approach ageing and age-related diseases.

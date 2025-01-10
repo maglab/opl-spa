@@ -2,10 +2,7 @@ import { Typography } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import React from "react";
 import contactKeys from "../../constants/userKeys";
-import {
-  formatFullName,
-  setDate,
-} from "../../utils/functions/dataManipulation";
+import { formatFullName, setDate } from "../../utilities/dataManipulation";
 import StandardStack from "../common/standardStack";
 
 function PostMetaData({ postData }) {

@@ -1,9 +1,10 @@
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import heroImage from "../assets/images/question2.png";
 import mainPageTexts from "../assets/mainPageTexts.json";
+import { defaultProblemUrl } from "../queries/queryKeys";
 
 export default function Hero() {
   return (
@@ -46,7 +47,7 @@ export default function Hero() {
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Button
                     component={RouterLink}
-                    to="/open-problems"
+                    to={defaultProblemUrl}
                     variant="contained"
                     size="large"
                     sx={{ minWidth: 180 }}
@@ -55,6 +56,20 @@ export default function Hero() {
                   </Button>
                   <Typography fontWeight="bold">
                     {mainPageTexts.problemButton}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Button
+                    component={RouterLink}
+                    to="/categories"
+                    variant="contained"
+                    size="large"
+                    sx={{ minWidth: 180 }}
+                  >
+                    Categories
+                  </Button>
+                  <Typography fontWeight="bold">
+                    {mainPageTexts.categoryButton}
                   </Typography>
                 </Stack>
                 <Stack direction="row" spacing={2} alignItems="center">
@@ -73,8 +88,10 @@ export default function Hero() {
                 </Stack>
               </Stack>
             </Stack>
+
+            <Divider />
             <Stack spacing={2}>
-              <Typography>Looking for something else?</Typography>
+              <Typography variant="h6">Looking for something else?</Typography>
               <Stack spacing={2}>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Button

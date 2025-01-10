@@ -1,14 +1,11 @@
-import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { TabContext, TabList } from "@mui/lab";
 import {
   Autocomplete,
-  Box,
   Chip,
   Grid,
   Tab,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useField } from "formik";
 import { matchSorter } from "match-sorter";
@@ -194,44 +191,6 @@ function Tags() {
   );
 }
 
-function TrendingTags() {
-  const { data, error } = useGetAnnotationEntries("tag");
-  const top10Tags =
-    data?.data?.slice(0, 10).filter((tag) => tag.open_problem_count > 0) || [];
-  const theme = useTheme();
-
-  return (
-    <Box border={1} borderRadius={1} borderColor={theme.palette.divider}>
-      <StandardGrid minor p={1} direction="column">
-        <Grid item>
-          <Typography
-            sx={{ display: "flex", alignItems: "center" }}
-            variant="subtitle1"
-          >
-            <WhatshotIcon color="primary" />
-            Trending tags
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Box>
-            {top10Tags &&
-              top10Tags.map((tag) => (
-                <Chip
-                  key={tag[TAGS_DATA_KEYS.id]}
-                  label={tag[TAGS_DATA_KEYS.title]}
-                  sx={{ m: 0.5 }}
-                />
-              ))}
-            {error && (
-              <Typography color="warning">Error in retrieving tags.</Typography>
-            )}
-          </Box>
-        </Grid>
-      </StandardGrid>
-    </Box>
-  );
-}
-
 function AnnotationPanel({
   tabValue,
   header,
@@ -288,7 +247,6 @@ function AnnotationTabs() {
         description={displayText.tags.description}
       >
         <Tags />
-        <TrendingTags />
       </AnnotationPanel>
       <AnnotationPanel
         tabValue="compounds"

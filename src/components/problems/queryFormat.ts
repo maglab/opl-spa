@@ -5,24 +5,25 @@ interface QueryType {
   value: string;
 }
 
+interface QueryObject {
+  subject: string;
+  text: string;
+}
+
 interface QueryResult {
   title: string;
-  references: string[];
-  tags: string[];
   compounds: string[];
   species: string[];
   genes: string[];
-  authors: string[];
+  categories: string[];
 }
 
 const defaultResult: QueryResult = {
   title: "",
-  references: [],
-  tags: [],
   compounds: [],
   species: [],
   genes: [],
-  authors: [],
+  categories: [],
 };
 
 function parseEntry(entry: string): QueryType {
@@ -39,21 +40,9 @@ function updateTitle(currentTitle: string, value: string): string {
 type UpdaterFunction = (res: QueryResult, value: string) => QueryResult;
 
 const updater: { [key: string]: UpdaterFunction } = {
-  [SEARCH_SUBJECT_KEYS.reference]: (res: QueryResult, value: string) => ({
-    ...res,
-    references: appendToList(res.references, value),
-  }),
   [SEARCH_SUBJECT_KEYS.title]: (res: QueryResult, value: string) => ({
     ...res,
     title: updateTitle(res.title, value),
-  }),
-  [SEARCH_SUBJECT_KEYS.author]: (res: QueryResult, value: string) => ({
-    ...res,
-    authors: appendToList(res.authors, value),
-  }),
-  [SEARCH_SUBJECT_KEYS.tag]: (res: QueryResult, value: string) => ({
-    ...res,
-    tags: appendToList(res.tags, value),
   }),
   [SEARCH_SUBJECT_KEYS.compound]: (res: QueryResult, value: string) => ({
     ...res,
@@ -67,6 +56,7 @@ const updater: { [key: string]: UpdaterFunction } = {
     ...res,
     genes: appendToList(res.genes, value),
   }),
+  [SEARCH_SUBJECT_KEYS.categories]: (res: QueryResult, value: string) => ({ ...res, categories: appendToList(res.categories, value) })
   // Add other keys similarly
 };
 
@@ -82,6 +72,18 @@ function updateResult(
   }
   return updateFunction(result, value);
 }
+
+const objectToQueryParam = (obj: QueryObject) => `${obj.subject}:${obj.text}`;
+
+const queryParamToObject = (param: string): QueryObject => {
+  const sepIndex = param.indexOf(":");
+  return {
+    subject: param.substring(0, sepIndex),
+    text: param.substring(sepIndex + 1),
+  };
+};
+
+export { objectToQueryParam, queryParamToObject };
 
 export default function formatEntries(entries: string[]): QueryResult {
   return entries.reduce((acc, entry) => {

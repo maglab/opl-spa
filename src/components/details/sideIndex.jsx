@@ -6,7 +6,6 @@ import IndexItem from "./indexItem";
 
 export default function SideIndex({ problem, scroller }) {
   const [openAnnotations, setOpenAnnotations] = useState(true);
-  const [openRelatedProblems, setOpenRelatedProblems] = useState(true);
 
   return (
     <Paper>
@@ -64,11 +63,18 @@ export default function SideIndex({ problem, scroller }) {
         <>
           <IndexItem
             label="Related Problems"
-            decorator={openRelatedProblems ? <ExpandLess /> : <ExpandMore />}
-            onClick={() => setOpenRelatedProblems(!openRelatedProblems)}
+            // decorator={openRelatedProblems ? <ExpandLess /> : <ExpandMore />}
+            onClick={() => scroller(SECTION_KEYS.relatedProblems)}
           />
-          <Collapse in={openRelatedProblems} unmountOnExit>
+          {/* <Collapse in={openRelatedProblems} unmountOnExit>
             <List disablePadding>
+              {problem[OPEN_PROBLEM_KEYS.categories].map((category) => (
+                <IndexItem
+                  key={category[CATEGORY_DATA_KEYS.id]}
+                  label={category[CATEGORY_DATA_KEYS.title]}
+                />
+              ))}
+
               {problem.upstream.length ? (
                 <IndexItem
                   label="Upstream"
@@ -86,7 +92,7 @@ export default function SideIndex({ problem, scroller }) {
                 />
               ) : undefined}
             </List>
-          </Collapse>
+          </Collapse> */}
         </>
         <IndexItem
           label="Solutions"

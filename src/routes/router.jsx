@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import About from "../components/about";
+import Categories from "../components/categories/categories";
 import ContactUs from "../components/contactUs";
 import Details from "../components/details";
 import Hero from "../components/hero";
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/open-problems",
         element: <Problems />,
+      },
+      {
+        path: "/categories",
+        element: <Categories />,
       },
       {
         path: "submit",

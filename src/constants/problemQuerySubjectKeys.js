@@ -1,11 +1,14 @@
+// Commented out subjects that are not in use now but may be in the future.
+
 const SEARCH_SUBJECT_KEYS = {
   title: "Title",
-  reference: "DOI",
+  // reference: "DOI",
   gene: "Gene symbol",
-  author: "Author",
+  // author: "Author",
   species: "Species",
   compound: "Compound",
-  tag: "Tag",
+  // tag: "Tag",
+  categories: "Category",
 };
 
 export default SEARCH_SUBJECT_KEYS;

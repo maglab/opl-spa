@@ -17,14 +17,16 @@ import StandardStack from "./standardStack";
 interface StandardCardProps {
   header?: string;
   children?: React.ReactNode;
+  isOpen: boolean;
 }
 
 export default function StandardSection({
   header,
   children, // children must be deconstructed here otherwise React will thinks you are iterating them and give you key error
+  isOpen = true,
 }: StandardCardProps) {
   const theme = useExtendedTheme();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(isOpen);
 
   return (
     <Box>

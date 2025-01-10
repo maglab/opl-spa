@@ -11,7 +11,7 @@ const apiAnnotations = {
   getAnnotationDetails: async (params) => {
     const { annotation, annotationId } = params;
     return apiRequest(() =>
-      apiClient.get(`annotations/${annotation}/${annotationId}`),
+      apiClient.get(`annotations/${annotation}/${annotationId}`)
     );
   },
 
@@ -23,12 +23,18 @@ const apiAnnotations = {
    * @param {boolean} all - Flag to retrieve all annotations (defaults to false).
    * @returns {Promise} A promise that resolves with the annotations.
    */
-  getAnnotationsForProblem: async ({annotation=null, id=null, all, fields=null}) => {
-    const path = all === true
-      ? `annotations/all/${id}`
-      : `annotations/${annotation}/filter/by-problem:${id}`;
+  getAnnotationsForProblem: async ({
+    annotation = null,
+    id = null,
+    all,
+    fields = null,
+  }) => {
+    const path =
+      all === true
+        ? `annotations/all/${id}`
+        : `annotations/${annotation}/filter/by-problem:${id}`;
     const queryParams = fields ? { fields: fields.join(",") } : {};
-    return apiClient.get(path, {params:queryParams})
+    return apiClient.get(path, { params: queryParams });
   },
 
   /**
@@ -42,8 +48,8 @@ const apiAnnotations = {
     const { annotation, annotationId } = params;
     return apiRequest(() =>
       apiClient.get(
-        `annotations/${annotation}/filter/by-annotation:${annotationId}`,
-      ),
+        `annotations/${annotation}/filter/by-annotation:${annotationId}`
+      )
     );
   },
 

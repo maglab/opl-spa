@@ -1,52 +1,108 @@
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { AppBar, Button, Grid, Link, Stack, Typography } from "@mui/material";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import Image from "mui-image";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import logoSvg from "../assets/svg/OpenLongevityLogo.svg";
+import { defaultProblemUrl } from "../queries/queryKeys";
 import DefaultMargin from "./common/defaultMargin";
 import StandardGrid from "./common/standardGrid";
 import StandardStack from "./common/standardStack";
 
-// function AccountButton() {
-//   const [anchorElement, setAnchorElement] = useState(null);
-//   const open = Boolean(anchorElement);
-//   const handleClick = (event) => {
-//     setAnchorElement(event.currentTarget);
-//   };
-//   const handleClose = () => {
-//     setAnchorElement(null);
-//   };
+const BUTTON_OPTIONS = ["Problems", "Problem Categories"];
+const ROUTES = [defaultProblemUrl, "/categories"];
 
-//   const { user, logout } = useAuth0();
-//   const username = user.name;
-//   return (
-//     <StandardStack>
-//       <Button
-//         startIcon={<AccountCircleIcon />}
-//         onClick={handleClick}
-//         variant="outlined"
-//       >
-//         {username}
-//       </Button>
-//       <Menu
-//         MenuListProps={{
-//           "aria-labelledby": "basic-button",
-//           sx: { width: anchorElement && anchorElement.offsetWidth },
-//         }}
-//         anchorEl={anchorElement}
-//         open={open}
-//         onClose={handleClose}
-//         sx={{ width: "100%" }}
-//       >
-//         <MenuItem onClick={logout}>Logout</MenuItem>
-//       </Menu>
-//     </StandardStack>
-//   );
-// }
+function SplitButtonProblems() {
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setOpen(false);
+  };
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <ButtonGroup
+        variant="contained"
+        ref={anchorRef}
+        aria-label="Button group with a nested menu"
+      >
+        <Button component={RouterLink} to={ROUTES[selectedIndex]}>
+          {BUTTON_OPTIONS[selectedIndex]}
+        </Button>
+        <Button
+          size="small"
+          aria-controls={open ? "split-button-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="menu"
+          onClick={handleToggle}
+        >
+          <ArrowDropDownIcon />
+        </Button>
+      </ButtonGroup>
+      <Popper
+        sx={{ zIndex: 1 }}
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            in={TransitionProps.in}
+            onEnter={TransitionProps.onEnter}
+            onExited={TransitionProps.onExited}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList id="split-button-menu" autoFocusItem>
+                  {BUTTON_OPTIONS.map((option, index) => (
+                    <MenuItem
+                      key={option}
+                      disabled={index === 2} // Example logic to disable an option
+                      selected={index === selectedIndex}
+                      onClick={(event) => handleMenuItemClick(event, index)}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </>
+  );
+}
 
 export default function Header() {
-  // const { isAuthenticated, loginWithRedirect } = useAuth0();
-
   return (
     <AppBar position="static" sx={{ bgcolor: "common.white" }}>
       <DefaultMargin py={0.5}>
@@ -84,23 +140,10 @@ export default function Header() {
                   >
                     Submit
                   </Button>
-                  <Button
-                    component={RouterLink}
-                    to="/open-problems"
-                    variant="contained"
-                  >
-                    Problems
-                  </Button>
+                  <SplitButtonProblems />
                   <Button component={RouterLink} to="/" variant="outlined">
                     Home
                   </Button>
-                  {/* {isAuthenticated ? (
-                    <AccountButton />
-                  ) : (
-                    <Button onClick={() => loginWithRedirect()}>
-                      Login / Register
-                    </Button>
-                  )} */}
                 </StandardStack>
               </Grid>
             </StandardGrid>

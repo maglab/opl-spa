@@ -1,14 +1,6 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Box, Chip, Grid, IconButton, MenuItem } from "@mui/material";
-import {
-  blue,
-  brown,
-  green,
-  grey,
-  orange,
-  purple,
-  teal,
-} from "@mui/material/colors";
+import { blue, green, grey, orange, teal } from "@mui/material/colors";
 import { Form, Formik } from "formik";
 import { original as ori } from "immer";
 import { capitalize, isEqual } from "lodash";
@@ -19,27 +11,18 @@ import useExtendedTheme from "../../theme/useExtendedTheme";
 import FormManagedTextField from "../common/formManagedTextField";
 import StandardGrid from "../common/standardGrid";
 import StandardStack from "../common/standardStack";
+import { objectToQueryParam, queryParamToObject } from "./queryFormat";
 
 const initialValues = { subject: SEARCH_SUBJECT_KEYS.title, text: "" };
 const criteriaColors = {
   [SEARCH_SUBJECT_KEYS.title]: grey[200],
   [SEARCH_SUBJECT_KEYS.gene]: blue[200],
-  [SEARCH_SUBJECT_KEYS.reference]: brown[200],
-  [SEARCH_SUBJECT_KEYS.author]: purple[200],
-  [SEARCH_SUBJECT_KEYS.tag]: green[200],
+  // [SEARCH_SUBJECT_KEYS.reference]: brown[200], //Reference searching possibly in the future when references are applied to open problems.
+  // [SEARCH_SUBJECT_KEYS.author]: purple[200], //We've removed public display users.
+  [SEARCH_SUBJECT_KEYS.categories]: green[200],
   [SEARCH_SUBJECT_KEYS.species]: orange[200],
   [SEARCH_SUBJECT_KEYS.compound]: teal[200],
 };
-
-const queryParamToObject = (param) => {
-  const sepIndex = param.indexOf(":");
-  return {
-    subject: param.substring(0, sepIndex),
-    text: param.substring(sepIndex + 1),
-  };
-};
-
-const objectToQueryParam = (obj) => `${obj.subject}:${obj.text}`;
 
 export default function Search() {
   const theme = useExtendedTheme();
